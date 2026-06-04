@@ -141,6 +141,10 @@ common:
     url: finops/ucsb-finops.yml
   - type: Review
     url: review.yml
+  - type: Blog
+    url: blogs/blogs.json
+  - type: JSONLD
+    url: json-ld/ucsb-context.jsonld
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

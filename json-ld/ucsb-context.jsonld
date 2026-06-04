@@ -1,0 +1,59 @@
+{
+  "@context": {
+    "schema": "https://schema.org/",
+    "ucsb": "https://developer.ucsb.edu/vocab#",
+    "name": "schema:name",
+    "url": "schema:url",
+    "description": "schema:description",
+    "logo": "schema:logo",
+    "sameAs": "schema:sameAs",
+    "department": "schema:department",
+    "CollegeOrUniversity": "schema:CollegeOrUniversity",
+    "EducationalOrganization": "schema:EducationalOrganization",
+    "address": "schema:address",
+    "telephone": "schema:telephone",
+
+    "developerPortal": {
+      "@id": "ucsb:developerPortal",
+      "@type": "@id"
+    },
+    "api": {
+      "@id": "ucsb:api",
+      "@type": "@id"
+    },
+    "apiCategory": "ucsb:apiCategory",
+    "securityClassification": "ucsb:securityClassification",
+    "baseUrl": {
+      "@id": "ucsb:baseUrl",
+      "@type": "@id"
+    },
+
+    "course": "schema:Course",
+    "courseCode": "schema:courseCode",
+    "student": "ucsb:student",
+    "academicProgram": "ucsb:academicProgram",
+    "diningVenue": {
+      "@id": "ucsb:diningVenue",
+      "@type": "schema:FoodEstablishment"
+    },
+    "housingAssignment": "ucsb:housingAssignment",
+    "employee": {
+      "@id": "ucsb:employee",
+      "@type": "schema:Person"
+    },
+    "digitalCollection": {
+      "@id": "ucsb:digitalCollection",
+      "@type": "schema:Collection"
+    }
+  },
+  "@type": "CollegeOrUniversity",
+  "name": "University of California, Santa Barbara",
+  "url": "https://www.ucsb.edu/",
+  "description": "Public land-grant research university and member of the University of California system, operating the UCSB API Developer Portal exposing campus enterprise APIs across Academics, Administration, Dining, Employees, Housing, and Students.",
+  "developerPortal": "https://developer.ucsb.edu/",
+  "sameAs": [
+    "https://github.com/ucsb",
+    "https://www.linkedin.com/school/uc-santa-barbara/",
+    "https://alexandria.ucsb.edu/"
+  ]
+}
