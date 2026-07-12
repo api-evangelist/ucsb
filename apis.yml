@@ -123,6 +123,8 @@ apis:
       - type: Documentation
         url: https://alexandria.ucsb.edu/welcome/about
 common:
+  - type: DomainSecurity
+    url: security/ucsb-domain-security.yml
   - type: Website
     url: https://www.ucsb.edu/
   - type: DeveloperPortal
