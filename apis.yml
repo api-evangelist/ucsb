@@ -1,4 +1,3 @@
----
 aid: ucsb
 name: University of California, Santa Barbara
 description: >-
@@ -13,9 +12,21 @@ description: >-
   (ADRL), a Samvera/Fedora-based institutional repository, and maintains an
   official GitHub organization at github.com/ucsb.
 type: Index
+accessModel:
+  pricing: free
+  onboarding: approval
+  trial: false
+  try_now: false
+  public: false
+  label: Free · Requires approval
+  confidence: medium
+  source:
+    - plans
+  generated: '2026-07-22'
+  method: derived
 position: Consumer
 access: 3rd-Party
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/ucsb.png
 url: https://raw.githubusercontent.com/api-evangelist/ucsb/refs/heads/main/apis.yml
 tags:
   - Education
@@ -26,7 +37,7 @@ tags:
   - California
   - United States
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-07-25'
 specificationVersion: '0.19'
 apis:
   - aid: ucsb:developer-portal
@@ -37,7 +48,7 @@ apis:
       Registration is required and new accounts are reviewed and approved
       manually by administrators before access is granted.
     humanURL: https://developer.ucsb.edu/
-    tags: [ API Portal, Developer Portal, Campus ]
+    tags: [API Portal, Developer Portal, Campus]
     properties:
       - type: Documentation
         url: https://developer.ucsb.edu/docs/getting-started
@@ -50,7 +61,7 @@ apis:
       including Academic Curriculums, Academic Graduate Programs, Academic
       Quarter Calendar, BARC Quarter Calendar, CLAS Schedules, and Events.
     humanURL: https://developer.ucsb.edu/apis/all
-    tags: [ Academics, Curriculum, Calendar, Courses ]
+    tags: [Academics, Curriculum, Calendar, Courses]
     properties:
       - type: Documentation
         url: https://developer.ucsb.edu/content/academic-curriculums
@@ -63,7 +74,7 @@ apis:
       Rosters, Student Schedules, Student Academic Programs (Majors/Minors),
       Student Photos, and related lookup services. Most require access approval.
     humanURL: https://developer.ucsb.edu/content/student-courses
-    tags: [ Students, SIS, Registration, Rosters ]
+    tags: [Students, SIS, Registration, Rosters]
     properties:
       - type: Documentation
         url: https://developer.ucsb.edu/content/student-courses
@@ -75,7 +86,7 @@ apis:
       Chartfield, PeopleSoft FAU Combination Service, COA/CCOA crosswalking, and
       Access Cards.
     humanURL: https://developer.ucsb.edu/apis/all
-    tags: [ Administration, Finance, Chartfield ]
+    tags: [Administration, Finance, Chartfield]
     properties:
       - type: Documentation
         url: https://developer.ucsb.edu/apis/all
@@ -86,7 +97,7 @@ apis:
       and staff, including Dining Cams, Dining Commons, Dining Menu, Dining
       Patrons, and Meal Plan Rates.
     humanURL: https://developer.ucsb.edu/apis/all
-    tags: [ Dining, Campus ]
+    tags: [Dining, Campus]
     properties:
       - type: Documentation
         url: https://developer.ucsb.edu/apis/all
@@ -96,7 +107,7 @@ apis:
       APIs delivering student housing data, including Contract Status and
       Housing Assignments.
     humanURL: https://developer.ucsb.edu/apis/all
-    tags: [ Housing, Campus ]
+    tags: [Housing, Campus]
     properties:
       - type: Documentation
         url: https://developer.ucsb.edu/apis/all
@@ -106,22 +117,10 @@ apis:
       APIs offering faculty and staff details such as the Employee Job API and
       related identity mapping services.
     humanURL: https://developer.ucsb.edu/apis/all
-    tags: [ Employees, HR ]
+    tags: [Employees, HR]
     properties:
       - type: Documentation
         url: https://developer.ucsb.edu/apis/all
-  - aid: ucsb:adrl
-    name: Alexandria Digital Research Library (ADRL)
-    description: >-
-      UCSB Library's institutional repository for digital research materials
-      (images, text, streamed media, numeric and spatial data), built on the
-      Samvera technical framework using Fedora, Solr, and Blacklight. Public
-      discovery interface; no documented public API is published on the portal.
-    humanURL: https://alexandria.ucsb.edu/
-    tags: [ Library, Institutional Repository, Samvera, Digital Collections ]
-    properties:
-      - type: Documentation
-        url: https://alexandria.ucsb.edu/welcome/about
 common:
   - type: DomainSecurity
     url: security/ucsb-domain-security.yml
@@ -147,6 +146,8 @@ common:
     url: blogs/blogs.json
   - type: JSONLD
     url: json-ld/ucsb-context.jsonld
+  - type: About
+    url: https://alexandria.ucsb.edu/
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
