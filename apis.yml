@@ -1,16 +1,21 @@
 aid: ucsb
 name: University of California, Santa Barbara
-description: >-
-  University of California, Santa Barbara (UCSB) is a public land-grant research
-  university and a member of the University of California system, ranked #79 in
-  the QS World University Rankings 2025. UCSB operates a formal, well-structured
-  API Developer Portal at developer.ucsb.edu that exposes campus enterprise APIs
-  across Academics, Administration, Dining, Employees, Housing, and Students
-  categories. Most APIs are gated behind registration and manual account approval
-  (security classifications include Auto-Approved, Access Approval Required, and
-  Private). The UCSB Library also runs the Alexandria Digital Research Library
-  (ADRL), a Samvera/Fedora-based institutional repository, and maintains an
-  official GitHub organization at github.com/ucsb.
+description: 'University of California, Santa Barbara is a public land-grant research university in the
+  University of California system and an Association of American Universities member. Unusually for this
+  cohort, UCSB runs a real, institution-operated API programme rather than a shelf of vendor contracts:
+  a Campus API Gateway at api.ucsb.edu, a developer portal at developer.ucsb.edu cataloging 37 campus
+  APIs across Academics, Administration, Dining, Employees, Housing and Students, a written and binding
+  API design standard for campus publishers, and 21 downloadable first-party OpenAPI documents — every
+  one of which declares a ucsb.edu host, so none of it is misattributed vendor engineering. The programme
+  is real but it is closed: portal accounts are approved by hand, 25 of the 37 APIs sit above the Auto-Approved
+  tier, and no endpoint is callable without an approved consumer key (an unauthenticated probe returns
+  401). UCSB also operates its own Shibboleth identity provider registered in InCommon, whose SAML metadata
+  is openly machine-readable, and the Alexandria Digital Research Library, which is institution-run but
+  has no API. Its library discovery layer and its open-access scholarship are vendor and UC-system tenancies
+  and are recorded as such. There is no open-data portal, no OAuth authorization server, no llms.txt and
+  no changelog.'
+x-type: university
+x-category: Public Research University
 type: Index
 deliveryModel:
   model: saas
@@ -32,7 +37,7 @@ accessModel:
   label: Free · Requires approval
   confidence: medium
   source:
-    - plans
+  - plans
   generated: '2026-07-22'
   method: derived
 position: Consumer
@@ -40,125 +45,667 @@ access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/ucsb.png
 url: https://raw.githubusercontent.com/api-evangelist/ucsb/refs/heads/main/apis.yml
 tags:
-  - Education
-  - Higher Education
-  - University
-  - Student Information System
-  - Campus
-  - California
-  - United States
+- Education
+- Higher Education
+- University
+- Public Research University
+- UC System
+- United States
+- California
+- Campus
+- Student Information System
+- Course Catalog
+- Academics
+- Identity Federation
+- Research Repository
+- Library
+- API Gateway
+- Developer Portal
 created: '2026-06-03'
-modified: '2026-07-25'
+modified: '2026-08-30'
 specificationVersion: '0.23'
 apis:
-  - aid: ucsb:developer-portal
-    name: UCSB API Developer Portal
-    description: >-
-      Central campus API developer portal for discovering, subscribing to,
-      requesting elevated access for, and consuming UCSB web service APIs.
-      Registration is required and new accounts are reviewed and approved
-      manually by administrators before access is granted.
-    humanURL: https://developer.ucsb.edu/
-    tags: [API Portal, Developer Portal, Campus]
-    properties:
-      - type: Documentation
-        url: https://developer.ucsb.edu/docs/getting-started
-      - type: Signup
-        url: https://developer.ucsb.edu/
-  - aid: ucsb:academics
-    name: UCSB Academics APIs
-    description: >-
-      APIs covering the life-cycle of campus, departments, and students,
-      including Academic Curriculums, Academic Graduate Programs, Academic
-      Quarter Calendar, BARC Quarter Calendar, CLAS Schedules, and Events.
-    humanURL: https://developer.ucsb.edu/apis/all
-    tags: [Academics, Curriculum, Calendar, Courses]
-    properties:
-      - type: Documentation
-        url: https://developer.ucsb.edu/content/academic-curriculums
-  - aid: ucsb:students
-    name: UCSB Students APIs
-    description: >-
-      APIs providing access to student rosters and individual student
-      information including demographic, registration, academic program, and
-      schedule data. Includes Student Courses, Student Registrations, Student
-      Rosters, Student Schedules, Student Academic Programs (Majors/Minors),
-      Student Photos, and related lookup services. Most require access approval.
-    humanURL: https://developer.ucsb.edu/content/student-courses
-    tags: [Students, SIS, Registration, Rosters]
-    properties:
-      - type: Documentation
-        url: https://developer.ucsb.edu/content/student-courses
-  - aid: ucsb:administration
-    name: UCSB Administration APIs
-    description: >-
-      Administrative APIs pertaining to financials, accounts receivable, and
-      related campus systems, including ClassCode Lookup Service, Department
-      Chartfield, PeopleSoft FAU Combination Service, COA/CCOA crosswalking, and
-      Access Cards.
-    humanURL: https://developer.ucsb.edu/apis/all
-    tags: [Administration, Finance, Chartfield]
-    properties:
-      - type: Documentation
-        url: https://developer.ucsb.edu/apis/all
-  - aid: ucsb:dining
-    name: UCSB Dining APIs
-    description: >-
-      APIs providing campus dining venue information used by students, faculty,
-      and staff, including Dining Cams, Dining Commons, Dining Menu, Dining
-      Patrons, and Meal Plan Rates.
-    humanURL: https://developer.ucsb.edu/apis/all
-    tags: [Dining, Campus]
-    properties:
-      - type: Documentation
-        url: https://developer.ucsb.edu/apis/all
-  - aid: ucsb:housing
-    name: UCSB Housing APIs
-    description: >-
-      APIs delivering student housing data, including Contract Status and
-      Housing Assignments.
-    humanURL: https://developer.ucsb.edu/apis/all
-    tags: [Housing, Campus]
-    properties:
-      - type: Documentation
-        url: https://developer.ucsb.edu/apis/all
-  - aid: ucsb:employees
-    name: UCSB Employees APIs
-    description: >-
-      APIs offering faculty and staff details such as the Employee Job API and
-      related identity mapping services.
-    humanURL: https://developer.ucsb.edu/apis/all
-    tags: [Employees, HR]
-    properties:
-      - type: Documentation
-        url: https://developer.ucsb.edu/apis/all
+- aid: ucsb:developer-portal
+  name: UCSB API Developer Portal
+  description: Central campus API developer portal. Catalogs 37 campus APIs across six categories, renders
+    each published contract with Swagger UI, and runs registration, App/consumer-key creation and the
+    API Access Request workflow. Accounts are approved manually by an administrator. UCSB operates this
+    itself on Drupal 10; it is not a vendor developer-portal product.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  x-operator: institution
+  tags:
+  - API Portal
+  - Developer Portal
+  - Campus
+  properties:
+  - type: Documentation
+    url: https://developer.ucsb.edu/documentation
+  - type: GettingStarted
+    url: https://developer.ucsb.edu/docs/getting-started
+  - type: APIReference
+    url: https://developer.ucsb.edu/apis/all
+  - type: Signup
+    url: https://developer.ucsb.edu/user/register
+- aid: ucsb:campus-api-gateway
+  name: UCSB Campus API Gateway
+  description: 'The single API front door for the campus, at api.ucsb.edu. Every campus API is published
+    as a proxy on it and it enforces the ucsb-api-key application entitlement before a request reaches
+    a backend web service. It runs on Apigee (api.ucsb.edu CNAMEs to ucsb-prod.apigee.net) but the domain,
+    the proxies, the API products and the backend services are UCSB’s, so this is institution-operated
+    infrastructure on a vendor runtime, not a vendor tenancy. Probed live 2026-08-30: an unauthenticated
+    call returns 401 with an Apigee fault envelope, and the CORS allow-list advertises the whole auth
+    surface — ucsb-api-key, ucsb-api-version, ucsb-user-jwt.'
+  humanURL: https://developer.ucsb.edu/docs/security/overview
+  baseURL: https://api.ucsb.edu
+  x-operator: institution
+  tags:
+  - API Gateway
+  - Campus
+  - Security
+  properties:
+  - type: Documentation
+    url: https://developer.ucsb.edu/docs/security/overview
+  - type: Authentication
+    url: authentication/ucsb-authentication.yml
+  - type: Scopes
+    url: scopes/ucsb-scopes.yml
+  - type: Errors
+    url: errors/ucsb-problem-types.yml
+  - type: Rules
+    url: rules/ucsb-rules.yml
+  - type: Lifecycle
+    url: lifecycle/ucsb-lifecycle.yml
+  - type: Conformance
+    url: conformance/ucsb-conformance.yml
+  - type: Vocabulary
+    url: vocabulary/ucsb-vocabulary.yml
+- aid: ucsb:academic-curriculums
+  name: UCSB Academic Curriculums
+  description: Search and retrieve the UCSB schedule of classes for a quarter — classes, sections, final
+    exams, space availability and general-education codes. The most substantial public academic contract
+    UCSB publishes, and the one a course-search client is built on. Published as Swagger 2.0, 5 paths,
+    base https://api.ucsb.edu/academics/curriculums.
+  humanURL: https://developer.ucsb.edu/content/academic-curriculums
+  baseURL: https://api.ucsb.edu/academics/curriculums
+  x-operator: institution
+  x-access-classification: Auto-Approved
+  tags:
+  - Academics
+  - Course Catalog
+  - Auto-Approved
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-academic-curriculums-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+- aid: ucsb:academic-graduate-programs
+  name: UCSB Academic Graduate Programs
+  description: List UCSB graduate degree programs and retrieve one by id, with department, degree types
+    and application detail, from the Graduate Division. Published as Swagger 2.0, 2 paths, base https://api.ucsb.edu/academics/gradprograms/v1.
+  humanURL: https://developer.ucsb.edu/content/academic-graduate-programs
+  baseURL: https://api.ucsb.edu/academics/gradprograms/v1
+  x-operator: institution
+  x-access-classification: Auto-Approved
+  tags:
+  - Academics
+  - Course Catalog
+  - Auto-Approved
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-academic-graduate-programs-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+- aid: ucsb:academic-quarter-calendar
+  name: UCSB Academic Quarter Calendar
+  description: 'The Office of the Registrar''s quarter calendar — first/last day of classes and finals,
+    the three registration passes, fee deadline and add/drop deadlines. The keystone contract of the estate:
+    everything else is keyed on quarter. Published as Swagger 2.0, 4 paths, base https://api.ucsb.edu/academics.'
+  humanURL: https://developer.ucsb.edu/content/academic-quarter-calendar
+  baseURL: https://api.ucsb.edu/academics
+  x-operator: institution
+  x-access-classification: Auto-Approved
+  tags:
+  - Academics
+  - Course Catalog
+  - Auto-Approved
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-academic-quarter-calendar-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+- aid: ucsb:barc-quarter-calendar
+  name: UCSB BARC Quarter Calendar
+  description: Quarter and term calendar as the BARC student billing system sees it, which is deliberately
+    distinct from the Registrar calendar. Private tier. Published as Swagger 2.0, 2 paths, base https://api.ucsb.edu/academics/private/barcquartercalendar/v1.
+  humanURL: https://developer.ucsb.edu/content/barc-quarter-calendar
+  baseURL: https://api.ucsb.edu/academics/private/barcquartercalendar/v1
+  x-operator: institution
+  x-access-classification: Private
+  tags:
+  - Academics
+  - Course Catalog
+  - Private
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-barc-quarter-calendar-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+- aid: ucsb:barc-students-api
+  name: UCSB BARC Students API
+  description: Student records as held by BARC, the campus Billing, Accounts Receivable and Collections
+    system. Private tier; the contract is public, the data is not. Published as Swagger 2.0, 1 path, base
+    https://api.ucsb.edu/students/private/barcstudents/v1.
+  humanURL: https://developer.ucsb.edu/content/barc-students-api
+  baseURL: https://api.ucsb.edu/students/private/barcstudents/v1
+  x-operator: institution
+  x-access-classification: Private
+  tags:
+  - Students
+  - Student Information System
+  - Private
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-barc-students-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+- aid: ucsb:clas-schedules
+  name: UCSB CLAS Schedules
+  description: Subjects and skills workshops offered by Campus Learning Assistance Services. One of only
+    two UCSB contracts published as OpenAPI 3.0.1, and the only one that requires the ucsb-api-version
+    header on every operation. Published as OpenAPI 3.0.1, 6 paths, base https://api.ucsb.edu/academics/clas/schedules/v1.
+  humanURL: https://developer.ucsb.edu/content/academic-clas-schedules
+  baseURL: https://api.ucsb.edu/academics/clas/schedules/v1
+  x-operator: institution
+  x-access-classification: Private
+  tags:
+  - Academics
+  - Course Catalog
+  - Private
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-clas-schedules-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+- aid: ucsb:classcode-lookup-service
+  name: UCSB ClassCode Lookup Service
+  description: Lookup of BARC class codes, which determine a student billing category. Access Approval
+    Required. Published as Swagger 2.0, 2 paths, base https://api.ucsb.edu/administration/financial/barc/classcode/v2.
+  humanURL: https://developer.ucsb.edu/content/classcode-lookup-service
+  baseURL: https://api.ucsb.edu/administration/financial/barc/classcode/v2
+  x-operator: institution
+  x-access-classification: Access Approval Required
+  tags:
+  - Administration
+  - Finance
+  - Access Approval Required
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-classcode-lookup-service-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+- aid: ucsb:department-chartfield
+  name: UCSB Department Chartfield
+  description: Department, cost centre, cost type and project-code chartfields from the campus financial
+    system. Published as OpenAPI 3.0.1 and the only contract that declares test and dev environments alongside
+    production. Published as OpenAPI 3.0.1, 1 path, base https://api.ucsb.edu/administration/financial/accounts.
+  humanURL: https://developer.ucsb.edu/content/department-chartfield
+  baseURL: https://api.ucsb.edu/administration/financial/accounts
+  x-operator: institution
+  x-access-classification: Auto-Approved
+  tags:
+  - Administration
+  - Finance
+  - Auto-Approved
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-department-chartfield-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+- aid: ucsb:department-course-extract
+  name: UCSB Department Course Extract
+  description: Registrar extract of a department course list with sections, time/locations, instructors
+    and concurrent courses. Private tier. Published as Swagger 2.0, 1 path, base https://api.ucsb.edu/students/private/deptcourses.
+  humanURL: https://developer.ucsb.edu/content/department-course-extract
+  baseURL: https://api.ucsb.edu/students/private/deptcourses
+  x-operator: institution
+  x-access-classification: Private
+  tags:
+  - Students
+  - Student Information System
+  - Private
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-department-course-extract-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+- aid: ucsb:employee-job
+  name: UCSB Employee Job
+  description: Employment and job data drawn from UCPath — employee records, job codes, job class codes
+    and employment status. Private tier; the most sensitive contract UCSB publishes a spec for. Published
+    as Swagger 2.0, 7 paths, base https://api.ucsb.edu/employees/private/employeejoblookup.
+  humanURL: https://developer.ucsb.edu/content/employee-job
+  baseURL: https://api.ucsb.edu/employees/private/employeejoblookup
+  x-operator: institution
+  x-access-classification: Private
+  tags:
+  - Employees
+  - HR
+  - Private
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-employee-job-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+- aid: ucsb:events
+  name: UCSB Events
+  description: Campus academic events list. The smallest contract in the estate — one GET, no declared
+    schema. Published as Swagger 2.0, 1 path, base https://api.ucsb.edu/academics/.
+  humanURL: https://developer.ucsb.edu/content/events
+  baseURL: https://api.ucsb.edu/academics/
+  x-operator: institution
+  x-access-classification: Auto-Approved
+  tags:
+  - Academics
+  - Course Catalog
+  - Auto-Approved
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-events-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+- aid: ucsb:grad-application-verifications
+  name: UCSB Grad Application Verifications
+  description: Graduate Division application verification service. The one published contract that does
+    NOT run on the Campus API Gateway — it is served directly from gradpoint.ucsb.edu, which sits behind
+    campus ADFS. Published as Swagger 2.0, 2 paths, base https://gradpoint.ucsb.edu/webservices/public/applverifications.
+  humanURL: https://developer.ucsb.edu/content/grad-application-verifications
+  baseURL: https://gradpoint.ucsb.edu/webservices/public/applverifications
+  x-operator: institution
+  x-access-classification: Private
+  tags:
+  - Students
+  - Student Information System
+  - Private
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-grad-application-verifications-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+- aid: ucsb:mtd-access
+  name: UCSB MTD Access
+  description: Registrar service backing student access to Santa Barbara Metropolitan Transit District
+    bus service. Private tier; the campus-life corner of the estate. Published as Swagger 2.0, 1 path,
+    base https://api.ucsb.edu/students/private.
+  humanURL: https://developer.ucsb.edu/content/mtd-access
+  baseURL: https://api.ucsb.edu/students/private
+  x-operator: institution
+  x-access-classification: Private
+  tags:
+  - Students
+  - Student Information System
+  - Private
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-mtd-access-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+- aid: ucsb:peoplesoft-fau-functional-accounting-unit-combination-service
+  name: UCSB PeopleSoft FAU (Functional Accounting Unit) Combination Service
+  description: Validation of PeopleSoft Functional Accounting Unit chartstring combinations. A POST-based
+    validation service and one of only three write-bearing contracts UCSB publishes. Published as Swagger
+    2.0, 1 path, base https://api.ucsb.edu/administration/financial/peoplesoft/fauvalidation/v2.
+  humanURL: https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  baseURL: https://api.ucsb.edu/administration/financial/peoplesoft/fauvalidation/v2
+  x-operator: institution
+  x-access-classification: Auto-Approved
+  tags:
+  - Administration
+  - Finance
+  - Auto-Approved
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-peoplesoft-fau-combination-service-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+- aid: ucsb:student-academic-programs-majors-minors
+  name: UCSB Student Academic Programs (Majors / Minors)
+  description: A student’s declared majors and minors. Access Approval Required; FERPA-governed. Published
+    as Swagger 2.0, 3 paths, base https://api.ucsb.edu/students.
+  humanURL: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  baseURL: https://api.ucsb.edu/students
+  x-operator: institution
+  x-access-classification: Access Approval Required
+  tags:
+  - Students
+  - Student Information System
+  - Access Approval Required
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-student-academic-programs-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+- aid: ucsb:student-basic-student-info
+  name: UCSB Student Basic Student Info
+  description: Basic and extended student demographic and enrollment records. Access Approval Required;
+    FERPA-governed. Published as Swagger 2.0, 2 paths, base https://api.ucsb.edu/students.
+  humanURL: https://developer.ucsb.edu/content/student-basic-student-info
+  baseURL: https://api.ucsb.edu/students
+  x-operator: institution
+  x-access-classification: Access Approval Required
+  tags:
+  - Students
+  - Student Information System
+  - Access Approval Required
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-student-basic-info-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+- aid: ucsb:student-courses
+  name: UCSB Student Courses
+  description: The courses a student is enrolled in for a quarter. Access Approval Required; FERPA-governed.
+    Its base path /students/courses is the exact nesting UCSB’s own published design standard tells campus
+    teams not to do. Published as Swagger 2.0, 1 path, base https://api.ucsb.edu/students/courses.
+  humanURL: https://developer.ucsb.edu/content/student-courses
+  baseURL: https://api.ucsb.edu/students/courses
+  x-operator: institution
+  x-access-classification: Access Approval Required
+  tags:
+  - Students
+  - Student Information System
+  - Access Approval Required
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-student-courses-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+- aid: ucsb:student-record-code-lookups
+  name: UCSB Student Record Code Lookups
+  description: Thirty-nine reference tables from the Student Information System — majors, minors, colleges,
+    departments, divisions, grades, grading options, classifications, pronouns, gender identity, instruction
+    types and more. The largest UCSB contract by a wide margin, Auto-Approved, and by far the most usable
+    public surface UCSB has. Published as Swagger 2.0, 39 paths, base https://api.ucsb.edu/students.
+  humanURL: https://developer.ucsb.edu/content/student-record-code-lookups
+  baseURL: https://api.ucsb.edu/students
+  x-operator: institution
+  x-access-classification: Auto-Approved
+  tags:
+  - Students
+  - Student Information System
+  - Auto-Approved
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-student-record-code-lookups-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+- aid: ucsb:student-registrations
+  name: UCSB Student Registrations
+  description: Student registration records and registration blocks for a quarter. Access Approval Required;
+    one of three write-bearing contracts. Published as Swagger 2.0, 3 paths, base https://api.ucsb.edu/students/registrations.
+  humanURL: https://developer.ucsb.edu/content/student-registrations
+  baseURL: https://api.ucsb.edu/students/registrations
+  x-operator: institution
+  x-access-classification: Access Approval Required
+  tags:
+  - Students
+  - Student Information System
+  - Access Approval Required
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-student-registrations-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+- aid: ucsb:student-rosters
+  name: UCSB Student Rosters
+  description: The roster of students enrolled in a course section. Access Approval Required; FERPA-governed.
+    Published as Swagger 2.0, 1 path, base https://api.ucsb.edu/students.
+  humanURL: https://developer.ucsb.edu/content/student-rosters
+  baseURL: https://api.ucsb.edu/students
+  x-operator: institution
+  x-access-classification: Access Approval Required
+  tags:
+  - Students
+  - Student Information System
+  - Access Approval Required
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-student-rosters-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+- aid: ucsb:student-schedules
+  name: UCSB Student Schedules
+  description: A student’s class schedule with meeting times, locations and instructors. Access Approval
+    Required; FERPA-governed. Published as Swagger 2.0, 1 path, base https://api.ucsb.edu/students/schedules.
+  humanURL: https://developer.ucsb.edu/content/student-schedules
+  baseURL: https://api.ucsb.edu/students/schedules
+  x-operator: institution
+  x-access-classification: Access Approval Required
+  tags:
+  - Students
+  - Student Information System
+  - Access Approval Required
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-student-schedules-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:identity-federation
+  name: UCSB Identity Federation (Passport / InCommon)
+  description: UCSB operates its own Shibboleth identity provider, "Passport", at passport.identity.ucsb.edu,
+    registered in InCommon as entityID urn:mace:incommon:ucsb.edu. Its SAML 2.0 metadata is machine-readable
+    and retrievable without credentials from the InCommon MDQ service — HTTP 200, application/samlmetadata+xml,
+    XML-signed, probed 2026-08-30. This is the one institution-operated machine-readable surface UCSB
+    has that is not an OpenAPI, and it is the kind of surface this catalog has historically missed for
+    universities entirely.
+  humanURL: https://passport.identity.ucsb.edu/idp/shibboleth
+  baseURL: https://passport.identity.ucsb.edu/idp/shibboleth
+  x-operator: institution
+  tags:
+  - Identity Federation
+  - Shibboleth
+  - SAML
+  - InCommon
+  properties:
+  - type: IdentityFederation
+    url: https://mdq.incommon.org/entities/urn%3Amace%3Aincommon%3Aucsb.edu
+  - type: Metadata
+    url: https://passport.identity.ucsb.edu/idp/shibboleth
+  - type: Conformance
+    url: conformance/ucsb-conformance.yml
+  x-metadata-url: https://mdq.incommon.org/entities/urn%3Amace%3Aincommon%3Aucsb.edu
+  x-audit-note: 'A host-based verdict on the InCommon MDQ URL reads "vendor" because other institutions
+    resolve through the same federation service. That is the federation, not the operator: the entity
+    described is urn:mace:incommon:ucsb.edu and the IdP it points at, passport.identity.ucsb.edu, is UCSB''s.
+    baseURL is set to the institution-operated IdP so the verdict lands correctly; the MDQ retrieval URL
+    is kept as x-metadata-url and as evidence in conformance/ucsb-conformance.yml.'
+- aid: ucsb:alexandria-digital-research-library
+  name: Alexandria Digital Research Library (ADRL)
+  description: 'UCSB Library''s institutional research repository, moved from alexandria.ucsb.edu to digital.library.ucsb.edu
+    and served through CloudFront. The host is UCSB''s and the front end is UCSB Library''s own component
+    build (the pages render custom <render-daylight-component> elements, not a hosted vendor UI), so it
+    is recorded as institution-operated rather than a vendor tenancy. It publishes NO documented API and
+    no OAI-PMH endpoint: /oai-pmh?verb=Identify returns 403 and /search.json returns 404 (probed 2026-08-30).
+    The CloudFront edge also bot-challenges some requests, so 403 here is a live surface refusing us,
+    not a dead one. Recorded as a surface class UCSB operates, with the honest note that it is not programmable.'
+  humanURL: https://digital.library.ucsb.edu/
+  x-operator: institution
+  x-programmable: false
+  tags:
+  - Research Repository
+  - Library
+  - Digital Collections
+  properties:
+  - type: ResearchRepository
+    url: https://digital.library.ucsb.edu/
+- aid: ucsb:library-discovery
+  name: UCSB Library Discovery (Ex Libris Primo VE)
+  description: UCSB Library’s catalog and discovery layer. The host search.library.ucsb.edu is a UCSB
+    CNAME onto ucsb.primo.exlibrisgroup.com, and the service resolves to Ex Libris tenancy 01UCSB_INST.
+    The collection, the holdings and the tenant are UCSB’s; the contract, the API and the engineering
+    are Ex Libris’. TENANT — the relationship is recorded here, the vendor’s generic Alma/Primo specification
+    is deliberately NOT saved under this institution.
+  humanURL: https://search.library.ucsb.edu/
+  baseURL: https://ucsb.primo.exlibrisgroup.com
+  x-operator: tenant
+  x-vendor: Ex Libris (Clarivate)
+  x-tenant-evidence: 'DNS: search.library.ucsb.edu CNAME ucsb.primo.exlibrisgroup.com; discovery vid=01UCSB_INST:UCSB'
+  tags:
+  - Library
+  - Library Catalog
+  - Discovery
+  - Vendor Tenant
+  properties:
+  - type: LibraryCatalog
+    url: https://search.library.ucsb.edu/
+- aid: ucsb:escholarship
+  name: UCSB on eScholarship
+  description: UCSB’s open-access scholarship collection inside eScholarship, the University of California’s
+    systemwide repository operated by the California Digital Library. It IS OAI-PMH harvestable (https://escholarship.org/oai?verb=Identify
+    returns 200, probed 2026-08-30), but the endpoint is CDL’s and serves every UC campus, so the oai-pmh
+    conformance is NOT credited to UCSB. TENANT — UCSB’s content on another operator’s platform.
+  humanURL: https://escholarship.org/uc/ucsb
+  baseURL: https://escholarship.org/oai
+  x-operator: tenant
+  x-vendor: California Digital Library (University of California)
+  tags:
+  - Research Repository
+  - Open Access
+  - OAI-PMH
+  - Vendor Tenant
+  properties:
+  - type: ResearchRepository
+    url: https://escholarship.org/uc/ucsb
+  x-audit-note: 'A cohort-derived host verdict reads escholarship.org as "vendor" because several UC campuses
+    claim it. That is correct about the HOST and is exactly why no eScholarship contract is saved under
+    this slug. The entry is retained at x-operator: tenant because the relationship itself is a real institutional
+    fact — UCSB''s open-access collection lives there — and the pipeline is explicit that a tenant relationship
+    must be re-labelled, never deleted, to avoid a misattribution. Nothing here is credited to UCSB: see
+    the oai-pmh and datacite entries in conformance/ucsb-conformance.yml, both scored conforms:false with
+    operator:tenant.'
 common:
-  - type: DomainSecurity
-    url: security/ucsb-domain-security.yml
-  - type: Website
-    url: https://www.ucsb.edu/
-  - type: DeveloperPortal
-    url: https://developer.ucsb.edu/
-  - type: GitHub
-    url: https://github.com/ucsb
-  - type: Status
-    url: https://status.library.ucsb.edu/
-  - type: LinkedIn
-    url: https://www.linkedin.com/school/uc-santa-barbara/
-  - type: Plans
-    url: plans/ucsb-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/ucsb-rate-limits.yml
-  - type: FinOps
-    url: finops/ucsb-finops.yml
-  - type: Review
-    url: review.yml
-  - type: Blog
-    url: blogs/blogs.json
-  - type: JSONLD
-    url: json-ld/ucsb-context.jsonld
-  - type: About
-    url: https://alexandria.ucsb.edu/
+- type: Website
+  url: https://www.ucsb.edu/
+- type: DeveloperPortal
+  url: https://developer.ucsb.edu/
+- type: Documentation
+  url: https://developer.ucsb.edu/documentation
+- type: APIReference
+  url: https://developer.ucsb.edu/apis/all
+- type: GettingStarted
+  url: https://developer.ucsb.edu/docs/getting-started
+- type: Signup
+  url: https://developer.ucsb.edu/user/register
+- type: GitHubOrganization
+  url: https://github.com/ucsb
+- type: GitHub
+  url: https://github.com/ucsb
+- type: Support
+  url: mailto:support@developer.ucsb.edu
+- type: TermsOfService
+  url: https://www.ucsb.edu/terms-of-use
+- type: Accessibility
+  url: https://www.ucsb.edu/accessibility
+- type: Status
+  url: https://status.sa.ucsb.edu/
+- type: Status
+  url: https://status.library.ucsb.edu/
+- type: Blog
+  url: https://news.ucsb.edu/
+- type: BlogRSS
+  url: https://www.news.ucsb.edu/all/feed
+- type: LinkedIn
+  url: https://www.linkedin.com/school/uc-santa-barbara/
+- type: CourseCatalog
+  url: https://developer.ucsb.edu/content/academic-curriculums
+- type: IdentityFederation
+  url: https://mdq.incommon.org/entities/urn%3Amace%3Aincommon%3Aucsb.edu
+- type: ResearchRepository
+  url: https://digital.library.ucsb.edu/
+- type: LibraryCatalog
+  url: https://search.library.ucsb.edu/
+- type: Registrar
+  url: https://registrar.sa.ucsb.edu/
+- type: InformationTechnology
+  url: https://it.ucsb.edu/
+- type: DomainSecurity
+  url: security/ucsb-domain-security.yml
+- type: Plans
+  url: plans/ucsb-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/ucsb-rate-limits.yml
+- type: FinOps
+  url: finops/ucsb-finops.yml
+- type: Review
+  url: review.yml
+- type: JSONLD
+  url: json-ld/ucsb-context.jsonld
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
+x-coverage:
+  state: gated
+  reason: auth_required
+  detail: 'UCSB is one of the genuinely programmable institutions in this cohort, but nothing it publishes
+    is callable without a manually approved account. The CONTRACTS are open: 21 first-party OpenAPI documents
+    download anonymously from developer.ucsb.edu and every one declares a ucsb.edu host, so the estate
+    is fully readable and fully attributable. The ENDPOINTS are not: api.ucsb.edu returns 401 to any request
+    without a ucsb-api-key, portal registration is approved by hand, 25 of 37 catalogued APIs sit above
+    the Auto-Approved tier, and 16 of the 37 do not expose a contract publicly at all — their portal pages
+    return an Access-denied body under HTTP 200. No response bodies, rate-limit headers or live schemas
+    could therefore be captured. The gap is authorization, not absence.'
+  evidence:
+  - url: https://developer.ucsb.edu/apis/all
+    status: 200
+    note: 37 APIs listed with access classification
+  - url: https://developer.ucsb.edu/sites/default/files/openapi/quartercalendar-v1-api.ucsb_.edu_.yaml
+    status: 200
+    note: first-party OpenAPI, downloads anonymously
+  - url: https://api.ucsb.edu/academics/quartercalendar/v1/quarters/current
+    status: 401
+    note: live gateway; Invalid ApiKey fault, no key issuable without approval
+  - url: https://developer.ucsb.edu/content/dining-commons
+    status: 200
+    note: HTTP 200 but body is "Access denied" — one of 16 APIs with no public contract
+  - url: https://developer.ucsb.edu/docs/getting-started
+    status: 200
+    note: '"an administrator will review your account and will grant new accounts manually"'
+  - url: https://mdq.incommon.org/entities/urn%3Amace%3Aincommon%3Aucsb.edu
+    status: 200
+    note: SAML metadata for UCSB IdP, retrievable without credentials
+  - url: https://digital.library.ucsb.edu/oai-pmh?verb=Identify
+    status: 403
+    note: no OAI-PMH on a UCSB host
+  - url: https://developer.ucsb.edu/sites/default/files/openapi/curriculums-v1.out_.api_.yml
+    status: 404
+    note: superseded v1 contract deleted, still referenced by UCSB own client repo
+  - url: https://www.ucsb.edu/llms.txt
+    status: 404
+  - url: https://developer.ucsb.edu/.well-known/security.txt
+    status: 404
+  probed: '2026-08-30'
+x-enrichment:
+  pipeline: pipeline-university
+  run: '2026-08-30'
+  operator_axis_settled: true
+  institution_surfaces: 25
+  tenant_surfaces: 2
+  vendor_surfaces_rejected: 0
+x-hostless-resolution:
+  resolved: '2026-08-30'
+  count: 19
+  verdict: institution
+  detail: 'The cohort audit builds host verdicts from servers[] only. 19 of the 21 UCSB contracts are
+    Swagger 2.0 and declare their host the Swagger 2.0 way — a top-level `host:` plus `basePath:` — so
+    they list as HOSTLESS even though every one of them names a UCSB host explicitly. Judged by what each
+    spec says about itself, per the ownership rule: 18 declare host: api.ucsb.edu and 1 (Grad Application
+    Verifications) declares host: gradpoint.ucsb.edu. Both are under ucsb.edu. Zero name a vendor host,
+    zero carry a vendor info.contact, zero carry a vendor info.title. All 19 are x-operator: institution
+    and none is a candidate for removal. A derived servers[] block was tried on the working copies to
+    make the host machine-visible, but it made all 19 read as MISBASED against their pristine _original
+    parents (which have no servers[] at all), so it was reverted: HOSTLESS is the truthful state here
+    and MISBASED would have been a false defect. The durable fix belongs in the audit, which should read
+    Swagger 2.0 host+basePath when servers[] is absent.'
+  hosts:
+    api.ucsb.edu: 18
+    gradpoint.ucsb.edu: 1
