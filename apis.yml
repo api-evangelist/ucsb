@@ -68,10 +68,11 @@ specificationVersion: '0.23'
 apis:
 - aid: ucsb:developer-portal
   name: UCSB API Developer Portal
-  description: Central campus API developer portal. Catalogs 37 campus APIs across six categories, renders
-    each published contract with Swagger UI, and runs registration, App/consumer-key creation and the
-    API Access Request workflow. Accounts are approved manually by an administrator. UCSB operates this
-    itself on Drupal 10; it is not a vendor developer-portal product.
+  description: >-
+    Central campus API developer portal. Catalogs 37 campus APIs across six categories, renders each published
+    contract with Swagger UI, and runs registration, App/consumer-key creation and the API Access Request
+    workflow. Accounts are approved manually by an administrator. UCSB operates this itself on Drupal
+    10; it is not a vendor developer-portal product.
   humanURL: https://developer.ucsb.edu/
   baseURL: https://developer.ucsb.edu/
   x-operator: institution
@@ -90,13 +91,14 @@ apis:
     url: https://developer.ucsb.edu/user/register
 - aid: ucsb:campus-api-gateway
   name: UCSB Campus API Gateway
-  description: 'The single API front door for the campus, at api.ucsb.edu. Every campus API is published
-    as a proxy on it and it enforces the ucsb-api-key application entitlement before a request reaches
-    a backend web service. It runs on Apigee (api.ucsb.edu CNAMEs to ucsb-prod.apigee.net) but the domain,
-    the proxies, the API products and the backend services are UCSB’s, so this is institution-operated
-    infrastructure on a vendor runtime, not a vendor tenancy. Probed live 2026-08-30: an unauthenticated
-    call returns 401 with an Apigee fault envelope, and the CORS allow-list advertises the whole auth
-    surface — ucsb-api-key, ucsb-api-version, ucsb-user-jwt.'
+  description: >-
+    The single API front door for the campus, at api.ucsb.edu. Every campus API is published as a proxy
+    on it and it enforces the ucsb-api-key application entitlement before a request reaches a backend
+    web service. It runs on Apigee (api.ucsb.edu CNAMEs to ucsb-prod.apigee.net) but the domain, the proxies,
+    the API products and the backend services are UCSB’s, so this is institution-operated infrastructure
+    on a vendor runtime, not a vendor tenancy. Probed live 2026-08-30: an unauthenticated call returns
+    401 with an Apigee fault envelope, and the CORS allow-list advertises the whole auth surface — ucsb-api-key,
+    ucsb-api-version, ucsb-user-jwt.
   humanURL: https://developer.ucsb.edu/docs/security/overview
   baseURL: https://api.ucsb.edu
   x-operator: institution
@@ -121,381 +123,12 @@ apis:
     url: conformance/ucsb-conformance.yml
   - type: Vocabulary
     url: vocabulary/ucsb-vocabulary.yml
-- aid: ucsb:academic-curriculums
-  name: UCSB Academic Curriculums
-  description: Search and retrieve the UCSB schedule of classes for a quarter — classes, sections, final
-    exams, space availability and general-education codes. The most substantial public academic contract
-    UCSB publishes, and the one a course-search client is built on. Published as Swagger 2.0, 5 paths,
-    base https://api.ucsb.edu/academics/curriculums.
-  humanURL: https://developer.ucsb.edu/content/academic-curriculums
-  baseURL: https://api.ucsb.edu/academics/curriculums
-  x-operator: institution
-  x-access-classification: Auto-Approved
-  tags:
-  - Academics
-  - Course Catalog
-  - Auto-Approved
-  properties:
-  - type: OpenAPI
-    url: openapi/ucsb-academic-curriculums-openapi.yml
-  - type: Documentation
-    url: https://developer.ucsb.edu/content/academic-curriculums
-- aid: ucsb:academic-graduate-programs
-  name: UCSB Academic Graduate Programs
-  description: List UCSB graduate degree programs and retrieve one by id, with department, degree types
-    and application detail, from the Graduate Division. Published as Swagger 2.0, 2 paths, base https://api.ucsb.edu/academics/gradprograms/v1.
-  humanURL: https://developer.ucsb.edu/content/academic-graduate-programs
-  baseURL: https://api.ucsb.edu/academics/gradprograms/v1
-  x-operator: institution
-  x-access-classification: Auto-Approved
-  tags:
-  - Academics
-  - Course Catalog
-  - Auto-Approved
-  properties:
-  - type: OpenAPI
-    url: openapi/ucsb-academic-graduate-programs-openapi.yml
-  - type: Documentation
-    url: https://developer.ucsb.edu/content/academic-graduate-programs
-- aid: ucsb:academic-quarter-calendar
-  name: UCSB Academic Quarter Calendar
-  description: 'The Office of the Registrar''s quarter calendar — first/last day of classes and finals,
-    the three registration passes, fee deadline and add/drop deadlines. The keystone contract of the estate:
-    everything else is keyed on quarter. Published as Swagger 2.0, 4 paths, base https://api.ucsb.edu/academics.'
-  humanURL: https://developer.ucsb.edu/content/academic-quarter-calendar
-  baseURL: https://api.ucsb.edu/academics
-  x-operator: institution
-  x-access-classification: Auto-Approved
-  tags:
-  - Academics
-  - Course Catalog
-  - Auto-Approved
-  properties:
-  - type: OpenAPI
-    url: openapi/ucsb-academic-quarter-calendar-openapi.yml
-  - type: Documentation
-    url: https://developer.ucsb.edu/content/academic-quarter-calendar
-- aid: ucsb:barc-quarter-calendar
-  name: UCSB BARC Quarter Calendar
-  description: Quarter and term calendar as the BARC student billing system sees it, which is deliberately
-    distinct from the Registrar calendar. Private tier. Published as Swagger 2.0, 2 paths, base https://api.ucsb.edu/academics/private/barcquartercalendar/v1.
-  humanURL: https://developer.ucsb.edu/content/barc-quarter-calendar
-  baseURL: https://api.ucsb.edu/academics/private/barcquartercalendar/v1
-  x-operator: institution
-  x-access-classification: Private
-  tags:
-  - Academics
-  - Course Catalog
-  - Private
-  properties:
-  - type: OpenAPI
-    url: openapi/ucsb-barc-quarter-calendar-openapi.yml
-  - type: Documentation
-    url: https://developer.ucsb.edu/content/barc-quarter-calendar
-- aid: ucsb:barc-students-api
-  name: UCSB BARC Students API
-  description: Student records as held by BARC, the campus Billing, Accounts Receivable and Collections
-    system. Private tier; the contract is public, the data is not. Published as Swagger 2.0, 1 path, base
-    https://api.ucsb.edu/students/private/barcstudents/v1.
-  humanURL: https://developer.ucsb.edu/content/barc-students-api
-  baseURL: https://api.ucsb.edu/students/private/barcstudents/v1
-  x-operator: institution
-  x-access-classification: Private
-  tags:
-  - Students
-  - Student Information System
-  - Private
-  properties:
-  - type: OpenAPI
-    url: openapi/ucsb-barc-students-openapi.yml
-  - type: Documentation
-    url: https://developer.ucsb.edu/content/barc-students-api
-- aid: ucsb:clas-schedules
-  name: UCSB CLAS Schedules
-  description: Subjects and skills workshops offered by Campus Learning Assistance Services. One of only
-    two UCSB contracts published as OpenAPI 3.0.1, and the only one that requires the ucsb-api-version
-    header on every operation. Published as OpenAPI 3.0.1, 6 paths, base https://api.ucsb.edu/academics/clas/schedules/v1.
-  humanURL: https://developer.ucsb.edu/content/academic-clas-schedules
-  baseURL: https://api.ucsb.edu/academics/clas/schedules/v1
-  x-operator: institution
-  x-access-classification: Private
-  tags:
-  - Academics
-  - Course Catalog
-  - Private
-  properties:
-  - type: OpenAPI
-    url: openapi/ucsb-clas-schedules-openapi.yml
-  - type: Documentation
-    url: https://developer.ucsb.edu/content/academic-clas-schedules
-- aid: ucsb:classcode-lookup-service
-  name: UCSB ClassCode Lookup Service
-  description: Lookup of BARC class codes, which determine a student billing category. Access Approval
-    Required. Published as Swagger 2.0, 2 paths, base https://api.ucsb.edu/administration/financial/barc/classcode/v2.
-  humanURL: https://developer.ucsb.edu/content/classcode-lookup-service
-  baseURL: https://api.ucsb.edu/administration/financial/barc/classcode/v2
-  x-operator: institution
-  x-access-classification: Access Approval Required
-  tags:
-  - Administration
-  - Finance
-  - Access Approval Required
-  properties:
-  - type: OpenAPI
-    url: openapi/ucsb-classcode-lookup-service-openapi.yml
-  - type: Documentation
-    url: https://developer.ucsb.edu/content/classcode-lookup-service
-- aid: ucsb:department-chartfield
-  name: UCSB Department Chartfield
-  description: Department, cost centre, cost type and project-code chartfields from the campus financial
-    system. Published as OpenAPI 3.0.1 and the only contract that declares test and dev environments alongside
-    production. Published as OpenAPI 3.0.1, 1 path, base https://api.ucsb.edu/administration/financial/accounts.
-  humanURL: https://developer.ucsb.edu/content/department-chartfield
-  baseURL: https://api.ucsb.edu/administration/financial/accounts
-  x-operator: institution
-  x-access-classification: Auto-Approved
-  tags:
-  - Administration
-  - Finance
-  - Auto-Approved
-  properties:
-  - type: OpenAPI
-    url: openapi/ucsb-department-chartfield-openapi.yml
-  - type: Documentation
-    url: https://developer.ucsb.edu/content/department-chartfield
-- aid: ucsb:department-course-extract
-  name: UCSB Department Course Extract
-  description: Registrar extract of a department course list with sections, time/locations, instructors
-    and concurrent courses. Private tier. Published as Swagger 2.0, 1 path, base https://api.ucsb.edu/students/private/deptcourses.
-  humanURL: https://developer.ucsb.edu/content/department-course-extract
-  baseURL: https://api.ucsb.edu/students/private/deptcourses
-  x-operator: institution
-  x-access-classification: Private
-  tags:
-  - Students
-  - Student Information System
-  - Private
-  properties:
-  - type: OpenAPI
-    url: openapi/ucsb-department-course-extract-openapi.yml
-  - type: Documentation
-    url: https://developer.ucsb.edu/content/department-course-extract
-- aid: ucsb:employee-job
-  name: UCSB Employee Job
-  description: Employment and job data drawn from UCPath — employee records, job codes, job class codes
-    and employment status. Private tier; the most sensitive contract UCSB publishes a spec for. Published
-    as Swagger 2.0, 7 paths, base https://api.ucsb.edu/employees/private/employeejoblookup.
-  humanURL: https://developer.ucsb.edu/content/employee-job
-  baseURL: https://api.ucsb.edu/employees/private/employeejoblookup
-  x-operator: institution
-  x-access-classification: Private
-  tags:
-  - Employees
-  - HR
-  - Private
-  properties:
-  - type: OpenAPI
-    url: openapi/ucsb-employee-job-openapi.yml
-  - type: Documentation
-    url: https://developer.ucsb.edu/content/employee-job
-- aid: ucsb:events
-  name: UCSB Events
-  description: Campus academic events list. The smallest contract in the estate — one GET, no declared
-    schema. Published as Swagger 2.0, 1 path, base https://api.ucsb.edu/academics/.
-  humanURL: https://developer.ucsb.edu/content/events
-  baseURL: https://api.ucsb.edu/academics/
-  x-operator: institution
-  x-access-classification: Auto-Approved
-  tags:
-  - Academics
-  - Course Catalog
-  - Auto-Approved
-  properties:
-  - type: OpenAPI
-    url: openapi/ucsb-events-openapi.yml
-  - type: Documentation
-    url: https://developer.ucsb.edu/content/events
-- aid: ucsb:grad-application-verifications
-  name: UCSB Grad Application Verifications
-  description: Graduate Division application verification service. The one published contract that does
-    NOT run on the Campus API Gateway — it is served directly from gradpoint.ucsb.edu, which sits behind
-    campus ADFS. Published as Swagger 2.0, 2 paths, base https://gradpoint.ucsb.edu/webservices/public/applverifications.
-  humanURL: https://developer.ucsb.edu/content/grad-application-verifications
-  baseURL: https://gradpoint.ucsb.edu/webservices/public/applverifications
-  x-operator: institution
-  x-access-classification: Private
-  tags:
-  - Students
-  - Student Information System
-  - Private
-  properties:
-  - type: OpenAPI
-    url: openapi/ucsb-grad-application-verifications-openapi.yml
-  - type: Documentation
-    url: https://developer.ucsb.edu/content/grad-application-verifications
-- aid: ucsb:mtd-access
-  name: UCSB MTD Access
-  description: Registrar service backing student access to Santa Barbara Metropolitan Transit District
-    bus service. Private tier; the campus-life corner of the estate. Published as Swagger 2.0, 1 path,
-    base https://api.ucsb.edu/students/private.
-  humanURL: https://developer.ucsb.edu/content/mtd-access
-  baseURL: https://api.ucsb.edu/students/private
-  x-operator: institution
-  x-access-classification: Private
-  tags:
-  - Students
-  - Student Information System
-  - Private
-  properties:
-  - type: OpenAPI
-    url: openapi/ucsb-mtd-access-openapi.yml
-  - type: Documentation
-    url: https://developer.ucsb.edu/content/mtd-access
-- aid: ucsb:peoplesoft-fau-functional-accounting-unit-combination-service
-  name: UCSB PeopleSoft FAU (Functional Accounting Unit) Combination Service
-  description: Validation of PeopleSoft Functional Accounting Unit chartstring combinations. A POST-based
-    validation service and one of only three write-bearing contracts UCSB publishes. Published as Swagger
-    2.0, 1 path, base https://api.ucsb.edu/administration/financial/peoplesoft/fauvalidation/v2.
-  humanURL: https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
-  baseURL: https://api.ucsb.edu/administration/financial/peoplesoft/fauvalidation/v2
-  x-operator: institution
-  x-access-classification: Auto-Approved
-  tags:
-  - Administration
-  - Finance
-  - Auto-Approved
-  properties:
-  - type: OpenAPI
-    url: openapi/ucsb-peoplesoft-fau-combination-service-openapi.yml
-  - type: Documentation
-    url: https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
-- aid: ucsb:student-academic-programs-majors-minors
-  name: UCSB Student Academic Programs (Majors / Minors)
-  description: A student’s declared majors and minors. Access Approval Required; FERPA-governed. Published
-    as Swagger 2.0, 3 paths, base https://api.ucsb.edu/students.
-  humanURL: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
-  baseURL: https://api.ucsb.edu/students
-  x-operator: institution
-  x-access-classification: Access Approval Required
-  tags:
-  - Students
-  - Student Information System
-  - Access Approval Required
-  properties:
-  - type: OpenAPI
-    url: openapi/ucsb-student-academic-programs-openapi.yml
-  - type: Documentation
-    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
-- aid: ucsb:student-basic-student-info
-  name: UCSB Student Basic Student Info
-  description: Basic and extended student demographic and enrollment records. Access Approval Required;
-    FERPA-governed. Published as Swagger 2.0, 2 paths, base https://api.ucsb.edu/students.
-  humanURL: https://developer.ucsb.edu/content/student-basic-student-info
-  baseURL: https://api.ucsb.edu/students
-  x-operator: institution
-  x-access-classification: Access Approval Required
-  tags:
-  - Students
-  - Student Information System
-  - Access Approval Required
-  properties:
-  - type: OpenAPI
-    url: openapi/ucsb-student-basic-info-openapi.yml
-  - type: Documentation
-    url: https://developer.ucsb.edu/content/student-basic-student-info
-- aid: ucsb:student-courses
-  name: UCSB Student Courses
-  description: The courses a student is enrolled in for a quarter. Access Approval Required; FERPA-governed.
-    Its base path /students/courses is the exact nesting UCSB’s own published design standard tells campus
-    teams not to do. Published as Swagger 2.0, 1 path, base https://api.ucsb.edu/students/courses.
-  humanURL: https://developer.ucsb.edu/content/student-courses
-  baseURL: https://api.ucsb.edu/students/courses
-  x-operator: institution
-  x-access-classification: Access Approval Required
-  tags:
-  - Students
-  - Student Information System
-  - Access Approval Required
-  properties:
-  - type: OpenAPI
-    url: openapi/ucsb-student-courses-openapi.yml
-  - type: Documentation
-    url: https://developer.ucsb.edu/content/student-courses
-- aid: ucsb:student-record-code-lookups
-  name: UCSB Student Record Code Lookups
-  description: Thirty-nine reference tables from the Student Information System — majors, minors, colleges,
-    departments, divisions, grades, grading options, classifications, pronouns, gender identity, instruction
-    types and more. The largest UCSB contract by a wide margin, Auto-Approved, and by far the most usable
-    public surface UCSB has. Published as Swagger 2.0, 39 paths, base https://api.ucsb.edu/students.
-  humanURL: https://developer.ucsb.edu/content/student-record-code-lookups
-  baseURL: https://api.ucsb.edu/students
-  x-operator: institution
-  x-access-classification: Auto-Approved
-  tags:
-  - Students
-  - Student Information System
-  - Auto-Approved
-  properties:
-  - type: OpenAPI
-    url: openapi/ucsb-student-record-code-lookups-openapi.yml
-  - type: Documentation
-    url: https://developer.ucsb.edu/content/student-record-code-lookups
-- aid: ucsb:student-registrations
-  name: UCSB Student Registrations
-  description: Student registration records and registration blocks for a quarter. Access Approval Required;
-    one of three write-bearing contracts. Published as Swagger 2.0, 3 paths, base https://api.ucsb.edu/students/registrations.
-  humanURL: https://developer.ucsb.edu/content/student-registrations
-  baseURL: https://api.ucsb.edu/students/registrations
-  x-operator: institution
-  x-access-classification: Access Approval Required
-  tags:
-  - Students
-  - Student Information System
-  - Access Approval Required
-  properties:
-  - type: OpenAPI
-    url: openapi/ucsb-student-registrations-openapi.yml
-  - type: Documentation
-    url: https://developer.ucsb.edu/content/student-registrations
-- aid: ucsb:student-rosters
-  name: UCSB Student Rosters
-  description: The roster of students enrolled in a course section. Access Approval Required; FERPA-governed.
-    Published as Swagger 2.0, 1 path, base https://api.ucsb.edu/students.
-  humanURL: https://developer.ucsb.edu/content/student-rosters
-  baseURL: https://api.ucsb.edu/students
-  x-operator: institution
-  x-access-classification: Access Approval Required
-  tags:
-  - Students
-  - Student Information System
-  - Access Approval Required
-  properties:
-  - type: OpenAPI
-    url: openapi/ucsb-student-rosters-openapi.yml
-  - type: Documentation
-    url: https://developer.ucsb.edu/content/student-rosters
-- aid: ucsb:student-schedules
-  name: UCSB Student Schedules
-  description: A student’s class schedule with meeting times, locations and instructors. Access Approval
-    Required; FERPA-governed. Published as Swagger 2.0, 1 path, base https://api.ucsb.edu/students/schedules.
-  humanURL: https://developer.ucsb.edu/content/student-schedules
-  baseURL: https://api.ucsb.edu/students/schedules
-  x-operator: institution
-  x-access-classification: Access Approval Required
-  tags:
-  - Students
-  - Student Information System
-  - Access Approval Required
-  properties:
-  - type: OpenAPI
-    url: openapi/ucsb-student-schedules-openapi.yml
-  - type: Documentation
-    url: https://developer.ucsb.edu/content/student-schedules
 - aid: ucsb:identity-federation
   name: UCSB Identity Federation (Passport / InCommon)
-  description: UCSB operates its own Shibboleth identity provider, "Passport", at passport.identity.ucsb.edu,
-    registered in InCommon as entityID urn:mace:incommon:ucsb.edu. Its SAML 2.0 metadata is machine-readable
-    and retrievable without credentials from the InCommon MDQ service — HTTP 200, application/samlmetadata+xml,
+  description: >-
+    UCSB operates its own Shibboleth identity provider, "Passport", at passport.identity.ucsb.edu, registered
+    in InCommon as entityID urn:mace:incommon:ucsb.edu. Its SAML 2.0 metadata is machine-readable and
+    retrievable without credentials from the InCommon MDQ service — HTTP 200, application/samlmetadata+xml,
     XML-signed, probed 2026-08-30. This is the one institution-operated machine-readable surface UCSB
     has that is not an OpenAPI, and it is the kind of surface this catalog has historically missed for
     universities entirely.
@@ -515,20 +148,22 @@ apis:
   - type: Conformance
     url: conformance/ucsb-conformance.yml
   x-metadata-url: https://mdq.incommon.org/entities/urn%3Amace%3Aincommon%3Aucsb.edu
-  x-audit-note: 'A host-based verdict on the InCommon MDQ URL reads "vendor" because other institutions
-    resolve through the same federation service. That is the federation, not the operator: the entity
-    described is urn:mace:incommon:ucsb.edu and the IdP it points at, passport.identity.ucsb.edu, is UCSB''s.
-    baseURL is set to the institution-operated IdP so the verdict lands correctly; the MDQ retrieval URL
-    is kept as x-metadata-url and as evidence in conformance/ucsb-conformance.yml.'
+  x-audit-note: >-
+    A host-based verdict on the InCommon MDQ URL reads "vendor" because other institutions resolve through
+    the same federation service. That is the federation, not the operator: the entity described is urn:mace:incommon:ucsb.edu
+    and the IdP it points at, passport.identity.ucsb.edu, is UCSB's. baseURL is set to the institution-operated
+    IdP so the verdict lands correctly; the MDQ retrieval URL is kept as x-metadata-url and as evidence
+    in conformance/ucsb-conformance.yml.
 - aid: ucsb:alexandria-digital-research-library
   name: Alexandria Digital Research Library (ADRL)
-  description: 'UCSB Library''s institutional research repository, moved from alexandria.ucsb.edu to digital.library.ucsb.edu
-    and served through CloudFront. The host is UCSB''s and the front end is UCSB Library''s own component
+  description: >-
+    UCSB Library's institutional research repository, moved from alexandria.ucsb.edu to digital.library.ucsb.edu
+    and served through CloudFront. The host is UCSB's and the front end is UCSB Library's own component
     build (the pages render custom <render-daylight-component> elements, not a hosted vendor UI), so it
     is recorded as institution-operated rather than a vendor tenancy. It publishes NO documented API and
     no OAI-PMH endpoint: /oai-pmh?verb=Identify returns 403 and /search.json returns 404 (probed 2026-08-30).
     The CloudFront edge also bot-challenges some requests, so 403 here is a live surface refusing us,
-    not a dead one. Recorded as a surface class UCSB operates, with the honest note that it is not programmable.'
+    not a dead one. Recorded as a surface class UCSB operates, with the honest note that it is not programmable.
   humanURL: https://digital.library.ucsb.edu/
   x-operator: institution
   x-programmable: false
@@ -541,16 +176,18 @@ apis:
     url: https://digital.library.ucsb.edu/
 - aid: ucsb:library-discovery
   name: UCSB Library Discovery (Ex Libris Primo VE)
-  description: UCSB Library’s catalog and discovery layer. The host search.library.ucsb.edu is a UCSB
-    CNAME onto ucsb.primo.exlibrisgroup.com, and the service resolves to Ex Libris tenancy 01UCSB_INST.
-    The collection, the holdings and the tenant are UCSB’s; the contract, the API and the engineering
-    are Ex Libris’. TENANT — the relationship is recorded here, the vendor’s generic Alma/Primo specification
-    is deliberately NOT saved under this institution.
+  description: >-
+    UCSB Library’s catalog and discovery layer. The host search.library.ucsb.edu is a UCSB CNAME onto
+    ucsb.primo.exlibrisgroup.com, and the service resolves to Ex Libris tenancy 01UCSB_INST. The collection,
+    the holdings and the tenant are UCSB’s; the contract, the API and the engineering are Ex Libris’.
+    TENANT — the relationship is recorded here, the vendor’s generic Alma/Primo specification is deliberately
+    NOT saved under this institution.
   humanURL: https://search.library.ucsb.edu/
   baseURL: https://ucsb.primo.exlibrisgroup.com
   x-operator: tenant
   x-vendor: Ex Libris (Clarivate)
-  x-tenant-evidence: 'DNS: search.library.ucsb.edu CNAME ucsb.primo.exlibrisgroup.com; discovery vid=01UCSB_INST:UCSB'
+  x-tenant-evidence: >-
+    DNS: search.library.ucsb.edu CNAME ucsb.primo.exlibrisgroup.com; discovery vid=01UCSB_INST:UCSB
   tags:
   - Library
   - Library Catalog
@@ -561,8 +198,9 @@ apis:
     url: https://search.library.ucsb.edu/
 - aid: ucsb:escholarship
   name: UCSB on eScholarship
-  description: UCSB’s open-access scholarship collection inside eScholarship, the University of California’s
-    systemwide repository operated by the California Digital Library. It IS OAI-PMH harvestable (https://escholarship.org/oai?verb=Identify
+  description: >-
+    UCSB’s open-access scholarship collection inside eScholarship, the University of California’s systemwide
+    repository operated by the California Digital Library. It IS OAI-PMH harvestable (https://escholarship.org/oai?verb=Identify
     returns 200, probed 2026-08-30), but the endpoint is CDL’s and serves every UC campus, so the oai-pmh
     conformance is NOT credited to UCSB. TENANT — UCSB’s content on another operator’s platform.
   humanURL: https://escholarship.org/uc/ucsb
@@ -577,13 +215,2980 @@ apis:
   properties:
   - type: ResearchRepository
     url: https://escholarship.org/uc/ucsb
-  x-audit-note: 'A cohort-derived host verdict reads escholarship.org as "vendor" because several UC campuses
-    claim it. That is correct about the HOST and is exactly why no eScholarship contract is saved under
-    this slug. The entry is retained at x-operator: tenant because the relationship itself is a real institutional
-    fact — UCSB''s open-access collection lives there — and the pipeline is explicit that a tenant relationship
+  x-audit-note: >-
+    A cohort-derived host verdict reads escholarship.org as "vendor" because several UC campuses claim
+    it. That is correct about the HOST and is exactly why no eScholarship contract is saved under this
+    slug. The entry is retained at x-operator: tenant because the relationship itself is a real institutional
+    fact — UCSB's open-access collection lives there — and the pipeline is explicit that a tenant relationship
     must be re-labelled, never deleted, to avoid a misattribution. Nothing here is credited to UCSB: see
     the oai-pmh and datacite entries in conformance/ucsb-conformance.yml, both scored conforms:false with
-    operator:tenant.'
+    operator:tenant.
+- aid: ucsb:ucsb-admitlevels-api
+  name: University of California, Santa Barbara Admit Levels API
+  description: >-
+    The AdmitLevels API from University of California, Santa Barbara — 1 operation(s) for admitlevels.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - AdmitLevels
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-admitlevels-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-classes-api
+  name: University of California, Santa Barbara Classes API
+  description: >-
+    The Classes API from University of California, Santa Barbara — 2 operation(s) for classes.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Classes
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-classes-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-classifications-api
+  name: University of California, Santa Barbara Classifications API
+  description: >-
+    The Classifications API from University of California, Santa Barbara — 1 operation(s) for classifications.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Classifications
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-classifications-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-classlevels-api
+  name: University of California, Santa Barbara Class Levels API
+  description: >-
+    The ClassLevels API from University of California, Santa Barbara — 1 operation(s) for classlevels.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - ClassLevels
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-classlevels-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-classlist-api
+  name: University of California, Santa Barbara Class List API
+  description: >-
+    The ClassList API from University of California, Santa Barbara — 1 operation(s) for classlist.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - ClassList
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-classlist-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-classsection-api
+  name: University of California, Santa Barbara Class Section API
+  description: >-
+    The ClassSection API from University of California, Santa Barbara — 1 operation(s) for classsection.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - ClassSection
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-classsection-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-classspaceavailability-api
+  name: University of California, Santa Barbara Class Space Availability API
+  description: >-
+    The ClassSpaceAvailability API from University of California, Santa Barbara — 1 operation(s) for classspaceavailability.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - ClassSpaceAvailability
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-classspaceavailability-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-colleges-api
+  name: University of California, Santa Barbara Colleges API
+  description: >-
+    The Colleges API from University of California, Santa Barbara — 1 operation(s) for colleges.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Colleges
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-colleges-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-courserepeats-api
+  name: University of California, Santa Barbara Course Repeats API
+  description: >-
+    The CourseRepeats API from University of California, Santa Barbara — 1 operation(s) for courserepeats.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - CourseRepeats
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-courserepeats-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-courses-api
+  name: University of California, Santa Barbara Courses API
+  description: >-
+    The Courses API from University of California, Santa Barbara — 1 operation(s) for courses.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Courses
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-courses-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-coursestatuses-api
+  name: University of California, Santa Barbara Course Statuses API
+  description: >-
+    The CourseStatuses API from University of California, Santa Barbara — 1 operation(s) for coursestatuses.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - CourseStatuses
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-coursestatuses-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-days-api
+  name: University of California, Santa Barbara Days API
+  description: The Days API from University of California, Santa Barbara — 1 operation(s) for days.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Days
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-days-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-degreestatus-api
+  name: University of California, Santa Barbara Degree Status API
+  description: >-
+    The DegreeStatus API from University of California, Santa Barbara — 1 operation(s) for degreestatus.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - DegreeStatus
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-degreestatus-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-departments-api
+  name: University of California, Santa Barbara Departments API
+  description: >-
+    The Departments API from University of California, Santa Barbara — 3 operation(s) for departments.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Departments
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-departments-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-divisions-api
+  name: University of California, Santa Barbara Divisions API
+  description: >-
+    The Divisions API from University of California, Santa Barbara — 1 operation(s) for divisions.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Divisions
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-divisions-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-emphasis-api
+  name: University of California, Santa Barbara Emphasis API
+  description: >-
+    The Emphasis API from University of California, Santa Barbara — 2 operation(s) for emphasis.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Emphasis
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-emphasis-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-employees-api
+  name: University of California, Santa Barbara Employees API
+  description: >-
+    The Employees API from University of California, Santa Barbara — 7 operation(s) for employees.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Employees
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-employees-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-events-api
+  name: University of California, Santa Barbara Events API
+  description: The Events API from University of California, Santa Barbara — 1 operation(s) for events.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-events-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-feestatus-api
+  name: University of California, Santa Barbara Fee Status API
+  description: >-
+    The FeeStatus API from University of California, Santa Barbara — 1 operation(s) for feestatus.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - FeeStatus
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-feestatus-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-finals-api
+  name: University of California, Santa Barbara Finals API
+  description: The Finals API from University of California, Santa Barbara — 1 operation(s) for finals.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Finals
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-finals-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-fwtmn001-api
+  name: University of California, Santa Barbara FWTMN001 API
+  description: >-
+    The FWTMN001 API from University of California, Santa Barbara — 1 operation(s) for fwtmn001.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - FWTMN001
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-fwtmn001-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-fwtmn006-api
+  name: University of California, Santa Barbara FWTMN006 API
+  description: >-
+    The FWTMN006 API from University of California, Santa Barbara — 1 operation(s) for fwtmn006.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - FWTMN006
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-fwtmn006-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-genderidentity-api
+  name: University of California, Santa Barbara Gender Identity API
+  description: >-
+    The GenderIdentity API from University of California, Santa Barbara — 1 operation(s) for genderidentity.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - GenderIdentity
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-genderidentity-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-get-active-or-specific-classcode-api
+  name: University of California, Santa Barbara Get Active or Specific ClassCode API
+  description: >-
+    The Get Active or Specific ClassCode API from University of California, Santa Barbara — 1 operation(s)
+    for get active or specific classcode.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Get Active or Specific ClassCode
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-get-active-or-specific-classcode-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-get-all-active-classcodes-api
+  name: University of California, Santa Barbara Get all Active ClassCodes API
+  description: >-
+    The Get all Active ClassCodes API from University of California, Santa Barbara — 1 operation(s) for
+    get all active classcodes.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Get all Active ClassCodes
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-get-all-active-classcodes-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-grades-api
+  name: University of California, Santa Barbara Grades API
+  description: The Grades API from University of California, Santa Barbara — 1 operation(s) for grades.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Grades
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-grades-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-gradingoptions-api
+  name: University of California, Santa Barbara Grading Options API
+  description: >-
+    The GradingOptions API from University of California, Santa Barbara — 1 operation(s) for gradingoptions.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - GradingOptions
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-gradingoptions-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-instructiontypes-api
+  name: University of California, Santa Barbara Instruction Types API
+  description: >-
+    The InstructionTypes API from University of California, Santa Barbara — 1 operation(s) for instructiontypes.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - InstructionTypes
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-instructiontypes-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-instructorfunctions-api
+  name: University of California, Santa Barbara Instructor Functions API
+  description: >-
+    The InstructorFunctions API from University of California, Santa Barbara — 1 operation(s) for instructorfunctions.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - InstructorFunctions
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-instructorfunctions-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-internationalstudents-api
+  name: University of California, Santa Barbara International Students API
+  description: >-
+    The InternationalStudents API from University of California, Santa Barbara — 1 operation(s) for internationalstudents.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - InternationalStudents
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-internationalstudents-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-majors-api
+  name: University of California, Santa Barbara Majors API
+  description: The Majors API from University of California, Santa Barbara — 4 operation(s) for majors.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Majors
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-majors-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-minors-api
+  name: University of California, Santa Barbara Minors API
+  description: The Minors API from University of California, Santa Barbara — 3 operation(s) for minors.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Minors
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-minors-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-multiethnicity-api
+  name: University of California, Santa Barbara Multi Ethnicity API
+  description: >-
+    The MultiEthnicity API from University of California, Santa Barbara — 1 operation(s) for multiethnicity.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - MultiEthnicity
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-multiethnicity-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-objectives-api
+  name: University of California, Santa Barbara Objectives API
+  description: >-
+    The Objectives API from University of California, Santa Barbara — 2 operation(s) for objectives.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Objectives
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-objectives-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-objmajemps-api
+  name: University of California, Santa Barbara Obj Maj Emps API
+  description: >-
+    The ObjMajEmps API from University of California, Santa Barbara — 1 operation(s) for objmajemps.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - ObjMajEmps
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-objmajemps-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-organizations-api
+  name: University of California, Santa Barbara Organizations API
+  description: >-
+    The Organizations API from University of California, Santa Barbara — 1 operation(s) for organizations.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Organizations
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-organizations-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-perms-api
+  name: University of California, Santa Barbara Perms API
+  description: The Perms API from University of California, Santa Barbara — 1 operation(s) for perms.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Perms
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-perms-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-programs-api
+  name: University of California, Santa Barbara Programs API
+  description: >-
+    The Programs API from University of California, Santa Barbara — 2 operation(s) for programs.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Programs
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-programs-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-pronouns-api
+  name: University of California, Santa Barbara Pronouns API
+  description: >-
+    The Pronouns API from University of California, Santa Barbara — 2 operation(s) for pronouns.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Pronouns
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-pronouns-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-quarters-api
+  name: University of California, Santa Barbara Quarters API
+  description: >-
+    The Quarters API from University of California, Santa Barbara — 2 operation(s) for quarters.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Quarters
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-quarters-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-registration-api
+  name: University of California, Santa Barbara Registration API
+  description: >-
+    The Registration API from University of California, Santa Barbara — 2 operation(s) for registration.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Registration
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-registration-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-registrationblocks-api
+  name: University of California, Santa Barbara Registration Blocks API
+  description: >-
+    The RegistrationBlocks API from University of California, Santa Barbara — 1 operation(s) for registrationblocks.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - RegistrationBlocks
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-registrationblocks-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-regstatus-api
+  name: University of California, Santa Barbara Reg Status API
+  description: >-
+    The RegStatus API from University of California, Santa Barbara — 1 operation(s) for regstatus.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - RegStatus
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-regstatus-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-repeattypes-api
+  name: University of California, Santa Barbara Repeat Types API
+  description: >-
+    The RepeatTypes API from University of California, Santa Barbara — 1 operation(s) for repeattypes.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - RepeatTypes
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-repeattypes-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-requirementcourses-api
+  name: University of California, Santa Barbara Requirement Courses API
+  description: >-
+    The RequirementCourses API from University of California, Santa Barbara — 1 operation(s) for requirementcourses.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - RequirementCourses
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-requirementcourses-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-requirements-api
+  name: University of California, Santa Barbara Requirements API
+  description: >-
+    The Requirements API from University of California, Santa Barbara — 1 operation(s) for requirements.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Requirements
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-requirements-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-rosters-api
+  name: University of California, Santa Barbara Rosters API
+  description: >-
+    The Rosters API from University of California, Santa Barbara — 1 operation(s) for rosters.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Rosters
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-rosters-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-schedules-api
+  name: University of California, Santa Barbara Schedules API
+  description: >-
+    The Schedules API from University of California, Santa Barbara — 7 operation(s) for schedules.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Schedules
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-schedules-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-schooltypes-api
+  name: University of California, Santa Barbara School Types API
+  description: >-
+    The SchoolTypes API from University of California, Santa Barbara — 1 operation(s) for schooltypes.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - SchoolTypes
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-schooltypes-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-sessions-api
+  name: University of California, Santa Barbara Sessions API
+  description: >-
+    The Sessions API from University of California, Santa Barbara — 2 operation(s) for sessions.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Sessions
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-sessions-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-students-api
+  name: University of California, Santa Barbara Students API
+  description: >-
+    The Students API from University of California, Santa Barbara — 3 operation(s) for students.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Students
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-students-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-studyloadstatus-api
+  name: University of California, Santa Barbara Study Load Status API
+  description: >-
+    The StudyLoadStatus API from University of California, Santa Barbara — 1 operation(s) for studyloadstatus.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - StudyLoadStatus
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-studyloadstatus-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-subjects-api
+  name: University of California, Santa Barbara Subjects API
+  description: >-
+    The Subjects API from University of California, Santa Barbara — 2 operation(s) for subjects.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Subjects
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-subjects-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-uc-fau-validation-api
+  name: University of California, Santa Barbara Uc Fau Validation API
+  description: >-
+    The Uc Fau Validation API from University of California, Santa Barbara — 1 operation(s) for uc fau
+    validation.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Uc Fau Validation
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-uc-fau-validation-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
+- aid: ucsb:ucsb-verifications-api
+  name: University of California, Santa Barbara Verifications API
+  description: >-
+    The Verifications API from University of California, Santa Barbara — 2 operation(s) for verifications.
+  humanURL: https://developer.ucsb.edu/
+  baseURL: https://developer.ucsb.edu/
+  tags:
+  - Verifications
+  properties:
+  - type: OpenAPI
+    url: openapi/ucsb-verifications-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-curriculums
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-graduate-programs
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-quarter-calendar
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/barc-students-api
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/academic-clas-schedules
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/classcode-lookup-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-chartfield
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/department-course-extract
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/employee-job
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/events
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/grad-application-verifications
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/mtd-access
+  - type: Documentation
+    url: >-
+      https://developer.ucsb.edu/content/peoplesoft-fau-functional-accounting-unit-combination-service
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-academic-programs-majors-minors
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-basic-student-info
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-courses
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-record-code-lookups
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-registrations
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-rosters
+  - type: Documentation
+    url: https://developer.ucsb.edu/content/student-schedules
 common:
 - type: Website
   url: https://www.ucsb.edu/
