@@ -1146,6 +1146,8 @@ apis:
   humanURL: https://developer.ucsb.edu/
   baseURL: https://developer.ucsb.edu/
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
@@ -2116,6 +2118,8 @@ apis:
   humanURL: https://developer.ucsb.edu/
   baseURL: https://developer.ucsb.edu/
   tags:
+  - Organization
+  tags_raw:
   - Organizations
   properties:
   - type: OpenAPI
@@ -2763,6 +2767,8 @@ apis:
   humanURL: https://developer.ucsb.edu/
   baseURL: https://developer.ucsb.edu/
   tags:
+  - Schedule
+  tags_raw:
   - Schedules
   properties:
   - type: OpenAPI
@@ -3142,6 +3148,8 @@ apis:
   humanURL: https://developer.ucsb.edu/
   baseURL: https://developer.ucsb.edu/
   tags:
+  - Verification
+  tags_raw:
   - Verifications
   properties:
   - type: OpenAPI
