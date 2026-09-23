@@ -1,0 +1,211 @@
+# x-archived-from: ucsb-department-course-extract-openapi.yml
+# x-archived-on: 2026-09-16
+swagger: '2.0'
+info:
+  version: v1
+  title: Registrar Department Course List API v1.0
+  description: 'Course List information for a given department. The information is from the Office of
+    the Registrar.
+
+
+
+    The BasicAuth header is a base64-encoded(ucsbNetId:password) combination. This should be the ucsbNetId/password
+    combination that was previously used to access the WebExtracts website.
+
+
+
+    When requesting a list of departments information, please try to keep the number of departments per
+    request to 5 or less.'
+  x-source-url: https://developer.ucsb.edu/sites/default/files/openapi/deptcourses-v1.2out.api__1.yaml
+  x-last-validated: '2026-08-30'
+  x-operator: institution
+host: api.ucsb.edu
+basePath: /students/private/deptcourses
+schemes:
+- https
+securityDefinitions:
+  ucsb-api-key:
+    name: ucsb-api-key
+    in: header
+    type: apiKey
+  BasicAuth:
+    type: basic
+security:
+- ucsb-api-key: []
+- BasicAuth: []
+paths:
+  /v1/classlist:
+    get:
+      tags:
+      - ClassList
+      summary: "Retrieves a list of courses for a given {quarter} and list of\r\n{departements}. Each\
+        \ course contains information on the \r\ninstructor, sections, and students enrolled."
+      operationId: ClassList_Get
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: quarter
+        in: query
+        description: The quarter
+        required: true
+        type: string
+      - name: departments
+        in: query
+        description: 'The list of 5 character department codes. Department code translations: <a href=''https://developer.ucsb.edu/content/student-record-code-lookups#/Departments/%2Flookups%2Fv1%2Fdepartments''
+          target=''_blank'' rel=''noopener noreferror''>Student Record Code Lookups API</a>.'
+        required: true
+        type: array
+        items:
+          type: string
+        collectionFormat: multi
+      - name: ucsb-api-version
+        in: header
+        description: The requested API version
+        required: false
+        type: string
+        default: '1.0'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Department'
+definitions:
+  Department:
+    type: object
+    properties:
+      deptCode:
+        type: string
+      courses:
+        type: array
+        items:
+          $ref: '#/definitions/Course'
+  Course:
+    type: object
+    properties:
+      courseID:
+        type: string
+      courseTitle:
+        type: string
+      courseDescription:
+        type: string
+      prerequisiteText:
+        type: string
+      crossListedCourses:
+        type: array
+        items:
+          type: string
+      sections:
+        type: array
+        items:
+          $ref: '#/definitions/Section'
+  Section:
+    type: object
+    properties:
+      enrollCode:
+        type: string
+      sectionNumber:
+        type: string
+      maxEnroll:
+        type: string
+      enrolledTotal:
+        type: string
+      sessionNumber:
+        type: string
+      classFull:
+        type: string
+      closedClass:
+        type: string
+      cancelledCourse:
+        type: string
+      courseType:
+        type: string
+      unitsFixed:
+        type: string
+      unitsVarHigh:
+        type: string
+      unitsVarLow:
+        type: string
+      timeLocations:
+        type: array
+        items:
+          $ref: '#/definitions/TimeLocation'
+      instructors:
+        type: array
+        items:
+          $ref: '#/definitions/Instructor'
+      concurrentCourses:
+        type: array
+        items:
+          $ref: '#/definitions/ConcurrentCourse'
+      students:
+        type: array
+        items:
+          $ref: '#/definitions/Student'
+  TimeLocation:
+    type: object
+    properties:
+      days:
+        type: string
+      beginTime:
+        type: string
+      endTime:
+        type: string
+      buildingRoom:
+        type: string
+      roomCapacity:
+        type: string
+  Instructor:
+    type: object
+    properties:
+      firstName:
+        type: string
+      lastName:
+        type: string
+      pronounCode:
+        type: string
+      name:
+        type: string
+      employeeNumber:
+        type: string
+      isPpsEmployeeNumber:
+        type: boolean
+        readOnly: true
+      isUcPathEmployeeNumber:
+        type: boolean
+        readOnly: true
+      titleCode:
+        type: string
+      instructorFunction:
+        type: string
+      instructorFunctionDescription:
+        type: string
+  ConcurrentCourse:
+    type: object
+    properties:
+      concurrentCourseNumber:
+        type: string
+      concurrentSectionNumber:
+        type: string
+      concurrentSessionNumber:
+        type: string
+  Student:
+    type: object
+    properties:
+      lastName:
+        type: string
+      firstName:
+        type: string
+      middleName:
+        type: string
+      permNumber:
+        type: string
+      emailAddress:
+        type: string
+      courseStatus:
+        type: string

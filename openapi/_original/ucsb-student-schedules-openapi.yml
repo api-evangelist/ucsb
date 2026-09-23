@@ -1,0 +1,190 @@
+# x-archived-from: ucsb-student-schedules-openapi.yml
+# x-archived-on: 2026-09-16
+swagger: '2.0'
+info:
+  version: v1
+  title: Student Schedules
+  description: 'Individual student course schedule information from the Office of the Registrar. While
+    schedule information can be returned from any quarter the endpoint is intended to provide schedule
+    information for the current quarter. The course information returned will contain the time and classroom
+    of the course along with instructor information.<br />
+
+    The BasicAuth header is a base64-encoded(ucsbNetId:password) combination. The ucsbNetId/password combination
+    should be of a service account registered with the Campus Identity systems (ETS, the Campus LDAP).
+    This ucsbNetId needs to be supplied to the Office of the Registrar as part of the approval process.'
+  x-source-url: https://developer.ucsb.edu/sites/default/files/openapi/schedules-v1.out_.api_.yaml
+  x-last-validated: '2026-08-30'
+  x-operator: institution
+host: api.ucsb.edu
+basePath: /students/schedules
+schemes:
+- https
+securityDefinitions:
+  ucsb-api-key:
+    name: ucsb-api-key
+    in: header
+    type: apiKey
+  BasicAuth:
+    type: basic
+security:
+- ucsb-api-key: []
+- BasicAuth: []
+paths:
+  /v1/schedules/{perm}/{quarter}:
+    get:
+      tags:
+      - Schedules
+      operationId: /v1/schedules/{perm}/{quarter}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: perm
+        in: path
+        description: Students 6 or 7 digit perm
+        required: true
+        type: string
+      - name: quarter
+        in: path
+        description: Quarter with format YYYYQ
+        required: true
+        type: string
+      - name: ucsb-user-jwt
+        in: header
+        description: Used when an application is required to provide an End User Token. Only the data
+          for the student indicated by the End User Token will be retrieved.
+        required: false
+        type: string
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.0'
+      responses:
+        '200':
+          description: Return the list of courses in a students schedule.
+          schema:
+            $ref: '#/definitions/StudentScheduleCourse'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          schema:
+            $ref: '#/definitions/WebApiInvalidModel'
+        '401':
+          description: Unauthorized. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+        '404':
+          description: Resource cannot be found. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+      description: Search for student schedule by perm and quarter. While schedule information can be
+        returned from any quarter the endpoint is intended to provide schedule information for the current
+        quarter. The course information returned will contain the time and classroom of the course along
+        with instructor information.
+definitions:
+  HealthcheckMessage:
+    type: object
+    properties:
+      component:
+        type: string
+      message:
+        type: string
+  StudentScheduleCourse:
+    description: Student Schedule data includes course, time location and instructor data
+    type: object
+    properties:
+      courseId:
+        description: "13 character course Id with format SSSSSPPPNNNNUUU, Fist 5 char is course subject,\r\
+          \nNext 3 char is course prefix then next 3 char is course number\r\nand last 2 char is course\
+          \ suffix. For example 'ES   1-  16B '\r\ncan be broken down in subject 'ES   ' prefix '1- '\
+          \ number ' 16' suffix 'B '"
+        type: string
+      quarter:
+        description: Quarter with format YYYYQ
+        type: string
+      enrollCode:
+        description: "EnrollCode an unique number assigned\r\nto a curriculum"
+        type: string
+      gradingOptionCode:
+        description: "Grading Options Code like Pass/No Pass (P/NP)\r\nOr Letter Grades (L)\r\nSee more\
+          \ GradingOptionsCode and GradingOptionsTranslation on GradingOptions interface\r\non Public\
+          \ Lookups API"
+        type: string
+      unitsAttempted:
+        format: double
+        description: "Total number of units attempted by the student\r\nfor the course"
+        type: number
+      courseTitle:
+        description: Course Title from curriculum catalog
+        type: string
+      session:
+        description: Session number only for summer quarter
+        type: string
+      repeatTypeCode:
+        description: "Repeat type for a course\r\nSee more RepeatTypeCode and RepeatTypeTranslation on\
+          \ RepeatType interface\r\non Public Lookups API"
+        type: string
+      timeLocations:
+        description: Schedule Time locations list with instructor data
+        type: array
+        items:
+          $ref: '#/definitions/ScheduleTimeLocation'
+  ScheduleTimeLocation:
+    description: Time Location data for course
+    type: object
+    properties:
+      section:
+        description: Course section student enrolled in
+        type: string
+      instructionTypeCode:
+        description: "Instruction Type ex Lec , Dis etc\r\nSee more InstructionTypeCode and InstructionTypeTranslation\
+          \ on InstructionType interface\r\non Public Lookups API"
+        type: string
+      days:
+        description: "Days of Instruction for course for example 'M W    ' means instruction happens on\
+          \ Monday and wednesday\r\nFor mode translation on day code look at Days interface at public\
+          \ api"
+        type: string
+      beginTime:
+        description: "Begin time for a course\r\nHH:mm format"
+        type: string
+      endTime:
+        description: "End time of the course\r\nHH:mm format"
+        type: string
+      buildingRoom:
+        description: location of course
+        type: string
+      instructors:
+        description: Time location instructor list
+        type: array
+        items:
+          $ref: '#/definitions/TimeLocationInstructor'
+  TimeLocationInstructor:
+    description: Instructor assigned to a course
+    type: object
+    properties:
+      name:
+        description: Name of the Instructor
+        type: string
+      functionCode:
+        description: "Instruction Function.\r\nSee more InstructionFunctionCode and InstructionFunctionTranslation\
+          \ on InstructionFunction interface\r\nSee translation on public lookup api"
+        type: string
+  WebApiInvalidModel:
+    type: object
+    properties:
+      message:
+        type: string
+      modelState:
+        type: object
+        additionalProperties:
+          type: array
+          items:
+            type: string
+  SimpleMessageModel:
+    type: object
+    properties:
+      message:
+        type: string

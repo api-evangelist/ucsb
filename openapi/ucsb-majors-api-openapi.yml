@@ -1,0 +1,370 @@
+openapi: 3.2.0
+info:
+  title: Ucsb Majors API
+  version: '1.0'
+  description: 'Operations tagged Majors across 2 of this provider''s published API definitions: academicprograms-v1.1.out_.api_.yaml, lookups-v1.6.out_.api__0.yaml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.ucsb.edu/students
+tags:
+- name: Majors
+paths:
+  /academicprograms/v1/majors/{perm}:
+    get:
+      tags:
+      - Majors
+      operationId: /academicprograms/v1/majors/{perm}
+      parameters:
+      - name: perm
+        in: path
+        description: The perm number of the student.
+        required: true
+        schema:
+          type: string
+      - name: ucsb-user-jwt
+        in: header
+        description: Used when an application is required to provide an End User Token. Only the data for the student indicated by the End User Token will be retrieved.
+        required: false
+        schema:
+          type: string
+      - name: ucsb-api-version
+        in: header
+        description: The requested API version
+        required: false
+        schema:
+          type: string
+          default: '1.1'
+      responses:
+        '200':
+          description: A populated list of Academic Major objects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicMajor'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicMajor'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+      description: 'Retrieve Major information about individual students.
+
+
+        The Major and Minor information can be used to verify a students Academic Programs and Quarters with the University, the currently enrolled Majors for departments to provision resources for the student, or searches for departments to help build population lists.'
+      security:
+      - ucsb-api-key: []
+      - ucsbnetid-password: []
+      summary: /academicprograms/v1/majors/{perm}
+      x-summary-source: derived
+    servers:
+    - url: https://api.ucsb.edu/students
+  /academicprograms/v1/majors/search:
+    get:
+      tags:
+      - Majors
+      operationId: /academicprograms/v1/majors/search
+      parameters:
+      - name: collegeCode
+        in: query
+        description: '4 character college code, which can be found in the Student Record Lookup API.
+
+          The academic program must be associated with this college. This is not expected to be used
+
+          along with deptCode or majorCode, but it can be.'
+        required: false
+        schema:
+          type: string
+      - name: deptCode
+        in: query
+        description: '5 character department code, which can be found in the Student Record Lookup API.
+
+          The academic program must be associated with this department. This is not expected to be used
+
+          along with collegeCode or majorCode, but it can be.'
+        required: false
+        schema:
+          type: string
+      - name: majorCode
+        in: query
+        description: '5 character major code, which can be found in the Student Record Lookup API.
+
+          The academic program must be associated with this major. This is not expected to be used
+
+          along with collegeCode or deptCode, but it can be.'
+        required: false
+        schema:
+          type: string
+      - name: activeQuarter
+        in: query
+        description: '5 digit quarter code in YYYYQ format.
+
+          The academic program must have been active during this quarter. This should not be used along
+
+          with startQuarter or thruQuarter. But, it can be.'
+        required: false
+        schema:
+          type: string
+      - name: acceptedQuarter
+        in: query
+        description: '5 digit quarter code in YYYYQ format.
+
+          The academic program must have this start quarter. This should not be used along
+
+          with activeQuarter or thruQuarter. But, it can be.'
+        required: false
+        schema:
+          type: string
+      - name: terminationQuarter
+        in: query
+        description: '5 digit quarter code in YYYYQ format.
+
+          The academic program must have this thru/end quarter. This should not be used along
+
+          with activeQuarter or startQuarter. But, it can be.'
+        required: false
+        schema:
+          type: string
+      - name: objLevelCode
+        in: query
+        description: '1 character code
+
+          The academic program objective level must be ''G''raduate or ''U''ndergraduate.'
+        required: false
+        schema:
+          type: string
+      - name: ucsb-api-version
+        in: header
+        description: The requested API version
+        required: false
+        schema:
+          type: string
+          default: '1.1'
+      responses:
+        '200':
+          description: A populated list of Academic Major objects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicMajor'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicMajor'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+      description: 'Retrieve Academic Programs (with Emphases) for the given search criteria. Of the quarter parameters, activeQuarter, startQuarter, thruQuarter, at least one must be used. The expectation is that only one will be used, but you can use multiple.
+
+
+        Either the deptCode or majorCode should be used, but are not required. You can also use both at the same time, but that will most likely never be needed.
+
+
+        The objLevel can be used to filter ''G''raduate programs from ''U''ndergraduate programs.
+
+
+        The Major and Minor information can be used to verify a students Academic Programs and Quarters with the University, the currently enrolled Majors for departments to provision resources for the student, or searches for departments to help build population lists.
+
+
+        IMPORTANT - The results of the search will return the Academic Programs which match the criteria. But this will sometimes mean that only a subset of an individual students programs will be returned. To understand the full view of a students programs, a second query to the /academicprograms/{perm} endpoint should be used for each student.'
+      security:
+      - ucsb-api-key: []
+      - ucsbnetid-password: []
+      summary: /academicprograms/v1/majors/search
+      x-summary-source: derived
+    servers:
+    - url: https://api.ucsb.edu/students
+  /lookups/v1/majors/{code}:
+    get:
+      tags:
+      - Majors
+      operationId: /lookups/v1/majors/{code}
+      parameters:
+      - name: code
+        in: path
+        description: 'The major code to match. If this is used translationFilter and includeInactive
+
+          are ignored.'
+        required: true
+        schema:
+          type: string
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcademicMajor_2'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/AcademicMajor_2'
+      description: 'Gets an active majors.
+
+        (Data Dictionary - Majors)'
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/majors/{code}
+      x-summary-source: derived
+    servers:
+    - url: https://api.ucsb.edu/students
+  /lookups/v1/majors:
+    get:
+      tags:
+      - Majors
+      operationId: /lookups/v1/majors
+      parameters:
+      - name: translationFilter
+        in: query
+        description: 'Filters the translations by the given text. If the text appears in the the
+
+          translation, then it will be returned.'
+        required: false
+        schema:
+          type: string
+          default: ''
+      - name: includeInactive
+        in: query
+        description: Include majors that are no longer active.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicMajor_2'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicMajor_2'
+      description: 'Gets the list of active majors.
+
+        (Data Dictionary - Majors)'
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/majors
+      x-summary-source: derived
+    servers:
+    - url: https://api.ucsb.edu/students
+components:
+  schemas:
+    WebApiInvalidModel:
+      type: object
+      properties:
+        message:
+          type: string
+        modelState:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    AcademicMajor:
+      type: object
+      properties:
+        perm:
+          description: The 7-digit perm number
+          type: string
+        majorCode:
+          description: 5 character major code, which can be found in the Student Record Lookup API.
+          type: string
+        deptCodes:
+          description: 5 character department code, which can be found in the Student Record Lookup API.
+          type: array
+          items:
+            type: string
+        collegeCode:
+          description: 4 character college code, which can be found in the Student Record Lookup API.
+          type: string
+        objCode:
+          description: 3 character objective code, which can be found in the Student Record Lookup API.
+          type: string
+        objLevelCode:
+          description: 1 character objective level code, either 'G'raduate or 'U'ndergraduate.
+          type: string
+        emphases:
+          description: A list of 15 character emphasis code, which can be found in the Student Record Lookup API.
+          type: array
+          items:
+            type: string
+        acceptedQuarter:
+          description: 'The start quarter the academic program was active in YYYYQ format. This is the first term
+
+            for the student''s Objective/Major/Emphasis program.'
+          type: string
+        terminationQuarter:
+          description: 'The end quarter the academic program was active in YYYYQ format.  This is the last term
+
+            for the student''s Objective/Major/Emphasis program.'
+          type: string
+        degreeStatusCode:
+          description: "1 character code which describes the status of the degree. The status is set once\nthe student has petetioned to graduate. The status codes can also be found in\nthe Student Record Lookup API.\n\nNULL\t- No Degree Status\nF\t\t- Final Degree (Completed all requirements and the degree class if finalized)\nP\t\t- Provisional Degree (Completed all requirements)\nS\t\t- Scheduled for Degree\nI\t\t- Degree with Work In Progress (Will receive the degree is all current work is completed successfully)\nN\t\t- NILS (Petitioned for degree but has not satisfed all requirements)"
+          type: string
+        degreeQuarter:
+          description: The quarter the student has petitioned to graduate in YYYYQ format. See the Degree Status to determine the status of the degree.
+          type: string
+    AcademicMajor_2:
+      type: object
+      properties:
+        majorCode:
+          type: string
+        majorTranslationShort:
+          type: string
+        majorTranslation:
+          type: string
+        collegeCode:
+          type: string
+        preMajorCode:
+          type: string
+        deptCode:
+          type: string
+        inactive:
+          type: boolean
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey
+    ucsbnetid-password:
+      type: http
+      scheme: basic
+x-refined-from:
+- academicprograms-v1.1.out_.api_.yaml
+- lookups-v1.6.out_.api__0.yaml

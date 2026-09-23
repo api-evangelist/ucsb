@@ -1,0 +1,340 @@
+openapi: 3.2.0
+info:
+  title: Ucsb Students API
+  version: '1.0'
+  description: 'Operations tagged Students across 2 of this provider''s published API definitions: barcstudents-v1_0_0.yaml, students-v2.out_.api__1.yaml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.ucsb.edu/students/private/barcstudents/v1
+- url: https://api.ucsb.edu/students
+security:
+- ucsb-api-key: []
+- BasicAuth: []
+tags:
+- name: Students
+paths:
+  /students:
+    get:
+      tags:
+      - Students
+      summary: /students
+      operationId: /students
+      parameters:
+      - name: daysBack
+        in: query
+        description: Number of days to look back
+        required: true
+        schema:
+          type: integer
+          format: int32
+          maximum: 30
+          minimum: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StudentsResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/StudentsResponse'
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/StudentsResponse'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+        '401':
+          description: Unauthorized. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+      x-summary-source: derived
+    servers:
+    - url: https://api.ucsb.edu/students/private/barcstudents/v1
+  /v2/students/{perm}:
+    get:
+      tags:
+      - Students
+      parameters:
+      - name: perm
+        in: path
+        description: Students 6 or 7 character perm
+        required: true
+        schema:
+          type: string
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '2.0'
+      responses:
+        '200':
+          description: A basic student information object is returned. With appropriate approval, an extended student information object is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentExtended'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StudentExtended'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+        '401':
+          description: Unauthorized. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+        '404':
+          description: Resource cannot be found. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+      summary: Get students by perm
+      x-summary-source: derived
+      operationId: getV2StudentsByPerm
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.ucsb.edu/students
+  /v2/students/current:
+    get:
+      tags:
+      - Students
+      parameters:
+      - name: ucsb-user-jwt
+        in: header
+        description: end user jwt token
+        required: true
+        schema:
+          type: string
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '2.0'
+      responses:
+        '200':
+          description: A basic student information object is returned. With appropriate approval, an extended student information object is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentMinimal'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StudentMinimal'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+        '401':
+          description: Unauthorized. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+        '404':
+          description: Resource cannot be found. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+      summary: Get students current
+      x-summary-source: derived
+      operationId: getV2StudentsCurrent
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.ucsb.edu/students
+components:
+  schemas:
+    Student:
+      description: A student record that was updated within the given time frame
+      type: object
+      properties:
+        perm:
+          description: 'Student Identification Number.
+
+            Assigned for Undergraduates on entry to the Admissions system.
+
+            Assigned to Graduate students on entry to the Registration system.
+
+            Assigned to Summer Sessions students.
+
+
+            Perm is also named SR_Identifier in many applications.'
+          type: string
+        emailAddress:
+          description: Email Address
+          type: string
+    StudentsResponse:
+      description: A wrapper class that contains messaging for the API call and the payload
+      type: object
+      properties:
+        data:
+          description: Results of API call, if any. NULL on error.
+          type: array
+          items:
+            $ref: '#/components/schemas/Student'
+    WebApiInvalidModel:
+      type: object
+      properties:
+        message:
+          type: string
+        modelState:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    SimpleMessageModel:
+      type: object
+      properties:
+        message:
+          type: string
+    StudentExtended:
+      type: object
+      properties:
+        firstName:
+          description: The student's lived first name
+          type: string
+        firstNameLegal:
+          description: The student's legal first name (Extended Data Only)
+          type: string
+        middleName:
+          description: The student's lived middle name (Extended Data Only)
+          type: string
+        middleNameLegal:
+          description: The student's legal middle name (Extended Data Only)
+          type: string
+        lastName:
+          description: The student's lived last name
+          type: string
+        lastNameLegal:
+          description: The student's legal last name (Extended Data Only)
+          type: string
+        suffix:
+          description: The name suffix (JR, SR, etc)
+          type: string
+        gender:
+          description: '''M'' = Male, ''F'' = Female, NULL = No value provided (Extended Data Only)'
+          type: string
+        birthDate:
+          description: The birthdate in 8 character code (YYYYMMDD)
+          type: string
+        nfr:
+          description: 'Not For Release - This indicates if the students record has a Not For Release flag associated with it. If true,
+
+            then the Registrar''s Office should be consulted before releasing any of the students information to anyone
+
+            besides the student.'
+          type: boolean
+        internationalStudentCode:
+          description: '''F'' = Foreign, ''R'' = Resident Alien, NULL = Domestic'
+          type: string
+        firstCensusQuarter:
+          description: The first quarter the student was registered and included in the UCOP extract.
+          type: string
+        lastCensusQuarter:
+          description: The latest quarter the student was registered and included in the UCOP extract.
+          type: string
+        lastRegisteredQuarter:
+          description: The latest quarter that the student was registered with a status of Registered (R) or EAP (E).
+          type: string
+        admitLevel:
+          description: '''FR'' = Freshman Undergraduate Admit, ''TR'' = Transfer Undergraduate Admit, Empty = No data or not an undergraduate admit.'
+          type: string
+        admitQuarter:
+          description: Quarter the student was admitted as an undergraduate.
+          type: string
+        pronounCode:
+          description: Pronoun code for the student.
+          type: string
+        perm:
+          description: The 7-digit perm number
+          type: string
+        email:
+          description: The email address (umail.ucsb.edu)
+          type: string
+    StudentMinimal:
+      type: object
+      properties:
+        perm:
+          description: The 7-digit perm number
+          type: string
+        firstName:
+          description: The student's first name
+          type: string
+        lastName:
+          description: The student's last name
+          type: string
+        suffix:
+          description: The name suffix (JR, SR, etc)
+          type: string
+        email:
+          description: The email address (umail.ucsb.edu)
+          type: string
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey
+    BasicAuth:
+      type: http
+      scheme: basic
+x-refined-from:
+- barcstudents-v1_0_0.yaml
+- students-v2.out_.api__1.yaml

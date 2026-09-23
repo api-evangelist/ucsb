@@ -1,0 +1,121 @@
+openapi: 3.2.0
+info:
+  version: v1.6
+  title: Student Record Code Lookups Subjects API
+  description: Code Lookups from the Office of the Registrar.
+servers:
+- url: https://api.ucsb.edu/students
+tags:
+- name: Subjects
+paths:
+  /lookups/v1/subjects/{code}:
+    get:
+      tags:
+      - Subjects
+      operationId: /lookups/v1/subjects/{code}
+      parameters:
+      - name: code
+        in: path
+        description: The subject code to match.
+        required: true
+        schema:
+          type: string
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcademicSubject'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/AcademicSubject'
+      description: Gets an active subject.
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/subjects/{code}
+      x-summary-source: derived
+  /lookups/v1/subjects:
+    get:
+      tags:
+      - Subjects
+      operationId: /lookups/v1/subjects
+      parameters:
+      - name: translationFilter
+        in: query
+        description: 'Filters the translations by the given text. If the text appears in the the
+
+          translation, then it will be returned.'
+        required: false
+        schema:
+          type: string
+          default: ''
+      - name: deptCode
+        in: query
+        description: The subject code to match.
+        required: false
+        schema:
+          type: string
+          default: ''
+      - name: includeInactive
+        in: query
+        description: Include subjects that are no longer active.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicSubject'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicSubject'
+      description: Gets the list of active subjects.
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/subjects
+      x-summary-source: derived
+components:
+  schemas:
+    AcademicSubject:
+      type: object
+      properties:
+        subjectCode:
+          type: string
+        subjectTranslation:
+          type: string
+        deptCode:
+          type: string
+        collegeCode:
+          type: string
+        relatedDeptCode:
+          type: string
+        inactive:
+          type: boolean
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey

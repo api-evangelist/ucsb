@@ -1,0 +1,501 @@
+swagger: '2.0'
+info:
+  version: v1
+  title: BARC Quarter Calendar API
+  description: "Quarter Calendar information from the Office of the Registrar specifically for BARC mainframe retirement. This API is designed to return a quarter information specifically needed by BARC. This API allows for querying quarter information for BARC calculations other systems. It is different from the Public Academic Quarter Calendar API as it has specific logic based on what actiontype is passed in. \r\n\r\nThe BasicAuth header is a base64-encoded(ucsbNetId:password) combination. The ucsbNetId/password combination should be of a service account registered with the Campus Identity systems (ETS, the Campus LDAP). This ucsbNetId needs to be supplied to the Office of the Registrar as part of the approval process."
+host: api.ucsb.edu
+basePath: /academics/private/barcquartercalendar/v1
+schemes:
+  - https
+securityDefinitions:
+  ucsb-api-key:
+    name: ucsb-api-key
+    in: header
+    type: apiKey
+  BasicAuth:
+    type: basic
+security:
+  - ucsb-api-key: []
+  - BasicAuth: []
+paths:
+  '/fwtmn001/{actiontype}':
+    get:
+      tags:
+        - FWTMN001
+      summary: ''
+      operationId: '/fwtmn001/{actiontype}'
+      consumes: []
+      produces:
+        - application/json
+        - text/json
+      parameters:
+        - name: actiontype
+          in: path
+          description: 'Valid values are "G", "V", "T", "C"'
+          required: true
+          type: string
+        - name: quarter
+          in: query
+          description: Quarter with format YYYYQ
+          required: false
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/QuarterInformationWrapper'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          schema:
+            $ref: '#/definitions/WebApiInvalidModel'
+        '401':
+          description: Unauthorized. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+  '/fwtmn006/{actiontype}':
+    get:
+      tags:
+        - FWTMN006
+      summary: ''
+      operationId: '/fwtmn006/{actiontype}'
+      consumes: []
+      produces:
+        - application/json
+        - text/json
+      parameters:
+        - name: actiontype
+          in: path
+          description: Valid value is "W"
+          required: true
+          type: string
+        - name: quarter
+          in: query
+          description: Quarter with format YYYYQ
+          required: false
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/TermInformationWrapper'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          schema:
+            $ref: '#/definitions/WebApiInvalidModel'
+        '401':
+          description: Unauthorized. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+definitions:
+  QuarterInformationWrapper:
+    description: A wrapper class that contains messaging for the API call and the payload
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/QuarterDataPayLoad'
+        description: 'Results of API call, if any. NULL on error.'
+      messageCode:
+        description: 'Error code, if any.'
+        type: string
+      message:
+        description: Error messaging coming from the database. Check here for clues about how to fix queries
+        type: string
+  QuarterDataPayLoad:
+    description: ''
+    type: object
+    properties:
+      quarterCalendar:
+        $ref: '#/definitions/QuarterCalendar'
+        description: Quarter Information
+      holidays:
+        description: 'An array of holidays, in YYYYMMDD Format'
+        type: array
+        items:
+          type: string
+      specialDays:
+        description: 'An array of special days, in YYYYMMDD Format'
+        type: array
+        items:
+          type: string
+  QuarterCalendar:
+    description: Represents a single quarter from the Quarter Calendar
+    type: object
+    properties:
+      term:
+        description: "Academic quarter term.\r\nFormat:\r\nYYYYQ, where the YYYY is the year and the Q is the quarter. 1: Winter, 2: Spring, 3: Summer, 4: Fall"
+        type: string
+      lastLotteryNumber:
+        description: Last registration lottery number used. Used to assign registration priority.
+        type: string
+      firstDayOfClasses:
+        description: Date of first day of instruction.    Format YYYYMMDD
+        type: string
+      lastAddDateGrad:
+        description: Last day for graduate students to add classes.    Format YYYYMMDD
+        type: string
+      lastAddDateUG:
+        description: Last day for undergraduate students to add classes.    Format YYYYMMDD
+        type: string
+      lastDay20pRefund:
+        description: Last day for a 20% registration fee refund. Student must withdraw before this date.
+        type: string
+      lastDay40pRefund:
+        description: Last day for a 40% registration fee refund. Student must withdraw before this date.
+        type: string
+      lastDay60pRefund:
+        description: Last day for a 60% registration fee refund. Student must withdraw before this date.
+        type: string
+      lastDay80pRefund:
+        description: Last day for a 80% registration fee refund. Student must withdraw before this date.
+        type: string
+      lastDayCancel:
+        description: Last day to cancel registration.    Format YYYYMMDD
+        type: string
+      readmitStartDate:
+        description: Readmission process start date.    Format YYYYMMDD
+        type: string
+      readmitEndDate:
+        description: Readmission process end date.    Format YYYYMMDD
+        type: string
+      lastDayRegTotals:
+        description: Last day for registration totals to be added to the Curriculum table.    Format YYYYMMDD
+        type: string
+      lastDayThirdWeekTotals:
+        description: Third week snapshot date.    Format YYYYMMDD
+        type: string
+      lastDropDateGrad:
+        description: Last day for graduate students to drop classes.    Format YYYYMMDD
+        type: string
+      lastDropDateUg:
+        description: Last day for undergraduate students to drop classes.    Format YYYYMMDD
+        type: string
+      lastGoDateGrad:
+        description: Last day for graduate students to change class grading option.     Format YYYYMMDD
+        type: string
+      lastGoDateUg:
+        description: Last day for undergraduate students to change class grading option.     Format YYYYMMDD
+        type: string
+      feeDeadline:
+        description: Fee payment deadline.    Format YYYYMMDD
+        type: string
+      blockDeadline:
+        description: Last day to add registration blocks.    Format YYYYMMDD
+        type: string
+      releaseCurriculumGold:
+        description: Date the Schedule of classes is released on the GOLD system.    Format YYYYMMDD
+        type: string
+      gradeProcessingCompletedDate:
+        description: Date grade processing is complete.    Format YYYYMMDD
+        type: string
+      quarterQYY:
+        description: Quarter in QYY format (ie. F15 for Fall 2015).
+        type: string
+      quarterYYQ:
+        description: Element is no longer used.
+        type: string
+      quarterName:
+        description: Quarter description. (ie. Fall 2014)
+        type: string
+      sdbQuarter:
+        description: Element is no longer used.
+        type: string
+      releaseCurriculum:
+        description: Date schedule of classes is released on the STAR system.    Format YYYYMMDD
+        type: string
+      lateFeeUgC:
+        description: Date late fee payment fees start being assessed for continuing undergraduate students.     Format YYYYMMDD
+        type: string
+      lateFeeUgNr:
+        description: Date late fee payment fees start being assessed for new /returning undergraduate students.     Format YYYYMMDD
+        type: string
+      lateFeeGrC:
+        description: Date late fee payment fees start being assessed for continuing graduate students.     Format YYYYMMDD
+        type: string
+      lateFeeGrNr:
+        description: Date late fee payment fees start being assessed for new/returning graduate students.     Format YYYYMMDD
+        type: string
+      lastDayFreeUGDrop:
+        description: Last day undergraduate students can drop classes without processing charge.    Format YYYYMMDD
+        type: string
+      lastDayFreeGradDrop:
+        description: Last day graduate students can drop classes without processing charge.    Format YYYYMMDD
+        type: string
+      lastDayFreeGradAdd:
+        description: Last day graduate students can add classes without processing charge.    Format YYYYMMDD
+        type: string
+      lastDayFreeUGAdd:
+        description: Last day undergraduate students can add classes without processing charge.    Format YYYYMMDD
+        type: string
+      ugcFeeDeadline:
+        description: Fee payment deadline for continuing undergraduate students..    Format YYYYMMDD
+        type: string
+      ugNrFeeDeadline:
+        description: Fee payment deadline for new/returning undergraduate students..    Format YYYYMMDD
+        type: string
+      gradNRFeeDeadline:
+        description: Fee payment deadline for new/returning graduate students..    Format YYYYMMDD
+        type: string
+      gradCFeeDeadline:
+        description: Fee payment deadline for continuing graduate students..    Format YYYYMMDD
+        type: string
+      lastDayOfClasses:
+        description: Last day of instruction.    Format YYYYMMDD
+        type: string
+      lastDayOfFinals:
+        description: Last day of final examinations.    Format YYYYMMDD
+        type: string
+      lockCurriculum:
+        description: Lock the Curriculum table for updates. Date the lock should be removed.    Format YYYYMMDD
+        type: string
+      firstDayOfQuarter:
+        description: First day of the quarter. Used for creating Room_Use table.    Format YYYYMMDD
+        type: string
+      weekdayQuarterBegins:
+        description: Day of the week for the First_Day_Of_Quarter.    Values  M - Monday  T- Tuesday  W - Wednesday  R - Thursday  F - Friday  S - Saturday  U - Sunday
+        type: string
+      lastDayOverMax:
+        description: Last day registration over the room capacity allowed. Not used    Format YYYYMMDD
+        type: string
+      pass1Begin:
+        description: Date and time registration pass 1 begins.    Character 1-8 Date (format YYYYMMD)  Character 9-12 Time (format HHMM)
+        type: string
+      pass1End:
+        description: Date and time registration pass 1 ends.    Character 1-8 Date (format YYYYMMD)  Character 9-12 Time (format HHMM)
+        type: string
+      pass1MaxUnits:
+        format: double
+        description: Maximum units a student may enroll for registration pass 1.    Format YYYYMMDD
+        type: number
+      pass1MaxPhoneCalls:
+        format: int32
+        description: Element is no longer used.
+        type: integer
+      pass2Begin:
+        description: Date and time registration pass 2 begins.    Character 1-8 Date (format YYYYMMD)  Character 9-12 Time (format HHMM)
+        type: string
+      pass2End:
+        description: Date and time registration pass 2 ends.    Character 1-8 Date (format YYYYMMD)  Character 9-12 Time (format HHMM)
+        type: string
+      pass2MaxUnits:
+        format: double
+        description: Maximum units a student may enroll for registration pass 2.    Format YYYYMMDD
+        type: number
+      pass2MaxPhoneCalls:
+        format: int32
+        description: Element is no longer used.
+        type: integer
+      pass3Begin:
+        description: Date and time registration pass 3 begins.    Character 1-8 Date (format YYYYMMD)  Character 9-12 Time (format HHMM)
+        type: string
+      pass3End:
+        description: Date and time registration pass 3 ends.    Character 1-8 Date (format YYYYMMD)  Character 9-12 Time (format HHMM)
+        type: string
+      pass3MaxUnits:
+        format: double
+        description: Maximum units a student may enroll for registration pass 3.    Format YYYYMMDD
+        type: number
+      pass3MaxPhoneCalls:
+        format: int32
+        description: Element is no longer used.
+        type: integer
+      lastDayOfSchedule:
+        description: Last day of quarter (the day before the First_Day_Of_Quarter for the next term).    Format YYYYMMDD
+        type: string
+      firstDayOfFinals:
+        description: First day of final examinations.    Format YYYYMMDD
+        type: string
+      instructorFreezeDate:
+        description: Last day to add class instructor data.    Format YYYYMMDD
+        type: string
+      lastAddDateUGNoPet:
+        description: Last day undergraduate students may add classes without a college petition.    Format YYYYMMDD
+        type: string
+      lastAddDateGradNoPet:
+        description: Last day graduate students may add classes without a college petition.    Format YYYYMMDD
+        type: string
+      lastDayEarlyFeeSs:
+        description: Early fee deadline for Summer sessions. No longer used.    Format YYYYMMDD
+        type: string
+      lastDayRegularFeeSs:
+        description: Fee deadline for Summer sessions.     Format YYYYMMDD
+        type: string
+      gradesReleaseDate:
+        description: Day grades are released to the GOLD system.    Format YYYYMMDD
+        type: string
+      degreePetitionDate:
+        description: Last day to file undergraduate degree petitions.    Format YYYYMMDD
+        type: string
+      prcGradesReleaseDate:
+        description: Element is no longer used.
+        type: string
+      barcDeadline:
+        description: Element is no longer used.
+        type: string
+      bankLoanDisburseDate:
+        description: Element is no longer used.
+        type: string
+      bankLoanDisburseDateNew:
+        description: Element is no longer used.
+        type: string
+      lastDayScheduleA40pRefund:
+        description: Last day to receive a 40% refund of registration fees on a withdrawal from UCSB.
+        type: string
+      lastDayScheduleA50pRefund:
+        description: Last day to receive a 50% refund of registration fees on a withdrawal from UCSB.
+        type: string
+      lastDayScheduleA60pRefund:
+        description: Last day to receive a 60% refund of registration fees on a withdrawal from UCSB.
+        type: string
+      lastDayScheduleA70pRefund:
+        description: Last day to receive a 70% refund of registration fees on a withdrawal from UCSB.
+        type: string
+      lastDayScheduleA80pRefund:
+        description: Last day to receive a 80% refund of registration fees on a withdrawal from UCSB.
+        type: string
+      lastDayScheduleA90pRefund:
+        description: Last day to receive a 90% refund of registration fees on a withdrawal from UCSB.
+        type: string
+      lastDayScheduleB25pRefund:
+        description: Last day to receive a 25% refund of registration fees on a withdrawal from UCSB. This schedule only applies to students in their first quarter at UCSB.
+        type: string
+      lastDayScheduleB50pRefund:
+        description: Last day to receive a 50% refund of registration fees on a withdrawal from UCSB. This schedule only applies to students in their first quarter at UCSB.
+        type: string
+      lastDayScheduleB90pRefund:
+        description: Last day to receive a 90% refund of registration fees on a withdrawal from UCSB. This schedule only applies to students in their first quarter at UCSB.
+        type: string
+      finalDegreeDate:
+        description: Final degree date for the quarter. This is the date the entire graduation class is given their final degree status (Academic_Program table).
+        type: string
+      pass1BeginDate:
+        description: Date commencement ceremony pass 1 begins.
+        type: string
+      degreePetitionWithdrawDate:
+        description: Last day to withdraw a degree petition.
+        type: string
+      pass1EndDate:
+        description: Date commencement ceremony pass 1 ends.
+        type: string
+      pass1MinUnits:
+        description: 'Commencement cermony pass 1, minimum units for eligibility.'
+        type: string
+      pass2BeginDate:
+        description: Date commencement ceremony pass 2 begins.
+        type: string
+      pass2EndDate:
+        description: Date commencement ceremony pass 2 ends.
+        type: string
+      pass2MinUnits:
+        type: string
+      initialProcessDate:
+        description: Not used.    Format YYYYMMDD
+        type: string
+      autoGoodStandingCutoffDate:
+        description: Date automatic good standing (Fee_Status changes) are sent from BARC.
+        type: string
+      feesAssessedDate:
+        description: Date registration fees were first assessed for the quarter.
+        type: string
+      degreeAwardedDate:
+        description: The official date degrees are awarded from UCSB. This is the date that appears on official transcripts.
+        type: string
+      commencementBookDate:
+        description: Element is no longer used.
+        type: string
+      gradeProcessingStartDate:
+        description: Date grade processing begins.
+        type: string
+      gradeProcessingEndDate:
+        description: Date grade processing ends.
+        type: string
+      systemUpdateDate:
+        format: date-time
+        description: System assigned date of last time the record was modified.
+        type: string
+      lastDayEditPrimary:
+        type: string
+      lastDayEditSecondary:
+        type: string
+      lastDayEditSchedule:
+        type: string
+      cmncPass1BeginDate:
+        type: string
+      cmncPass1EndDate:
+        type: string
+      cmncPass2BeginDate:
+        type: string
+      cmncPass2EndDate:
+        type: string
+      cmncInitialProcessDate:
+        type: string
+  WebApiInvalidModel:
+    type: object
+    properties:
+      message:
+        type: string
+      modelState:
+        type: object
+        additionalProperties:
+          type: array
+          items:
+            type: string
+  SimpleMessageModel:
+    type: object
+    properties:
+      message:
+        type: string
+  TermInformationWrapper:
+    description: A wrapper class that contains messaging for the API call and the payload
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/TermInformation'
+        description: ''
+      messageCode:
+        description: 'Error code, if any.'
+        type: string
+      message:
+        description: Error messaging coming from the database. Check here for clues about how to fix queries
+        type: string
+  TermInformation:
+    description: ''
+    type: object
+    properties:
+      termOccurrences:
+        format: int32
+        description: ''
+        type: integer
+      term1:
+        description: ''
+        type: string
+      term2:
+        description: ''
+        type: string
+      term3:
+        description: ''
+        type: string
+  HealthcheckMessage:
+    type: object
+    properties:
+      component:
+        type: string
+      message:
+        type: string
+  HealthcheckResponseModel:
+    type: object
+    properties:
+      version:
+        type: string
+      status:
+        type: string
+      details:
+        type: array
+        items:
+          $ref: '#/definitions/HealthcheckMessageModel'
+  HealthcheckMessageModel:
+    type: object
+    properties:
+      component:
+        type: string
+      message:
+        type: string

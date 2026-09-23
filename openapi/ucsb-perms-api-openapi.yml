@@ -1,0 +1,63 @@
+openapi: 3.2.0
+info:
+  version: v1
+  title: Registrar MTD Access v1.0 Perms API
+  description: List of student perms that are valid to use the MTD bus service.
+servers:
+- url: https://api.ucsb.edu/students/private
+security:
+- ucsb-api-key: []
+- BasicAuth: []
+tags:
+- name: Perms
+paths:
+  /mtdaccess/v1/perms:
+    get:
+      tags:
+      - Perms
+      operationId: /mtdaccess/v1/perms
+      security:
+      - ucsb-api-key: []
+      - BasicAuth: []
+      parameters:
+      - name: ucsb-api-version
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+            text/json:
+              schema:
+                type: array
+                items:
+                  type: string
+      description: 'A list of all perm numbers (7-digit) for students who are currently able to ride MTD using
+
+        a student pass.
+
+
+        Students qualify for bus ride starting one week prior to first day of classes for current quarter
+
+        and thru the end of the second week of the next quarter. Summer session is treated as any other quarter.
+
+
+        Include students with this criteria: (Reg status is R or W) and (Fee Status is not blank and not N)'
+      summary: /mtdaccess/v1/perms
+      x-summary-source: derived
+components:
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey
+    BasicAuth:
+      type: http
+      scheme: basic

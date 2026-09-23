@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ucsb/main/json-schema/ucsb-student-course-schema.json",
+  "title": "Course",
+  "description": "A course a student is enrolled in, from the Student Courses API.",
+  "type": "object",
+  "properties": {
+    "perm": {
+      "description": "Student 7 digit perm",
+      "type": "string"
+    },
+    "quarter": {
+      "description": "Quarter with format YYYYQ",
+      "type": "string"
+    },
+    "courseId": {
+      "description": "13 character course Id with format SSSSSPPPNNNNUUU , Fist 5 char is course subject,\r\nNext 3 char is course prefix then next 3 char is course number\r\nand last 2 char is course suffix. For example 'ES   1-  16B '\r\ncan be broken down in subject 'ES   ' prefix '1- ' number ' 16' suffix 'B '",
+      "type": "string"
+    },
+    "enrollCode": {
+      "description": "EnrollCode an unique number assigned\r\nto a curriculum",
+      "type": "string"
+    },
+    "session": {
+      "description": "Session of the curriculum in which\r\nStudent is enrolled for summer",
+      "type": "string"
+    },
+    "grade": {
+      "description": "Grade assigned for the Course",
+      "type": "string"
+    },
+    "repeatTypeCode": {
+      "description": "Repeat type for a course\r\nSee more RepeatTypeCode and RepeatTypeTranslation on RepeatType interface\r\non Public Lookups API",
+      "type": "string"
+    },
+    "unitsAttempted": {
+      "format": "double",
+      "description": "Total number of units attempted by the student\r\nfor the course",
+      "type": "number"
+    },
+    "unitsCompleted": {
+      "format": "double",
+      "description": "units completed by student during\r\nthe course",
+      "type": "number"
+    }
+  },
+  "x-source": "openapi/ucsb-student-courses-openapi.yml",
+  "x-method": "derived",
+  "x-generated": "2026-08-30"
+}

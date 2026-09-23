@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ucsb/main/json-schema/ucsb-graduate-program-schema.json",
+  "title": "GraduateProgramDetail",
+  "description": "A UCSB graduate degree program with its department, degree types and application details.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "format": "int32",
+      "description": "Graduate Program unique identifier",
+      "type": "integer"
+    },
+    "majorCode": {
+      "description": "5 character major code",
+      "type": "string"
+    },
+    "departmentCode": {
+      "description": "5 character department code",
+      "type": "string"
+    },
+    "displayName": {
+      "description": "Graduate Program's display name",
+      "type": "string"
+    },
+    "description": {
+      "description": "Graduate Program's description , html formatted",
+      "type": "string"
+    },
+    "website": {
+      "description": "Graduate Program's web site",
+      "type": "string"
+    },
+    "address": {
+      "description": "Graduate Program's address",
+      "type": "string"
+    },
+    "phone": {
+      "description": "Graduate Program's phone",
+      "type": "string"
+    },
+    "email": {
+      "description": "Graduate Program's email address",
+      "type": "string"
+    },
+    "degrees": {
+      "description": "list of degrees, separated by comma",
+      "type": "string"
+    },
+    "requirements": {
+      "description": "list of requirements, html formatted",
+      "type": "string"
+    },
+    "deadlines": {
+      "description": "Graduate Program's deadlines, comma separated",
+      "type": "string"
+    },
+    "emphases": {
+      "description": "List of emphases, semicolon separated",
+      "type": "string"
+    },
+    "specializations": {
+      "description": "List of specialization, semicolon separated",
+      "type": "string"
+    }
+  },
+  "x-source": "openapi/ucsb-academic-graduate-programs-openapi.yml",
+  "x-method": "derived",
+  "x-generated": "2026-08-30"
+}

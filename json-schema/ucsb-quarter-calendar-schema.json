@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ucsb/main/json-schema/ucsb-quarter-calendar-schema.json",
+  "title": "QuarterCalendar",
+  "description": "A UCSB academic quarter with its registration passes, add/drop deadlines and finals dates, from the Office of the Registrar.",
+  "type": "object",
+  "properties": {
+    "quarter": {
+      "type": "string"
+    },
+    "qyy": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "readOnly": true
+    },
+    "academicYear": {
+      "type": "string",
+      "readOnly": true
+    },
+    "firstDayOfClasses": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "lastDayOfClasses": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "firstDayOfFinals": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "lastDayOfFinals": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "firstDayOfQuarter": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "lastDayOfSchedule": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "pass1Begin": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "pass2Begin": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "pass3Begin": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "feeDeadline": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "lastDayToAddUnderGrad": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "lastDayToAddGrad": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "lastDayThirdWeek": {
+      "format": "date-time",
+      "type": "string"
+    }
+  },
+  "x-source": "openapi/ucsb-academic-quarter-calendar-openapi.yml",
+  "x-method": "derived",
+  "x-generated": "2026-08-30"
+}

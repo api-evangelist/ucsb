@@ -1,0 +1,140 @@
+swagger: '2.0'
+info:
+  version: v1
+  title: Student Courses
+  description:
+    Student Course information from the Office of the Registrar. This service contains information
+    about the students academic history, including their grades. While this endpoint provides
+    information on the current quarter, it is intended to look at the historical information
+    about an individual student's record.<br />
+    
+    The BasicAuth header is a base64-encoded(ucsbNetId:password) combination. The ucsbNetId/password
+    combination should be of a service account registered with the Campus Identity systems (ETS, the Campus LDAP).
+    This ucsbNetId needs to be supplied to the Office of the Registrar as part of the approval process.
+host: api.ucsb.edu
+basePath: /students/courses
+schemes:
+  - https
+securityDefinitions:
+  ucsb-api-key:
+    name: ucsb-api-key
+    in: header
+    type: apiKey
+  ucsbnetid-password:
+    type: basic
+security:
+  - ucsb-api-key: []
+  - ucsbnetid-password: []
+paths:
+  '/v1/courses/{perm}':
+    get:
+      tags:
+        - Courses
+      operationId: '/courses/v1/courses/{perm}'
+      consumes: []
+      produces:
+        - application/json
+        - text/json
+      parameters:
+        - name: perm
+          in: path
+          description: Students 6 or 7 digit perm
+          required: true
+          type: string
+        - name: quarter
+          in: query
+          description: Quarter with format YYYYQ
+          required: false
+          type: string
+        - name: enrollCode
+          in: query
+          description: Enroll code should be 5 chars
+          required: false
+          type: string
+        - name: ucsb-user-jwt
+          in: header
+          description: Used when an application is required to provide an End User Token. Only the data for the student indicated by the End User Token will be retrieved.
+          required: false
+          type: string
+        - name: ucsb-api-version
+          in: header
+          description: Specific api version to use.
+          required: false
+          type: string
+          default: '1.0'
+      responses:
+        '200':
+          description: Basic course information for student.
+          schema:
+            $ref: '#/definitions/Course'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          schema:
+            $ref: '#/definitions/WebApiInvalidModel'
+        '401':
+          description: Unauthorized. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+        '404':
+          description: Resource cannot be found. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+      description:
+        Search for courses in which student is registered. All the courses for that student can be returned
+        when search by perm and quarter/enroll code. Perm is required for search and either quarter and enroll code
+        can be both used. Returned is the collection of courses for student enrollment.<br />
+        <br />
+        This service contains information
+        about the students academic history, including their grades. While this endpoint provides
+        information on the current quarter, it is intended to look at the historical information
+        about an individual student's record.
+definitions:
+  Course:
+    description: "Course Entity represent\r\nCourse Data student enrolled in"
+    type: object
+    properties:
+      perm:
+        description: Student 7 digit perm
+        type: string
+      quarter:
+        description: Quarter with format YYYYQ
+        type: string
+      courseId:
+        description: "13 character course Id with format SSSSSPPPNNNNUUU , Fist 5 char is course subject,\r\nNext 3 char is course prefix then next 3 char is course number\r\nand last 2 char is course suffix. For example 'ES   1-  16B '\r\ncan be broken down in subject 'ES   ' prefix '1- ' number ' 16' suffix 'B '"
+        type: string
+      enrollCode:
+        description: "EnrollCode an unique number assigned\r\nto a curriculum"
+        type: string
+      session:
+        description: "Session of the curriculum in which\r\nStudent is enrolled for summer"
+        type: string
+      grade:
+        description: Grade assigned for the Course
+        type: string
+      repeatTypeCode:
+        description: "Repeat type for a course\r\nSee more RepeatTypeCode and RepeatTypeTranslation on RepeatType interface\r\non Public Lookups API"
+        type: string
+      unitsAttempted:
+        format: double
+        description: "Total number of units attempted by the student\r\nfor the course"
+        type: number
+      unitsCompleted:
+        format: double
+        description: "units completed by student during\r\nthe course"
+        type: number
+  WebApiInvalidModel:
+    type: object
+    properties:
+      message:
+        type: string
+      modelState:
+        type: object
+        additionalProperties:
+          type: array
+          items:
+            type: string
+  SimpleMessageModel:
+    type: object
+    properties:
+      message:
+        type: string

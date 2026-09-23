@@ -1,0 +1,102 @@
+swagger: '2.0'
+info:
+  version: v1
+  title: Public BARC Students API v1.0
+  description: "Students API from the Office of the Registrar specifically for BARC mainframe retirement. This API is designed to find student records that have changed within a given day range.\r\n                                  This API allows for querying student perms and email addresses information for BARC systems. \r\n                               It is different from the Public Students API as it does not provide any other student information.<br/> <br/>\r\n                        The BasicAuth header is a base64-encoded(ucsbNetId:password) combination. The ucsbNetId/password combination should be of a service account registered with the Campus Identity systems (ETS, the Campus LDAP). \r\n                        This ucsbNetId needs to be supplied to the Office of the Registrar as part of the approval process."
+host: api.ucsb.edu
+basePath: /students/private/barcstudents/v1
+schemes:
+  - https
+securityDefinitions:
+  ucsb-api-key:
+    name: ucsb-api-key
+    in: header
+    type: apiKey
+  BasicAuth:
+    type: basic
+security:
+  - ucsb-api-key: []
+  - BasicAuth: []
+paths:
+  '/students':
+    get:
+      tags:
+        - Students
+      summary: ''
+      operationId: '/students'
+      consumes: []
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: daysBack
+          in: query
+          description: Number of days to look back
+          required: true
+          type: integer
+          format: int32
+          maximum: 30
+          minimum: 1
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/StudentsResponse'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          schema:
+            $ref: '#/definitions/WebApiInvalidModel'
+        '401':
+          description: Unauthorized. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+definitions:
+  StudentsRequest:
+    description: Model for requests to get student data
+    required:
+      - daysBack
+    type: object
+    properties:
+      daysBack:
+        format: int32
+        description: Number of days to look back
+        maximum: 30
+        minimum: 1
+        type: integer
+  StudentsResponse:
+    description: A wrapper class that contains messaging for the API call and the payload
+    type: object
+    properties:
+      data:
+        description: 'Results of API call, if any. NULL on error.'
+        type: array
+        items:
+          $ref: '#/definitions/Student'
+  Student:
+    description: A student record that was updated within the given time frame
+    type: object
+    properties:
+      perm:
+        description: "Student Identification Number.\r\nAssigned for Undergraduates on entry to the Admissions system.\r\nAssigned to Graduate students on entry to the Registration system.\r\nAssigned to Summer Sessions students.\r\n\r\nPerm is also named SR_Identifier in many applications."
+        type: string
+      emailAddress:
+        description: Email Address
+        type: string
+  WebApiInvalidModel:
+    type: object
+    properties:
+      message:
+        type: string
+      modelState:
+        type: object
+        additionalProperties:
+          type: array
+          items:
+            type: string
+  SimpleMessageModel:
+    type: object
+    properties:
+      message:
+        type: string

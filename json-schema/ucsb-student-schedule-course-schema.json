@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ucsb/main/json-schema/ucsb-student-schedule-course-schema.json",
+  "title": "StudentScheduleCourse",
+  "description": "A course on a student class schedule with its meeting times and locations.",
+  "type": "object",
+  "properties": {
+    "courseId": {
+      "description": "13 character course Id with format SSSSSPPPNNNNUUU, Fist 5 char is course subject,\r\nNext 3 char is course prefix then next 3 char is course number\r\nand last 2 char is course suffix. For example 'ES   1-  16B '\r\ncan be broken down in subject 'ES   ' prefix '1- ' number ' 16' suffix 'B '",
+      "type": "string"
+    },
+    "quarter": {
+      "description": "Quarter with format YYYYQ",
+      "type": "string"
+    },
+    "enrollCode": {
+      "description": "EnrollCode an unique number assigned\r\nto a curriculum",
+      "type": "string"
+    },
+    "gradingOptionCode": {
+      "description": "Grading Options Code like Pass/No Pass (P/NP)\r\nOr Letter Grades (L)\r\nSee more GradingOptionsCode and GradingOptionsTranslation on GradingOptions interface\r\non Public Lookups API",
+      "type": "string"
+    },
+    "unitsAttempted": {
+      "format": "double",
+      "description": "Total number of units attempted by the student\r\nfor the course",
+      "type": "number"
+    },
+    "courseTitle": {
+      "description": "Course Title from curriculum catalog",
+      "type": "string"
+    },
+    "session": {
+      "description": "Session number only for summer quarter",
+      "type": "string"
+    },
+    "repeatTypeCode": {
+      "description": "Repeat type for a course\r\nSee more RepeatTypeCode and RepeatTypeTranslation on RepeatType interface\r\non Public Lookups API",
+      "type": "string"
+    },
+    "timeLocations": {
+      "description": "Schedule Time locations list with instructor data",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ScheduleTimeLocation"
+      }
+    }
+  },
+  "$defs": {
+    "ScheduleTimeLocation": {
+      "description": "Time Location data for course",
+      "type": "object",
+      "properties": {
+        "section": {
+          "description": "Course section student enrolled in",
+          "type": "string"
+        },
+        "instructionTypeCode": {
+          "description": "Instruction Type ex Lec , Dis etc\r\nSee more InstructionTypeCode and InstructionTypeTranslation on InstructionType interface\r\non Public Lookups API",
+          "type": "string"
+        },
+        "days": {
+          "description": "Days of Instruction for course for example 'M W    ' means instruction happens on Monday and wednesday\r\nFor mode translation on day code look at Days interface at public api",
+          "type": "string"
+        },
+        "beginTime": {
+          "description": "Begin time for a course\r\nHH:mm format",
+          "type": "string"
+        },
+        "endTime": {
+          "description": "End time of the course\r\nHH:mm format",
+          "type": "string"
+        },
+        "buildingRoom": {
+          "description": "location of course",
+          "type": "string"
+        },
+        "instructors": {
+          "description": "Time location instructor list",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TimeLocationInstructor"
+          }
+        }
+      }
+    },
+    "TimeLocationInstructor": {
+      "description": "Instructor assigned to a course",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Name of the Instructor",
+          "type": "string"
+        },
+        "functionCode": {
+          "description": "Instruction Function.\r\nSee more InstructionFunctionCode and InstructionFunctionTranslation on InstructionFunction interface\r\nSee translation on public lookup api",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "x-source": "openapi/ucsb-student-schedules-openapi.yml",
+  "x-method": "derived",
+  "x-generated": "2026-08-30"
+}

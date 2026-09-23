@@ -1,0 +1,312 @@
+# x-archived-from: ucsb-student-registrations-openapi.yml
+# x-archived-on: 2026-09-16
+swagger: '2.0'
+info:
+  version: v2
+  title: Student Registrations
+  description: Registrations information from the Office of the Registrar. This data is expected to be
+    used to verify if a student was registered during a particular quarter. You can use the Academic Quarter
+    calendar to determine what quarter was in session for a particular date. Registration information
+    can also be used determine their class level (FR, JR, etc) or if they were an Undergraduate or Graduate
+    student.<br/><br/>The BasicAuth header is a base64-encoded(ucsbNetId:password) combination. The ucsbNetId/password
+    combination should be of a service account registered with the Campus Identity systems (ETS, the Campus
+    LDAP). This ucsbNetId needs to be supplied to the Office of the Registrar as part of the approval
+    process.
+  x-source-url: https://developer.ucsb.edu/sites/default/files/openapi/registrations-v2_0.yaml
+  x-last-validated: '2026-08-30'
+  x-operator: institution
+host: api.ucsb.edu
+basePath: /students/registrations
+schemes:
+- https
+securityDefinitions:
+  ucsb-api-key:
+    name: ucsb-api-key
+    in: header
+    type: apiKey
+  BasicAuth:
+    type: basic
+security:
+- ucsb-api-key: []
+- BasicAuth: []
+paths:
+  /v2/registrations/{perm}:
+    get:
+      tags:
+      - Registration
+      summary: Search for a student's registration records. If no quarter is supplied, all registration
+        records are returned. This data is expected to be used to verify if a student was registered during
+        a particular quarter. You can use the Academic Quarter calendar to determine what quarter was
+        in session for a particular date. Registration information can also be used determine their class
+        level (FR, JR, etc) or if they were an Undergraduate or Graduate student.
+      operationId: /registrations/v2/registrations/{perm}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: perm
+        in: path
+        description: Student's 6 or 7 character perm
+        required: true
+        type: string
+      - name: ucsb-user-jwt
+        in: header
+        description: Used when an application is required to provide an End User Token. Only the data
+          for the student indicated by the End User Token will be retrieved.
+        required: false
+        type: string
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '2.0'
+      responses:
+        '200':
+          description: A populated list of registration objects.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Registration'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          schema:
+            $ref: '#/definitions/WebApiInvalidModel'
+        '401':
+          description: Unauthorized. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+        '404':
+          description: Resource cannot be found. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+  /v2/registrations/{perm}/{quarter}:
+    get:
+      tags:
+      - Registration
+      summary: Search for a student's registration records. If no quarter is supplied, all registration
+        records are  returned. This data is expected to be used to verify if a student was registered
+        during a particular quarter. You can use the Academic Quarter calendar to determine what quarter
+        was in session for a particular date. Registration information can also be used determine their
+        class level (FR, JR, etc) or if they were an Undergraduate or Graduate student.
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: perm
+        in: path
+        description: Student's 6 or 7 character perm.
+        required: true
+        type: string
+      - name: quarter
+        in: path
+        description: Quarter with format YYYYQ
+        required: true
+        type: string
+      - name: ucsb-user-jwt
+        in: header
+        description: Used when an application is required to provide an End User Token. Only the data
+          for the student indicated by the End User Token will be retrieved.
+        required: false
+        type: string
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '2.0'
+      responses:
+        '200':
+          description: registration objects by perm and quarter.
+          schema:
+            $ref: '#/definitions/Registration'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          schema:
+            $ref: '#/definitions/WebApiInvalidModel'
+        '401':
+          description: Unauthorized. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+        '404':
+          description: Resource cannot be found. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+  /v2/registrationblocks:
+    post:
+      tags:
+      - RegistrationBlocks
+      summary: Adds or removes a registration block for a student.  This endpoint is restricted and only
+        for use by internal departments in coordination with the Office of the Registrar.
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: registrationBlockRequest
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/RegistrationBlockRequest'
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '2.0'
+      responses:
+        '200':
+          description: Return regblockResponse if successful
+          schema:
+            $ref: '#/definitions/RegistrationBlockResponse'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          schema:
+            $ref: '#/definitions/WebApiInvalidModel'
+        '401':
+          description: Unauthorized. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+        '404':
+          description: Resource cannot be found. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+definitions:
+  Registration:
+    required:
+    - perm
+    - quarter
+    type: object
+    properties:
+      perm:
+        description: Student 7 character perm
+        maxLength: 7
+        minLength: 0
+        type: string
+      quarter:
+        description: Quarter with format YYYYQ
+        maxLength: 5
+        minLength: 0
+        type: string
+      classLevelCode:
+        description: Class level code for the quarter. See public look up api for translations
+        maxLength: 2
+        minLength: 0
+        type: string
+      classificationCode:
+        description: Classification code for the quarter. See public look up api for translations
+        maxLength: 1
+        minLength: 0
+        type: string
+      regStatusCode:
+        description: Registration status code for the quarter. See public look up api for translations
+        maxLength: 1
+        minLength: 0
+        type: string
+      feeStatusCode:
+        description: Fee status code for the quarter. See public look up api for translations
+        maxLength: 1
+        minLength: 0
+        type: string
+      objLevelCode:
+        description: Object level code for the quarter. See public look up api for translations
+        maxLength: 1
+        minLength: 0
+        type: string
+      registeredPaidFlag:
+        description: When (RegStatus code is either 'R' or 'E') and (Fee Status code is not empty)
+        maxLength: 1
+        minLength: 0
+        type: string
+      eapReciprocityFlag:
+        description: Check if the student is on EAP Reciprocity
+        maxLength: 1
+        minLength: 0
+        type: string
+      studyLoadStatus:
+        description: Status of the study load example value - F (full time), H (half time)
+        maxLength: 1
+        minLength: 0
+        type: string
+      studyLoadUnits:
+        format: double
+        description: Total Study load units for the quarter
+        maximum: 99
+        minimum: 0
+        pattern: ^\d+\.\d{1,2}$
+        type: number
+      appointment1BeginDateTime:
+        format: date-time
+        description: First Appointment Begin date and time
+        type: string
+      appointment2BeginDateTime:
+        format: date-time
+        description: Second Appointment Begin date and time
+        type: string
+      appointment3BeginDateTime:
+        format: date-time
+        description: Third Appointment Begin date and time
+        type: string
+  WebApiInvalidModel:
+    type: object
+    properties:
+      message:
+        type: string
+      modelState:
+        type: object
+        additionalProperties:
+          type: array
+          items:
+            type: string
+  SimpleMessageModel:
+    type: object
+    properties:
+      message:
+        type: string
+  RegistrationBlockRequest:
+    description: Dto object to process a registration block
+    required:
+    - quarter
+    - perm
+    - blockDepartment
+    - blockReason
+    - blockAction
+    type: object
+    properties:
+      quarter:
+        description: Quarter Block will be placed
+        type: string
+      perm:
+        description: 6 or 7 character student Id
+        type: string
+      blockDepartment:
+        description: Department Placing the block. Refer Campus Organisations Org_Code
+        type: string
+      blockReason:
+        description: Reason for the block - Refer Look up block reason
+        type: string
+      blockAction:
+        description: Block Action - can be either Add or Drop
+        enum:
+        - Add
+        - Drop
+        type: string
+  RegistrationBlockResponse:
+    description: Regsitration Block Response Object
+    type: object
+    properties:
+      status:
+        description: Status of the request Failed, Success, Rejected
+        enum:
+        - Success
+        - Rejected
+        type: string
+      messsage:
+        description: Error Message
+        type: string

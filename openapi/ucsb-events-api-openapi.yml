@@ -1,0 +1,29 @@
+openapi: 3.2.0
+info:
+  version: v2
+  title: Events API
+  description: Event information aggregated by the Office of Public Affairs and Communications.
+servers:
+- url: https://api.ucsb.edu/academics/
+security:
+- ucsb-api-key: []
+tags:
+- name: Events
+paths:
+  /events/v1:
+    get:
+      tags:
+      - Events
+      operationId: /events/v1
+      responses:
+        '200':
+          description: A list of events
+      description: Retrieve a list of events
+      summary: /events/v1
+      x-summary-source: derived
+components:
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey

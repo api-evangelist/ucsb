@@ -1,0 +1,56 @@
+openapi: 3.2.0
+info:
+  version: v1.6
+  title: Student Record Code Lookups Admit Levels API
+  description: Code Lookups from the Office of the Registrar.
+servers:
+- url: https://api.ucsb.edu/students
+tags:
+- name: AdmitLevels
+paths:
+  /lookups/v1/admitlevels:
+    get:
+      tags:
+      - AdmitLevels
+      operationId: /lookups/v1/admitlevels
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicAdmitLevel'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicAdmitLevel'
+      description: Gets the list of admit level codes.
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/admitlevels
+      x-summary-source: derived
+components:
+  schemas:
+    AcademicAdmitLevel:
+      type: object
+      properties:
+        admitLevelCode:
+          type: string
+        admitLevelTranslation:
+          type: string
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey

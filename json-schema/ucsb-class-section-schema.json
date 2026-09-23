@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ucsb/main/json-schema/ucsb-class-section-schema.json",
+  "title": "ClassSection",
+  "description": "A section of a class in the UCSB schedule of classes, with enrollment counts, meeting times and instructors.",
+  "type": "object",
+  "properties": {
+    "enrollCode": {
+      "description": "EnrollCode an unique number assigned\r\nto a curriculum",
+      "type": "string"
+    },
+    "section": {
+      "description": "Section number of the course",
+      "type": "string"
+    },
+    "session": {
+      "description": "Session number only for summer quarter",
+      "type": "string"
+    },
+    "classClosed": {
+      "description": "If the class is closed",
+      "type": "string"
+    },
+    "courseCancelled": {
+      "description": "Is course cancelled",
+      "type": "string"
+    },
+    "gradingOptionCode": {
+      "description": "Grading Options Code like Pass/No Pass (P/NP)\r\nOr Letter Grades (L)\r\nSee more GradingOptionsCode and GradingOptionsTranslation on GradingOptions interface\r\non Student Record Code Lookups API",
+      "type": "string"
+    },
+    "enrolledTotal": {
+      "format": "int32",
+      "description": "total number of enrollments in the course",
+      "type": "integer"
+    },
+    "maxEnroll": {
+      "format": "int32",
+      "description": "max number of students can be enrolled in the section",
+      "type": "integer"
+    },
+    "secondaryStatus": {
+      "description": "Secondary Status of the course",
+      "type": "string"
+    },
+    "departmentApprovalRequired": {
+      "description": "Is department approval required for enrollment in the section",
+      "type": "boolean"
+    },
+    "instructorApprovalRequired": {
+      "description": "Is instructor approval required for enrollment in the section",
+      "type": "boolean"
+    },
+    "restrictionLevel": {
+      "description": "Is there restriction on the level of the course",
+      "type": "string"
+    },
+    "restrictionMajor": {
+      "description": "RestrictionMajor being a limit on which majors can add into the course",
+      "type": "string"
+    },
+    "restrictionMajorPass": {
+      "description": "RestrictionMajorPass limits it to a certain major registration pass only,\r\nmeaning once that registration pass is over, then the limit is no longer enforced",
+      "type": "string"
+    },
+    "restrictionMinor": {
+      "description": "RestrictionMinors being a limit on which minors can add into the course",
+      "type": "string"
+    },
+    "restrictionMinorPass": {
+      "description": "RestrictionMinorPass limits it to a certain minor registration pass only,\r\nmeaning once that registration pass is over, then the limit is no longer enforced",
+      "type": "string"
+    },
+    "concurrentCourses": {
+      "description": "concurrent course for the section",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "timeLocations": {
+      "description": "Time location for the section",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ClassTimeLocation"
+      }
+    },
+    "instructors": {
+      "description": "instructor the section",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ClassInstructor"
+      }
+    }
+  },
+  "$defs": {
+    "ClassTimeLocation": {
+      "description": "time location for the section",
+      "type": "object",
+      "properties": {
+        "room": {
+          "description": "Room where course is offered",
+          "type": "string"
+        },
+        "building": {
+          "description": "Building for the room",
+          "type": "string"
+        },
+        "roomCapacity": {
+          "format": "int32",
+          "description": "Capacity of the room",
+          "type": "integer"
+        },
+        "days": {
+          "description": "Days of Instruction for course for example 'M W    ' means instruction happens on Monday and wednesday\r\nFor mode translation on day code look at Days interface at Student Record Code Lookups API",
+          "type": "string"
+        },
+        "beginTime": {
+          "description": "Begin time for a course\r\nHH:mm format",
+          "type": "string"
+        },
+        "endTime": {
+          "description": "End time of the course\r\nHH:mm format",
+          "type": "string"
+        }
+      }
+    },
+    "ClassInstructor": {
+      "description": "Instructor of the section and class",
+      "type": "object",
+      "properties": {
+        "instructor": {
+          "description": "Name of the Instructor",
+          "type": "string"
+        },
+        "functionCode": {
+          "description": "Instruction Function.\r\nSee more InstructionFunctionCode and InstructionFunctionTranslation on InstructionFunction interface\r\nSee translation on Student Record Code Lookups API",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "x-source": "openapi/ucsb-academic-curriculums-openapi.yml",
+  "x-method": "derived",
+  "x-generated": "2026-08-30"
+}

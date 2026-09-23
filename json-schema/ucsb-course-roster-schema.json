@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ucsb/main/json-schema/ucsb-course-roster-schema.json",
+  "title": "Roster",
+  "description": "The roster of students enrolled in a course section.",
+  "type": "object",
+  "properties": {
+    "perm": {
+      "description": "Student 7 digit perm",
+      "type": "string"
+    },
+    "unitsAttempted": {
+      "format": "double",
+      "description": "Total number of units attempted by the student\r\nfor the course",
+      "type": "number"
+    }
+  },
+  "x-source": "openapi/ucsb-student-rosters-openapi.yml",
+  "x-method": "derived",
+  "x-generated": "2026-08-30"
+}

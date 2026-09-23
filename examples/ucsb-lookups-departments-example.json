@@ -1,0 +1,22 @@
+{
+  "x-generated": "2026-08-30",
+  "x-method": "derived",
+  "x-source": "openapi/ucsb-student-record-code-lookups-openapi.yml",
+  "x-note": "Student Record Code Lookups is the largest UCSB contract (39 paths) and is Auto-Approved on the portal. Request shape verbatim from the OpenAPI; response values are illustrative.",
+  "request": {
+    "method": "GET",
+    "url": "https://api.ucsb.edu/students/lookups/v1/departments?college=L%26S&includeInactive=false",
+    "headers": {
+      "ucsb-api-key": "YOUR_CONSUMER_KEY",
+      "ucsb-api-version": "1.6",
+      "Accept": "application/json"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": [
+      { "code": "CMPSC", "translation": "COMPUTER SCIENCE", "college": "L&S", "division": "MLPS", "active": true },
+      { "code": "ENGL", "translation": "ENGLISH", "college": "L&S", "division": "HFA", "active": true }
+    ]
+  }
+}

@@ -1,0 +1,83 @@
+openapi: 3.2.0
+info:
+  version: v3
+  title: Academic Curriculum v3.0 Finals API
+  description: Public curriculum api for class and class section search. The data provided is intended to be used to populate drop downs, validate data entry, and provide information for planning and sharing. The data doesn't change and can be cached for limited period of times to enable easier lookups.
+servers:
+- url: https://api.ucsb.edu/academics/curriculums
+security:
+- ucsb-api-key: []
+tags:
+- name: Finals
+paths:
+  /v3/finals:
+    get:
+      tags:
+      - Finals
+      summary: Get Final Exam information for a course by quarter and enrollCode
+      operationId: Finals_GetFinalsAsync
+      parameters:
+      - name: quarter
+        in: query
+        description: Quarter with format YYYYQ
+        required: true
+        schema:
+          type: string
+      - name: enrollCode
+        in: query
+        description: EnrollCode an unique number assigned to a curriculum
+        required: true
+        schema:
+          type: string
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '3.0'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FinalExam'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/FinalExam'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/FinalExam'
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/FinalExam'
+components:
+  schemas:
+    FinalExam:
+      description: Final Exam for a course
+      type: object
+      properties:
+        hasFinals:
+          description: is there a final exam for the course
+          type: boolean
+        comments:
+          description: Comments for the exam
+          type: string
+        examDay:
+          description: Day of Exam
+          type: string
+        examDate:
+          description: Date of Exam
+          type: string
+        beginTime:
+          description: Begin time for the Exam
+          type: string
+        endTime:
+          description: End time for the exam
+          type: string
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey

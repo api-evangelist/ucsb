@@ -1,0 +1,45 @@
+{
+  "x-generated": "2026-08-30",
+  "x-method": "probed",
+  "x-source": "https://api.ucsb.edu/academics/quartercalendar/v1/quarters/current",
+  "x-note": "CAPTURED LIVE on 2026-08-30 against the UCSB Campus API Gateway with no key and with an invalid key. Both return the identical Apigee fault envelope; the gateway does not distinguish missing from invalid. The unknown-path 404 uses a DIFFERENT envelope shape, which is the one inconsistency in the gateway's error contract.",
+  "cases": [
+    {
+      "name": "missing ucsb-api-key",
+      "request": { "method": "GET", "url": "https://api.ucsb.edu/academics/quartercalendar/v1/quarters/current", "headers": {} },
+      "response": {
+        "status": 401,
+        "headers": {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Headers": "origin, x-requested-with, accept, ucsb-api-key, ucsb-api-version, authorization, ucsb-user-jwt, content-type"
+        },
+        "body": { "fault": { "faultstring": "Invalid ApiKey", "detail": { "errorcode": "oauth.v2.InvalidApiKey" } } }
+      }
+    },
+    {
+      "name": "invalid ucsb-api-key",
+      "request": { "method": "GET", "url": "https://api.ucsb.edu/academics/quartercalendar/v1/quarters/current", "headers": { "ucsb-api-key": "not-a-real-key" } },
+      "response": {
+        "status": 401,
+        "body": { "fault": { "faultstring": "Invalid ApiKey", "detail": { "errorcode": "oauth.v2.InvalidApiKey" } } }
+      }
+    },
+    {
+      "name": "key valid but not entitled to this API product",
+      "request": { "method": "GET", "url": "https://api.ucsb.edu/<an API the app is not subscribed to>", "headers": { "ucsb-api-key": "YOUR_CONSUMER_KEY" } },
+      "response": {
+        "status": 401,
+        "body": { "fault": { "faultstring": "Invalid ApiKey for given resource", "detail": { "errorcode": "oauth.v2.InvalidApiKeyForGivenResource" } } },
+        "x-evidence": "https://developer.ucsb.edu/docs/security/api-key — documented by UCSB, not probed (requires an approved key)."
+      }
+    },
+    {
+      "name": "unrouted path",
+      "request": { "method": "GET", "url": "https://api.ucsb.edu/academics/nope/v1/nothing", "headers": {} },
+      "response": {
+        "status": 404,
+        "body": { "message": "No API Endpoint defined for this path. Please see https://developer.ucsb.edu/ for more information." }
+      }
+    }
+  ]
+}

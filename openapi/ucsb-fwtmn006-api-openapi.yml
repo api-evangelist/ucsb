@@ -1,0 +1,117 @@
+openapi: 3.2.0
+info:
+  version: v1
+  title: BARC Quarter Calendar FWTMN006 API
+  description: Quarter Calendar information from the Office of the Registrar specifically for BARC mainframe retirement.
+servers:
+- url: https://api.ucsb.edu/academics/private/barcquartercalendar/v1
+security:
+- ucsb-api-key: []
+- BasicAuth: []
+tags:
+- name: FWTMN006
+paths:
+  /fwtmn006/{actiontype}:
+    get:
+      tags:
+      - FWTMN006
+      summary: /fwtmn006/{actiontype}
+      operationId: /fwtmn006/{actiontype}
+      parameters:
+      - name: actiontype
+        in: path
+        description: Valid value is "W"
+        required: true
+        schema:
+          type: string
+      - name: quarter
+        in: query
+        description: Quarter with format YYYYQ
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TermInformationWrapper'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/TermInformationWrapper'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+        '401':
+          description: Unauthorized. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+      x-summary-source: derived
+components:
+  schemas:
+    TermInformationWrapper:
+      description: A wrapper class that contains messaging for the API call and the payload
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/TermInformation'
+          description: ''
+        messageCode:
+          description: Error code, if any.
+          type: string
+        message:
+          description: Error messaging coming from the database. Check here for clues about how to fix queries
+          type: string
+    TermInformation:
+      description: ''
+      type: object
+      properties:
+        termOccurrences:
+          format: int32
+          description: ''
+          type: integer
+        term1:
+          description: ''
+          type: string
+        term2:
+          description: ''
+          type: string
+        term3:
+          description: ''
+          type: string
+    WebApiInvalidModel:
+      type: object
+      properties:
+        message:
+          type: string
+        modelState:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    SimpleMessageModel:
+      type: object
+      properties:
+        message:
+          type: string
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey
+    BasicAuth:
+      type: http
+      scheme: basic

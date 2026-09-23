@@ -1,0 +1,159 @@
+swagger: '2.0'
+info:
+  version: v1
+  title: Students Rosters
+  description:
+    Course roster information from the Office of the Registrar. This API is designed 
+    to return a list of student perm numbers that are enrolled within courses. This 
+    API allows for querying courses at a department level and can be used to help 
+    determine student populations that will be input for other systems. It is 
+    different from the Courses API and Schedules API as it doesn't focus on 
+    individual, but instead focuses on lists of students which are enrolled in 
+    courses.
+    
+    <br /><br />
+    
+    The BasicAuth header is a base64-encoded(ucsbNetId:password) combination. The 
+    ucsbNetId/password combination should be of a service account registered with 
+    the Campus Identity systems (ETS, the Campus LDAP). This ucsbNetId needs to be 
+    supplied to the Office of the Registrar as part of the approval process.
+host: api.ucsb.edu
+basePath: /students
+schemes:
+  - https
+securityDefinitions:
+  ucsb-api-key:
+    name: ucsb-api-key
+    in: header
+    type: apiKey
+  BasicAuth:
+    type: basic
+security:
+  - ucsb-api-key: []
+  - BasicAuth: []
+paths:
+  '/rosters/v1/rosters/{quarter}':
+    get:
+      tags:
+        - Rosters
+      operationId: '/rosters/v1/rosters/{quarter}'
+      consumes: []
+      produces:
+        - application/json
+        - text/json
+      parameters:
+        - name: quarter
+          in: path
+          description: Quarter with format YYYYQ
+          required: true
+          type: string
+        - name: deptCode
+          in: query
+          description: '5 character department code, which can be found in the Student Record Lookup API.'
+          required: false
+          type: string
+        - name: courseId
+          in: query
+          description: "13 character course Id with format SSSSSPPPNNNNUUU , First 5 char is course subject,\r\nNext 3 char is course prefix then next 3 char is course number\r\nand last 2 char is course suffix. For example 'ES   1-  16B '\r\ncan be broken down in subject 'ES   ' prefix '1- ' number ' 16' suffix 'B '"
+          required: false
+          type: string
+        - name: objLevelCode
+          in: query
+          description: '1 character code, The academic program objective level must be ''G''raduate or ''U''ndergraduate.'
+          required: false
+          type: string
+        - name: ucsb-api-version
+          in: header
+          description: Specific api version to use.
+          required: false
+          type: string
+          default: '1.0'
+      responses:
+        '200':
+          description: Get Rosters For department or Course.
+          schema:
+            $ref: '#/definitions/RosterCourse'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          schema:
+            $ref: '#/definitions/WebApiInvalidModel'
+        '401':
+          description: Unauthorized. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+        '404':
+          description: Resource cannot be found. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+      description: "Search for rosters for a quarter and either Department code or Course Id and optional Objective level.\r\nThe rosters returned has primary course information such as enroll code, courseId and List of Students enrolled in each sections."
+definitions:
+  HealthcheckMessage:
+    type: object
+    properties:
+      component:
+        type: string
+      message:
+        type: string
+  RosterCourse:
+    description: Roster data includes course and Enrollment in Sections
+    type: object
+    properties:
+      courseId:
+        description: "13 character course Id with format SSSSSPPPNNNNUUU, Fist 5 char is course subject,\r\nNext 3 char is course prefix then next 3 char is course number\r\nand last 2 char is course suffix. For example 'ES   1-  16B '\r\ncan be broken down in subject 'ES   ' prefix '1- ' number ' 16' suffix 'B '"
+        type: string
+      quarter:
+        description: Quarter with format YYYYQ
+        type: string
+      enrollCode:
+        description: "EnrollCode an unique number assigned\r\nto a curriculum"
+        type: string
+      session:
+        description: Session number only for summer quarter
+        type: string
+      sections:
+        description: Roster data for Each section of course
+        type: array
+        items:
+          $ref: '#/definitions/RosterSection'
+  RosterSection:
+    description: Roster data for the Non primary sections
+    type: object
+    properties:
+      section:
+        description: Section Number for a course
+        type: string
+      enrollCode:
+        description: "EnrollCode an unique number assigned\r\nto a curriculum"
+        type: string
+      rosters:
+        description: Roster data for the section
+        type: array
+        items:
+          $ref: '#/definitions/Roster'
+  Roster:
+    description: Roster of Enrolled Students in Section
+    type: object
+    properties:
+      perm:
+        description: Student 7 digit perm
+        type: string
+      unitsAttempted:
+        format: double
+        description: "Total number of units attempted by the student\r\nfor the course"
+        type: number
+  WebApiInvalidModel:
+    type: object
+    properties:
+      message:
+        type: string
+      modelState:
+        type: object
+        additionalProperties:
+          type: array
+          items:
+            type: string
+  SimpleMessageModel:
+    type: object
+    properties:
+      message:
+        type: string

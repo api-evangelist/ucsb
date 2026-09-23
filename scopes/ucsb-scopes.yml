@@ -1,0 +1,75 @@
+generated: '2026-08-30'
+method: searched
+source: https://developer.ucsb.edu/apis/all
+docs: https://developer.ucsb.edu/docs/applications/application-approval-request
+note: >-
+  UCSB has NO OAuth scopes. Its authorization model is a three-tier ACCESS CLASSIFICATION
+  applied per API and published in the portal's own API directory table, plus per-application
+  entitlement to API products at the gateway. That classification is the real, institution-
+  authored authorization vocabulary here, so it is recorded as the scope model rather than
+  leaving the artifact empty or inventing OAuth scopes that do not exist. The tier strings are
+  UCSB's, read verbatim from the /apis/all table on 2026-08-30; the descriptions are ours.
+model: access-classification
+oauth_scopes_published: false
+schemes:
+- name: ucsb-access-classification
+  source: https://developer.ucsb.edu/apis/all
+  enforced_at: Campus API Gateway (api.ucsb.edu) + manual approval workflow
+scopes:
+- scope: Auto-Approved
+  description: >-
+    Any approved developer-portal account can subscribe an App and call the API without a
+    further access request. Non-personal reference data — calendars, curriculum, code lookup
+    tables, dining venue data.
+  apis: 12
+  examples:
+  - Academic Curriculums
+  - Academic Graduate Programs
+  - Academic Quarter Calendar
+  - Events
+  - Student Record Code Lookups
+  - Department Chartfield
+  - Dining Commons
+  - Dining Menu
+  - Meal Plan Rates
+  sources: [https://developer.ucsb.edu/apis/all]
+- scope: Access Approval Required
+  description: >-
+    Requires a reviewed API Access Request naming the business need before the App is
+    entitled. Covers student-level records and administrative financial services — the
+    FERPA-governed tier.
+  apis: 15
+  examples:
+  - Student Courses
+  - Student Registrations
+  - Student Rosters
+  - Student Schedules
+  - Student Photos
+  - Student Academic Programs (Majors / Minors)
+  - Housing Assignments
+  - Contract Status
+  - Access Cards
+  sources: [https://developer.ucsb.edu/apis/all]
+- scope: Private
+  description: >-
+    Restricted to a named campus consumer; not generally obtainable. Several Private APIs
+    still publish a public OpenAPI on the portal, so the CONTRACT is discoverable even where
+    the data is not.
+  apis: 10
+  examples:
+  - BARC Students API
+  - BARC Quarter Calendar
+  - CLAS Schedules
+  - Department Course Extract
+  - Employee Job
+  - Grad Application Verifications
+  - MTD Access
+  - Recreation Patron Photos
+  - CampusM Calendar
+  sources: [https://developer.ucsb.edu/apis/all]
+gaps:
+- No OAuth 2.0 authorization server, so no token scopes exist to grant, audit or revoke
+  granularly; entitlement is app-level and human-approved.
+- The tier is published on the directory table and on each API page but is NOT carried in the
+  OpenAPI documents, so a machine reading only the contract cannot tell an Auto-Approved API
+  from a Private one.

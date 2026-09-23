@@ -1,0 +1,116 @@
+openapi: 3.2.0
+info:
+  version: v1.6
+  title: Student Record Code Lookups Objectives API
+  description: Code Lookups from the Office of the Registrar.
+servers:
+- url: https://api.ucsb.edu/students
+tags:
+- name: Objectives
+paths:
+  /lookups/v1/objectives/{code}:
+    get:
+      tags:
+      - Objectives
+      operationId: /lookups/v1/objectives/{code}
+      parameters:
+      - name: code
+        in: path
+        description: The objective code to match.
+        required: true
+        schema:
+          type: string
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcademicObjective'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/AcademicObjective'
+      description: Gets an active objective.
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/objectives/{code}
+      x-summary-source: derived
+  /lookups/v1/objectives:
+    get:
+      tags:
+      - Objectives
+      operationId: /lookups/v1/objectives
+      parameters:
+      - name: translationFilter
+        in: query
+        description: 'Filters the translations by the given text. If the text appears in the the
+
+          translation, then it will be returned.'
+        required: false
+        schema:
+          type: string
+          default: ''
+      - name: includeInactive
+        in: query
+        description: Include objectives that are no longer active.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicObjective'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicObjective'
+      description: Gets the list of active objectives.
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/objectives
+      x-summary-source: derived
+components:
+  schemas:
+    AcademicObjective:
+      type: object
+      properties:
+        objCode:
+          type: string
+        objTranslation:
+          type: string
+        objTypeCode:
+          type: string
+        objTypeTransaltion:
+          type: string
+        objLevel:
+          type: string
+        objLevelCode:
+          type: string
+        inactive:
+          type: boolean
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey

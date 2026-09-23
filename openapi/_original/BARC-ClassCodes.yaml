@@ -1,0 +1,108 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: "ClassCode Lookup Service"
+  description: "This service looks up Class Codes on the BARC system. The service will query the system based on three flags. *Active (Retrieve only Active codes) *All (Retrieve Active and Inactive codes) *Specific Class Code (Example: 0001)"
+  termsOfService: ''
+  contact:
+    name: API Team
+host: api.ucsb.edu
+basePath: /administration/financial/barc/classcode/v2
+schemes:
+  - https
+  
+securityDefinitions:
+  apiKey:
+    type: apiKey
+    name: ucsb-api-key
+    in: header
+    
+security:
+  - apiKey: []
+
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  '/{value}':
+    get:
+      tags:
+        - Get Active or Specific ClassCode
+      operationId: GetClassCodeItem
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - name: value
+          in: path
+          description: Active or ClassCodeID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Returns a list of Class Codes from the BARC System
+          schema:
+            $ref: '#/definitions/ClassCodeItem'
+        '404':
+          description: Not Found
+        '500':
+          description: Server Error
+   
+    
+  /:
+    get:
+      tags:
+        - Get all Active ClassCodes
+      operationId: GetClassCode
+      consumes: []
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters: []
+      responses:
+        '200':
+          description: Returns a list of Class Codes from the BARC System
+          schema:
+            uniqueItems: false
+            type: array
+            items:
+              $ref: '#/definitions/ClassCodeItem'
+        '404':
+          description: Not Found
+        '500':
+          description: Server Error
+
+definitions:
+  ClassCodeItem:
+    type: object
+    properties:
+     classcode:
+        type: string
+     description:
+        type: string
+     loc:
+        type: string
+     account:
+        type: string
+     fund:
+        type: string
+     sub:
+        type: string
+     manualControl:
+        type: string
+     validForBarcFlag:
+        type: string
+     objectCode:
+        type: string
+     registrationRefundFlag:
+        type: string
+     department:
+        type: string        
+     lastUpdateDate:
+        type: string
+     lastUpdateUserid:
+        type: string      

@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ucsb/main/json-schema/ucsb-student-schema.json",
+  "title": "StudentExtended",
+  "description": "Basic student record returned by the Student Basic Student Info API. Access Approval Required; FERPA-governed.",
+  "type": "object",
+  "properties": {
+    "firstName": {
+      "description": "The student's lived first name",
+      "type": "string"
+    },
+    "firstNameLegal": {
+      "description": "The student's legal first name (Extended Data Only)",
+      "type": "string"
+    },
+    "middleName": {
+      "description": "The student's lived middle name (Extended Data Only)",
+      "type": "string"
+    },
+    "middleNameLegal": {
+      "description": "The student's legal middle name (Extended Data Only)",
+      "type": "string"
+    },
+    "lastName": {
+      "description": "The student's lived last name",
+      "type": "string"
+    },
+    "lastNameLegal": {
+      "description": "The student's legal last name (Extended Data Only)",
+      "type": "string"
+    },
+    "suffix": {
+      "description": "The name suffix (JR, SR, etc)",
+      "type": "string"
+    },
+    "gender": {
+      "description": "'M' = Male, 'F' = Female, NULL = No value provided (Extended Data Only)",
+      "type": "string"
+    },
+    "birthDate": {
+      "description": "The birthdate in 8 character code (YYYYMMDD)",
+      "type": "string"
+    },
+    "nfr": {
+      "description": "Not For Release - This indicates if the students record has a Not For Release flag associated with it. If true,\r\nthen the Registrar's Office should be consulted before releasing any of the students information to anyone\r\nbesides the student.",
+      "type": "boolean"
+    },
+    "internationalStudentCode": {
+      "description": "'F' = Foreign, 'R' = Resident Alien, NULL = Domestic",
+      "type": "string"
+    },
+    "firstCensusQuarter": {
+      "description": "The first quarter the student was registered and included in the UCOP extract.",
+      "type": "string"
+    },
+    "lastCensusQuarter": {
+      "description": "The latest quarter the student was registered and included in the UCOP extract.",
+      "type": "string"
+    },
+    "lastRegisteredQuarter": {
+      "description": "The latest quarter that the student was registered with a status of Registered (R) or EAP (E).",
+      "type": "string"
+    },
+    "admitLevel": {
+      "description": "'FR' = Freshman Undergraduate Admit, 'TR' = Transfer Undergraduate Admit, Empty = No data or not an undergraduate admit.",
+      "type": "string"
+    },
+    "admitQuarter": {
+      "description": "Quarter the student was admitted as an undergraduate.",
+      "type": "string"
+    },
+    "pronounCode": {
+      "description": "Pronoun code for the student.",
+      "type": "string"
+    },
+    "perm": {
+      "description": "The 7-digit perm number",
+      "type": "string"
+    },
+    "email": {
+      "description": "The email address (umail.ucsb.edu)",
+      "type": "string"
+    }
+  },
+  "x-source": "openapi/ucsb-student-basic-info-openapi.yml",
+  "x-method": "derived",
+  "x-generated": "2026-08-30"
+}

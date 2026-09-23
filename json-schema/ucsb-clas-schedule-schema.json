@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ucsb/main/json-schema/ucsb-clas-schedule-schema.json",
+  "title": "Schedule",
+  "description": "A Campus Learning Assistance Services (CLAS) workshop/tutoring schedule entry.",
+  "type": "object",
+  "properties": {
+    "subjectCode": {
+      "type": "string",
+      "nullable": true
+    },
+    "subjectName": {
+      "type": "string",
+      "nullable": true
+    },
+    "courseNo": {
+      "type": "string",
+      "nullable": true
+    },
+    "session": {
+      "type": "string",
+      "nullable": true
+    },
+    "instructor": {
+      "type": "string",
+      "nullable": true
+    },
+    "groupLecturePK": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "lectureDays": {
+      "type": "string",
+      "nullable": true
+    },
+    "lectureTime": {
+      "type": "string",
+      "nullable": true
+    },
+    "lectureLocation": {
+      "type": "string",
+      "nullable": true
+    },
+    "groupCode": {
+      "type": "string",
+      "nullable": true
+    },
+    "tutor": {
+      "type": "string",
+      "nullable": true
+    },
+    "groupDays": {
+      "type": "string",
+      "nullable": true
+    },
+    "groupTime": {
+      "type": "string",
+      "nullable": true
+    },
+    "isNew": {
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": false,
+  "x-source": "openapi/ucsb-clas-schedules-openapi.yml",
+  "x-method": "derived",
+  "x-generated": "2026-08-30"
+}

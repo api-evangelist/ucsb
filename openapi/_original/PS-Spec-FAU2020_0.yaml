@@ -1,0 +1,206 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: FAU (Functional Accounting Unit) Combination Service
+  description: 'Validates a FAU combination to determine if the FAU is valid or invalid. If invalid, a message will indicate why.'
+  termsOfService: ''
+  contact:
+    name: Christian Montecino - christianmontecino@ucsb.edu
+host: api.ucsb.edu
+basePath: /administration/financial/peoplesoft/fauvalidation/v2
+schemes:
+  - https
+  
+securityDefinitions:
+  apiKey:
+    type: apiKey
+    name: ucsb-api-key
+    in: header
+    
+security:
+  - apiKey: []
+
+consumes:
+  - application/json
+produces:
+  - application/json
+
+paths:
+  /uc_fau_validation:
+    post:
+      description: Perform a POST in order to validate an account
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/UC_FAU_VALIDATION_REPLY'
+          description: Response - Returns a valid or invalid response based on request
+        '401':
+          description: Unauthorized Error
+        '500':
+          description: Server Error
+      parameters:
+        - name: businessunit
+          in: query
+          type: string
+          default: 'UCSB8'
+          required: true
+          description: 'Use UCSB8'
+        - name: ledgergoup
+          in: query
+          type: string
+          default: 'ACTUALS'
+          required: true
+          description: 'Use ACTUALS for Finanial transactions and APPROP_EXP for Budget'
+        - name: account
+          in: query
+          type: string
+          required: true
+          description: '6 digits reflect campus level account detail rolling up to UCOP Account Group Code; includes functional area'
+        - name: fund
+          in: query
+          type: string
+          description: '5 digits reflect campus level fund detail rolling up to UCOP Fund Group Code'
+        - name: sub
+          in: query
+          type: string
+          description: '1 digit expenditure classification'
+        - name: object
+          in: query
+          type: string
+          description: '4 digits detailed expenditure classification'
+        - name: transcode
+          in: query
+          type: string
+          description: '4 digits used with equity accounts'
+definitions:
+  FieldTypes:
+    properties:
+      COMBO_CF_MSG_H:
+        $ref: '#/definitions/COMBO_CF_MSG_H'
+      COMBO_CF_MSG_D:
+        $ref: '#/definitions/COMBO_CF_MSG_D'
+      PSCAMA:
+        $ref: '#/definitions/PSCAMA'
+    type: object
+  COMBO_CF_MSG_H:
+    properties:
+      COMBO_VALID_FLG:
+        $ref: '#/definitions/COMBO_VALID_FLG'
+      MESSAGE_SET_NBR:
+        $ref: '#/definitions/MESSAGE_SET_NBR'
+      MESSAGE_NBR:
+        $ref: '#/definitions/MESSAGE_NBR'
+      MESSAGE_TEXT:
+        $ref: '#/definitions/MESSAGE_TEXT'
+      COMBO_TRAN_SRC:
+        $ref: '#/definitions/COMBO_TRAN_SRC'
+    type: object
+  COMBO_TRAN_SRC:
+    properties:
+      IsChanged:
+        type: string
+    type: object
+  COMBO_CF_MSG_D:
+    properties:
+      SEQNO:
+        $ref: '#/definitions/SEQNO'
+      COMBO_VALID_FLG:
+        $ref: '#/definitions/COMBO_VALID_FLG'
+    type: object
+  SEQNO:
+    properties: {}
+    type: object
+  COMBO_VALID_FLG:
+    properties:
+      IsChanged:
+        type: string
+    type: object
+  PSCAMA:
+    properties:
+      LANGUAGE_CD:
+        $ref: '#/definitions/LANGUAGE_CD'
+      AUDIT_ACTN:
+        $ref: '#/definitions/AUDIT_ACTN'
+      BASE_LANGUAGE_CD:
+        $ref: '#/definitions/BASE_LANGUAGE_CD'
+      MSG_SEQ_FLG:
+        $ref: '#/definitions/MSG_SEQ_FLG'
+      PROCESS_INSTANCE:
+        $ref: '#/definitions/PROCESS_INSTANCE'
+      PUBLISH_RULE_ID:
+        $ref: '#/definitions/PUBLISH_RULE_ID'
+      MSGNODENAME:
+        $ref: '#/definitions/MSGNODENAME'
+    type: object
+  LANGUAGE_CD:
+    properties:
+      IsChanged:
+        type: string
+    type: object
+  AUDIT_ACTN:
+    properties:
+      IsChanged:
+        type: string
+    type: object
+  BASE_LANGUAGE_CD:
+    properties:
+      IsChanged:
+        type: string
+    type: object
+  MSG_SEQ_FLG:
+    properties:
+      IsChanged:
+        type: string
+    type: object
+  PROCESS_INSTANCE:
+    properties:
+      IsChanged:
+        type: string
+    type: object
+  PUBLISH_RULE_ID:
+    properties:
+      IsChanged:
+        type: string
+    type: object
+  MSGNODENAME:
+    properties:
+      IsChanged:
+        type: string
+    type: object
+  MsgData:
+    properties:
+      Transaction:
+        $ref: '#/definitions/Transaction'
+    type: object
+  Transaction:
+    properties:
+      COMBO_CF_MSG_H:
+        $ref: '#/definitions/COMBO_CF_MSG_H'
+      PSCAMA:
+        $ref: '#/definitions/PSCAMA'
+    type: array
+    minItems: 0
+    items:
+      $ref: '#/definitions/Transaction'
+  UC_FAU_VALIDATION_REPLY:
+    properties:
+      FieldTypes:
+        $ref: '#/definitions/FieldTypes'
+      MsgData:
+        $ref: '#/definitions/MsgData'
+    type: object
+  MESSAGE_SET_NBR:
+    properties:
+      IsChanged:
+        type: string
+    type: object
+  MESSAGE_NBR:
+    properties:
+      IsChanged:
+        type: string
+    type: object
+  MESSAGE_TEXT:
+    properties:
+      IsChanged:
+        type: string
+    type: object

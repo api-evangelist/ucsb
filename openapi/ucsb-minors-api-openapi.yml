@@ -1,0 +1,228 @@
+openapi: 3.2.0
+info:
+  title: Ucsb Minors API
+  version: '1.0'
+  description: 'Operations tagged Minors across 2 of this provider''s published API definitions: academicprograms-v1.1.out_.api_.yaml, lookups-v1.6.out_.api__0.yaml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.ucsb.edu/students
+tags:
+- name: Minors
+paths:
+  /academicprograms/v1/minors/{perm}:
+    get:
+      tags:
+      - Minors
+      operationId: /academicprograms/v1/minors/{perm}
+      parameters:
+      - name: perm
+        in: path
+        description: The perm number of the student.
+        required: true
+        schema:
+          type: string
+      - name: ucsb-user-jwt
+        in: header
+        description: Used when an application is required to provide an End User Token. Only the data for the student indicated by the End User Token will be retrieved.
+        required: false
+        schema:
+          type: string
+      - name: ucsb-api-version
+        in: header
+        description: The requested API version
+        required: false
+        schema:
+          type: string
+          default: '1.1'
+      responses:
+        '200':
+          description: A populated list of Academic Minor objects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicMinor'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicMinor'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+      description: Retrieve Minor information about individual students.
+      security:
+      - ucsb-api-key: []
+      - ucsbnetid-password: []
+      summary: /academicprograms/v1/minors/{perm}
+      x-summary-source: derived
+    servers:
+    - url: https://api.ucsb.edu/students
+  /lookups/v1/minors/{code}:
+    get:
+      tags:
+      - Minors
+      operationId: /lookups/v1/minors/{code}
+      parameters:
+      - name: code
+        in: path
+        description: 'The subject code to match. If this is used translationFilter and includeInactive
+
+          are ignored.'
+        required: true
+        schema:
+          type: string
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcademicMinor_2'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/AcademicMinor_2'
+      description: 'Gets an active minor.
+
+        (Data Dictionary - Minors)'
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/minors/{code}
+      x-summary-source: derived
+    servers:
+    - url: https://api.ucsb.edu/students
+  /lookups/v1/minors:
+    get:
+      tags:
+      - Minors
+      operationId: /lookups/v1/minors
+      parameters:
+      - name: translationFilter
+        in: query
+        description: 'Filters the translations by the given text. If the text appears in the the
+
+          translation, then it will be returned.'
+        required: false
+        schema:
+          type: string
+          default: ''
+      - name: includeInactive
+        in: query
+        description: Include minors that are no longer active.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicMinor_2'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicMinor_2'
+      description: 'Gets the list of active minors.
+
+        (Data Dictionary - Minors)'
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/minors
+      x-summary-source: derived
+    servers:
+    - url: https://api.ucsb.edu/students
+components:
+  schemas:
+    AcademicMinor:
+      type: object
+      properties:
+        perm:
+          description: The 7-digit perm number
+          type: string
+        minorCode:
+          description: 5 character minor code, which can be found in the Student Record Lookup API.
+          type: string
+        deptCode:
+          description: 5 character department code, which can be found in the Student Record Lookup API.
+          type: string
+        collegeCode:
+          description: 4 character college code, which can be found in the Student Record Lookup API.
+          type: string
+        acceptedQuarter:
+          description: 'The start quarter the academic program was active in YYYYQ format. This is the first term
+
+            for the student''s Objective/Major/Emphasis program.'
+          type: string
+        terminationQuarter:
+          description: 'The end quarter the academic program was active in YYYYQ format.  This is the last term
+
+            for the student''s Objective/Major/Emphasis program.'
+          type: string
+        degreeStatusCode:
+          description: "1 character code which describes the status of the degree. The status is set once\nthe student has petetioned to graduate. The status codes can also be found in\nthe Student Record Lookup API.\n\nNULL\t- No Degree Status\nF\t\t- Final Degree (Completed all requirements and the degree class if finalized)\nP\t\t- Provisional Degree (Completed all requirements)\nS\t\t- Scheduled for Degree\nI\t\t- Degree with Work In Progress (Will receive the degree is all current work is completed successfully)\nN\t\t- NILS (Petitioned for degree but has not satisfed all requirements)"
+          type: string
+        degreeQuarter:
+          description: The quarter the student has petitioned to graduate in YYYYQ format. See the Degree Status to determine the status of the degree.
+          type: string
+    WebApiInvalidModel:
+      type: object
+      properties:
+        message:
+          type: string
+        modelState:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    AcademicMinor_2:
+      type: object
+      properties:
+        minorCode:
+          type: string
+        minorTranslationShort:
+          type: string
+        minorTranslation:
+          type: string
+        collegeCode:
+          type: string
+        departmentCode:
+          type: string
+        inactive:
+          type: boolean
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey
+    ucsbnetid-password:
+      type: http
+      scheme: basic
+x-refined-from:
+- academicprograms-v1.1.out_.api_.yaml
+- lookups-v1.6.out_.api__0.yaml

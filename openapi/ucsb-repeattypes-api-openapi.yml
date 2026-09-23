@@ -1,0 +1,56 @@
+openapi: 3.2.0
+info:
+  version: v1.6
+  title: Student Record Code Lookups Repeat Types API
+  description: Code Lookups from the Office of the Registrar.
+servers:
+- url: https://api.ucsb.edu/students
+tags:
+- name: RepeatTypes
+paths:
+  /lookups/v1/repeattypes:
+    get:
+      tags:
+      - RepeatTypes
+      operationId: /lookups/v1/repeattypes
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicRepeatType'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicRepeatType'
+      description: Get repeat type code and translation
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/repeattypes
+      x-summary-source: derived
+components:
+  schemas:
+    AcademicRepeatType:
+      type: object
+      properties:
+        repeatTypeCode:
+          type: string
+        repeatTypeTranslation:
+          type: string
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey

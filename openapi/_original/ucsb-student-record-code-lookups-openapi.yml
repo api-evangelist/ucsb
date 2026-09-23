@@ -1,0 +1,1655 @@
+# x-archived-from: ucsb-student-record-code-lookups-openapi.yml
+# x-archived-on: 2026-09-16
+swagger: '2.0'
+info:
+  version: v1.6
+  title: Student Record Code Lookups
+  description: Code Lookups from the Office of the Registrar.
+  x-source-url: https://developer.ucsb.edu/sites/default/files/openapi/lookups-v1.6.out_.api__0.yaml
+  x-last-validated: '2026-08-30'
+  x-operator: institution
+host: api.ucsb.edu
+basePath: /students
+schemes:
+- https
+securityDefinitions:
+  ucsb-api-key:
+    name: ucsb-api-key
+    in: header
+    type: apiKey
+paths:
+  /lookups/v1/admitlevels:
+    get:
+      tags:
+      - AdmitLevels
+      operationId: /lookups/v1/admitlevels
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicAdmitLevel'
+      description: Gets the list of admit level codes.
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/classifications:
+    get:
+      tags:
+      - Classifications
+      operationId: /lookups/v1/classifications
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicClassification'
+      description: "Gets the list of classifications.\r\n([Data Dictionary - Classifications](https://dataservices.sa.ucsb.edu/_layouts/15/ReportServer/RSViewerPage.aspx?rv:RelativeReportUrl=/Lookup%20Tables/Student%20Data%20Tables/Classification.rdl&amp;Source=https%3A%2F%2Fdataservices%2Esa%2Eucsb%2Eedu%2FLookup%2520Tables%2FForms%2FAllItems%2Easpx%3FRootFolder%3D%252FLookup%2520Tables%252FStudent%2520Data%2520Tables%26FolderCTID%3D0x012000B185318CCBCACA479FB3883E2999B5D1%26View%3D%257B6D05A9F9%252D2DF5%252D4CB7%252DAF3A%252DB19EE832D3D7%257D))"
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/classlevels:
+    get:
+      tags:
+      - ClassLevels
+      operationId: /lookups/v1/classlevels
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicClassLevel'
+      description: "Gets the list of class levels.\r\n([Data Dictionary - Class Levels](https://dataservices.sa.ucsb.edu/_layouts/15/ReportServer/RSViewerPage.aspx?rv:RelativeReportUrl=/Lookup%20Tables/Student%20Data%20Tables/Class%20Level.rdl&amp;Source=https%3A%2F%2Fdataservices%2Esa%2Eucsb%2Eedu%2FLookup%2520Tables%2FForms%2FAllItems%2Easpx%3FRootFolder%3D%252FLookup%2520Tables%252FStudent%2520Data%2520Tables%26FolderCTID%3D0x012000B185318CCBCACA479FB3883E2999B5D1%26View%3D%257B6D05A9F9%252D2DF5%252D4CB7%252DAF3A%252DB19EE832D3D7%257D))"
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/colleges:
+    get:
+      tags:
+      - Colleges
+      operationId: /lookups/v1/colleges
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: translationFilter
+        in: query
+        description: "Filters the translations by the given text. If the text appears in the the\r\ntranslation,\
+          \ then it will be returned."
+        required: false
+        type: string
+        default: ''
+      - name: includeInactive
+        in: query
+        description: "Include colleges that are no longer active. The default behavior is to not\r\ninclude\
+          \ inactive colleges."
+        required: false
+        type: boolean
+        default: false
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicCollege'
+      description: "Gets the list of active colleges.\r\n([Data Dictionary - College](https://dataservices.sa.ucsb.edu/_layouts/15/ReportServer/RSViewerPage.aspx?rv:RelativeReportUrl=/Lookup%20Tables/College.rdl&amp;Source=https%3A%2F%2Fdataservices%2Esa%2Eucsb%2Eedu%2FPages%2FLookup_Tables%2Easpx))"
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/courserepeats:
+    get:
+      tags:
+      - CourseRepeats
+      operationId: /lookups/v1/courserepeats
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicCourseRepeat'
+      description: "Gets the list of course repeat codes.\r\n([Data Dictionary - Course Repeat Codes](https://dataservices.sa.ucsb.edu/_layouts/15/ReportServer/RSViewerPage.aspx?rv:RelativeReportUrl=/Lookup%20Tables/Course%20Data%20Tables/Course%20Repeat.rdl&amp;Source=https%3A%2F%2Fdataservices%2Esa%2Eucsb%2Eedu%2FLookup%2520Tables%2FForms%2FAllItems%2Easpx%3FRootFolder%3D%252FLookup%2520Tables%252FCourse%2520Data%2520Tables%26FolderCTID%3D0x012000B185318CCBCACA479FB3883E2999B5D1%26View%3D%257B6D05A9F9%252D2DF5%252D4CB7%252DAF3A%252DB19EE832D3D7%257D))"
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/coursestatuses:
+    get:
+      tags:
+      - CourseStatuses
+      operationId: /lookups/v1/coursestatuses
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicCourseStatus'
+      description: "Gets the list of course status codes.\r\n([Data Dictionary - Course Status](https://dataservices.sa.ucsb.edu/_layouts/15/ReportServer/RSViewerPage.aspx?rv:RelativeReportUrl=/Lookup%20Tables/Course%20Data%20Tables/Course%20Status.rdl&amp;Source=https%3A%2F%2Fdataservices%2Esa%2Eucsb%2Eedu%2FLookup%2520Tables%2FForms%2FAllItems%2Easpx%3FRootFolder%3D%252FLookup%2520Tables%252FCourse%2520Data%2520Tables%26FolderCTID%3D0x012000B185318CCBCACA479FB3883E2999B5D1%26View%3D%257B6D05A9F9%252D2DF5%252D4CB7%252DAF3A%252DB19EE832D3D7%257D))"
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/days:
+    get:
+      tags:
+      - Days
+      operationId: /lookups/v1/days
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicDays'
+      description: Get DaysCode and daysCode translation
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/degreestatus:
+    get:
+      tags:
+      - DegreeStatus
+      operationId: /lookups/v1/degreestatus
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicDegreeStatus'
+      description: Gets the list of degree status codes.
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/departments/{code}:
+    get:
+      tags:
+      - Departments
+      operationId: /lookups/v1/departments/{code}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: code
+        in: path
+        description: The department code to match.
+        required: true
+        type: string
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/AcademicDepartment'
+      description: "Gets an active departments.\r\n([Data Dictionary - Academic Department](https://dataservices.sa.ucsb.edu/_layouts/15/ReportServer/RSViewerPage.aspx?rv:RelativeReportUrl=/Lookup%20Tables/Department.rdl&amp;Source=https%3A%2F%2Fdataservices%2Esa%2Eucsb%2Eedu%2FPages%2FLookup_Tables%2Easpx))"
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/departments:
+    get:
+      tags:
+      - Departments
+      operationId: /lookups/v1/departments
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: college
+        in: query
+        description: "Filter the list of departments by the college. Possible values are\r\nan empty string/null,\
+          \ L&amp;S, ENGR, CRST, ESM, GRAD, GSE.\r\n([Data Dictionary - College](https://dataservices.sa.ucsb.edu/_layouts/15/ReportServer/RSViewerPage.aspx?rv:RelativeReportUrl=/Lookup%20Tables/College.rdl&amp;Source=https%3A%2F%2Fdataservices%2Esa%2Eucsb%2Eedu%2FPages%2FLookup_Tables%2Easpx))"
+        required: false
+        type: string
+        default: ''
+      - name: translationFilter
+        in: query
+        description: "Filters the translations by the given text. If the text appears in the the\r\ntranslation,\
+          \ then it will be returned."
+        required: false
+        type: string
+        default: ''
+      - name: includeInactive
+        in: query
+        description: "Include departments that are no longer active. The default behavior is to not\r\n\
+          include inactive departments."
+        required: false
+        type: boolean
+        default: false
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicDepartment'
+      description: "Gets the list of active departments.\r\n([Data Dictionary - Academic Department](https://dataservices.sa.ucsb.edu/_layouts/15/ReportServer/RSViewerPage.aspx?rv:RelativeReportUrl=/Lookup%20Tables/Department.rdl&amp;Source=https%3A%2F%2Fdataservices%2Esa%2Eucsb%2Eedu%2FPages%2FLookup_Tables%2Easpx))"
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/divisions:
+    get:
+      tags:
+      - Divisions
+      operationId: /lookups/v1/divisions
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: translationFilter
+        in: query
+        description: "Filters the translations by the given text. If the text appears in the the\r\ntranslation,\
+          \ then it will be returned."
+        required: false
+        type: string
+        default: ''
+      - name: includeInactive
+        in: query
+        description: "Include divisions that are no longer active. The default behavior is to not\r\n\
+          include inactive divisions."
+        required: false
+        type: boolean
+        default: false
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicDivision'
+      description: "Gets the list of active divisions.\r\n([Data Dictionary - Academic Department](https://dataservices.sa.ucsb.edu/_layouts/15/ReportServer/RSViewerPage.aspx?rv:RelativeReportUrl=/Lookup%20Tables/Department.rdl&amp;Source=https%3A%2F%2Fdataservices%2Esa%2Eucsb%2Eedu%2FPages%2FLookup_Tables%2Easpx))"
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/emphasis/{code}:
+    get:
+      tags:
+      - Emphasis
+      operationId: /lookups/v1/emphasis/{code}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: code
+        in: path
+        description: "The emphasis code to match. If this is used translationFilter and includeInactive\r\
+          \nare ignored."
+        required: true
+        type: string
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/AcademicEmphasis'
+      description: "Gets an active emphasis.\r\n([Data Dictionary - Emphasis](https://dataservices.sa.ucsb.edu/_layouts/15/ReportServer/RSViewerPage.aspx?rv:RelativeReportUrl=/Lookup%20Tables/Student%20Academic%20Program%20Tables/Emphasis.rdl&amp;Source=https%3A%2F%2Fdataservices%2Esa%2Eucsb%2Eedu%2FLookup%2520Tables%2FForms%2FAllItems%2Easpx%3FRootFolder%3D%252fLookup%2520Tables%252fStudent%2520Academic%2520Program%2520Tables%26FolderCTID%3D0x012000B185318CCBCACA479FB3883E2999B5D1))"
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/emphasis:
+    get:
+      tags:
+      - Emphasis
+      operationId: /lookups/v1/emphasis
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: translationFilter
+        in: query
+        description: "Filters the translations by the given text. If the text appears in the the\r\ntranslation,\
+          \ then it will be returned. This cannot be used with code."
+        required: false
+        type: string
+        default: ''
+      - name: includeInactive
+        in: query
+        description: Include emphases that are no longer active. This cannot be used with code.
+        required: false
+        type: boolean
+        default: false
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicEmphasis'
+      description: "Gets the list of active emphases. (The name was left as emphasis because it's easier\
+        \ to find).\r\n([Data Dictionary - Emphasis](https://dataservices.sa.ucsb.edu/_layouts/15/ReportServer/RSViewerPage.aspx?rv:RelativeReportUrl=/Lookup%20Tables/Student%20Academic%20Program%20Tables/Emphasis.rdl&amp;Source=https%3A%2F%2Fdataservices%2Esa%2Eucsb%2Eedu%2FLookup%2520Tables%2FForms%2FAllItems%2Easpx%3FRootFolder%3D%252fLookup%2520Tables%252fStudent%2520Academic%2520Program%2520Tables%26FolderCTID%3D0x012000B185318CCBCACA479FB3883E2999B5D1))"
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/feestatus:
+    get:
+      tags:
+      - FeeStatus
+      operationId: /lookups/v1/feestatus
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: includeInactive
+        in: query
+        required: false
+        type: boolean
+        default: false
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicFeeStatus'
+      description: Gets the list of school type codes.
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/genderidentity:
+    get:
+      tags:
+      - GenderIdentity
+      operationId: /lookups/v1/genderidentity
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicGenderIdentity'
+      description: Get gender identity code and translation
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/pronouns/{code}:
+    get:
+      tags:
+      - Pronouns
+      operationId: /lookups/v1/pronouns/{code}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: code
+        in: path
+        description: The gender pronoun code to match.
+        required: true
+        type: string
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/GenderPronoun'
+      description: Gets a gender pronoun object
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/pronouns:
+    get:
+      tags:
+      - Pronouns
+      operationId: /lookups/v1/pronouns
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: translationFilter
+        in: query
+        description: "Filters the translations by the given text. If the text appears in the the\r\ntranslation,\
+          \ then it will be returned."
+        required: false
+        type: string
+        default: ''
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GenderPronoun'
+      description: Gets the list of gender pronouns.
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/grades:
+    get:
+      tags:
+      - Grades
+      operationId: /lookups/v1/grades
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicGrade'
+      description: "Gets the list of grades.\r\n([Data Dictionary - Grades](https://dataservices.sa.ucsb.edu/_layouts/15/ReportServer/RSViewerPage.aspx?rv:RelativeReportUrl=/Lookup%20Tables/Course%20Data%20Tables/Grades.rdl&amp;Source=https%3A%2F%2Fdataservices%2Esa%2Eucsb%2Eedu%2FLookup%2520Tables%2FForms%2FAllItems%2Easpx%3FRootFolder%3D%252FLookup%2520Tables%252FCourse%2520Data%2520Tables%26FolderCTID%3D0x012000B185318CCBCACA479FB3883E2999B5D1%26View%3D%257B6D05A9F9%252D2DF5%252D4CB7%252DAF3A%252DB19EE832D3D7%257D))"
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/gradingoptions:
+    get:
+      tags:
+      - GradingOptions
+      operationId: /lookups/v1/gradingoptions
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicGradingOption'
+      description: "Get list of character code which describes grading options and translations.The grading\
+        \ options\r\ncan be pass no pass (P, NP) and letter grades like (A,B, C). For graduate student\
+        \ Pass/No Pass grade value is \"S\" and \"U\"\r\nfor satisfactory and Non satisfactory \r\nP -\
+        \ Pass/No Pass\r\nL - Letter Grade"
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/instructiontypes:
+    get:
+      tags:
+      - InstructionTypes
+      operationId: /lookups/v1/instructiontypes
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicInstructionType'
+      description: Get Academic Instruction type code and Instruction translation
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/instructorfunctions:
+    get:
+      tags:
+      - InstructorFunctions
+      operationId: /lookups/v1/instructorfunctions
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicInstructorFunction'
+      description: Get Instruction function code and translations
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/internationalstudents:
+    get:
+      tags:
+      - InternationalStudents
+      operationId: /lookups/v1/internationalstudents
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicInternationalStudent'
+      description: Gets the list of student international stundent type codes.
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/majors/{code}:
+    get:
+      tags:
+      - Majors
+      operationId: /lookups/v1/majors/{code}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: code
+        in: path
+        description: "The major code to match. If this is used translationFilter and includeInactive\r\
+          \nare ignored."
+        required: true
+        type: string
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/AcademicMajor'
+      description: "Gets an active majors.\r\n([Data Dictionary - Majors](https://dataservices.sa.ucsb.edu/_layouts/15/ReportServer/RSViewerPage.aspx?rv:RelativeReportUrl=/Lookup%20Tables/Student%20Academic%20Program%20Tables/Majors.rdl&amp;Source=https%3A%2F%2Fdataservices%2Esa%2Eucsb%2Eedu%2FLookup%2520Tables%2FForms%2FAllItems%2Easpx%3FRootFolder%3D%252FLookup%2520Tables%252FStudent%2520Academic%2520Program%2520Tables%26FolderCTID%3D0x012000B185318CCBCACA479FB3883E2999B5D1%26View%3D%257B6D05A9F9%252D2DF5%252D4CB7%252DAF3A%252DB19EE832D3D7%257D))"
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/majors:
+    get:
+      tags:
+      - Majors
+      operationId: /lookups/v1/majors
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: translationFilter
+        in: query
+        description: "Filters the translations by the given text. If the text appears in the the\r\ntranslation,\
+          \ then it will be returned."
+        required: false
+        type: string
+        default: ''
+      - name: includeInactive
+        in: query
+        description: Include majors that are no longer active.
+        required: false
+        type: boolean
+        default: false
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicMajor'
+      description: "Gets the list of active majors.\r\n([Data Dictionary - Majors](https://dataservices.sa.ucsb.edu/_layouts/15/ReportServer/RSViewerPage.aspx?rv:RelativeReportUrl=/Lookup%20Tables/Student%20Academic%20Program%20Tables/Majors.rdl&amp;Source=https%3A%2F%2Fdataservices%2Esa%2Eucsb%2Eedu%2FLookup%2520Tables%2FForms%2FAllItems%2Easpx%3FRootFolder%3D%252FLookup%2520Tables%252FStudent%2520Academic%2520Program%2520Tables%26FolderCTID%3D0x012000B185318CCBCACA479FB3883E2999B5D1%26View%3D%257B6D05A9F9%252D2DF5%252D4CB7%252DAF3A%252DB19EE832D3D7%257D))"
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/minors/{code}:
+    get:
+      tags:
+      - Minors
+      operationId: /lookups/v1/minors/{code}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: code
+        in: path
+        description: "The subject code to match. If this is used translationFilter and includeInactive\r\
+          \nare ignored."
+        required: true
+        type: string
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/AcademicMinor'
+      description: "Gets an active minor.\r\n([Data Dictionary - Minors](https://dataservices.sa.ucsb.edu/_layouts/15/ReportServer/RSViewerPage.aspx?rv:RelativeReportUrl=/Lookup%20Tables/Student%20Academic%20Program%20Tables/Minors%20by%20College.rdl&amp;Source=https%3A%2F%2Fdataservices%2Esa%2Eucsb%2Eedu%2FLookup%2520Tables%2FForms%2FAllItems%2Easpx%3FRootFolder%3D%252FLookup%2520Tables%252FStudent%2520Academic%2520Program%2520Tables%26FolderCTID%3D0x012000B185318CCBCACA479FB3883E2999B5D1%26View%3D%257B6D05A9F9%252D2DF5%252D4CB7%252DAF3A%252DB19EE832D3D7%257D))"
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/minors:
+    get:
+      tags:
+      - Minors
+      operationId: /lookups/v1/minors
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: translationFilter
+        in: query
+        description: "Filters the translations by the given text. If the text appears in the the\r\ntranslation,\
+          \ then it will be returned."
+        required: false
+        type: string
+        default: ''
+      - name: includeInactive
+        in: query
+        description: Include minors that are no longer active.
+        required: false
+        type: boolean
+        default: false
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicMinor'
+      description: "Gets the list of active minors.\r\n([Data Dictionary - Minors](https://dataservices.sa.ucsb.edu/_layouts/15/ReportServer/RSViewerPage.aspx?rv:RelativeReportUrl=/Lookup%20Tables/Student%20Academic%20Program%20Tables/Minors%20by%20College.rdl&amp;Source=https%3A%2F%2Fdataservices%2Esa%2Eucsb%2Eedu%2FLookup%2520Tables%2FForms%2FAllItems%2Easpx%3FRootFolder%3D%252FLookup%2520Tables%252FStudent%2520Academic%2520Program%2520Tables%26FolderCTID%3D0x012000B185318CCBCACA479FB3883E2999B5D1%26View%3D%257B6D05A9F9%252D2DF5%252D4CB7%252DAF3A%252DB19EE832D3D7%257D))"
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/multiethnicity:
+    get:
+      tags:
+      - MultiEthnicity
+      operationId: /lookups/v1/multiethnicity
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicMultiEthnicity'
+      description: "Gets the list of Multi ethnicity for students\r\nAll the multi ethnicity code and\
+        \ there translations returned"
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/objectives/{code}:
+    get:
+      tags:
+      - Objectives
+      operationId: /lookups/v1/objectives/{code}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: code
+        in: path
+        description: The objective code to match.
+        required: true
+        type: string
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/AcademicObjective'
+      description: Gets an active objective.
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/objectives:
+    get:
+      tags:
+      - Objectives
+      operationId: /lookups/v1/objectives
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: translationFilter
+        in: query
+        description: "Filters the translations by the given text. If the text appears in the the\r\ntranslation,\
+          \ then it will be returned."
+        required: false
+        type: string
+        default: ''
+      - name: includeInactive
+        in: query
+        description: Include objectives that are no longer active.
+        required: false
+        type: boolean
+        default: false
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicObjective'
+      description: Gets the list of active objectives.
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/objmajemps:
+    get:
+      tags:
+      - ObjMajEmps
+      operationId: /lookups/v1/objmajemps
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: objCode
+        in: query
+        description: The objective code to match. Can be used with other code parameters.
+        required: false
+        type: string
+        default: ''
+      - name: majorCode
+        in: query
+        description: The objective code to match. Can be used with other code parameters.
+        required: false
+        type: string
+        default: ''
+      - name: emphasisCode
+        in: query
+        description: The objective code to match. Can be used with other code parameters.
+        required: false
+        type: string
+        default: ''
+      - name: objLevelCode
+        in: query
+        description: '''G''raduate or ''U''ndergraduate. Can be used with other code parameters.'
+        required: false
+        type: string
+        default: ''
+      - name: objLevel
+        in: query
+        description: "'G'raduate or 'U'ndergraduate. Can be used with other code parameters.\r\nThis parameter\
+          \ will be deprecated in the future, use objLevelCode instead."
+        required: false
+        type: string
+        default: ''
+      - name: includeInactive
+        in: query
+        description: Include object major emphasis combinations that are no longer active. This cannot
+          be used with code.
+        required: false
+        type: boolean
+        default: false
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicObjMajEmp'
+      description: "Gets the list of active object major emphasis combinations.\r\nThese are the actual\
+        \ degree programs students enroll in.\r\n([Data Dictionary - Object Major Emphasis By College](https://dataservices.sa.ucsb.edu/_layouts/15/ReportServer/RSViewerPage.aspx?rv:RelativeReportUrl=/Lookup%20Tables/Student%20Academic%20Program%20Tables/Object%20Major%20Emphasis%20by%20College.rdl&amp;Source=https%3A%2F%2Fdataservices%2Esa%2Eucsb%2Eedu%2FLookup%2520Tables%2FForms%2FAllItems%2Easpx%3FRootFolder%3D%252fLookup%2520Tables%252fStudent%2520Academic%2520Program%2520Tables%26FolderCTID%3D0x012000B185318CCBCACA479FB3883E2999B5D1))"
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/organizations:
+    get:
+      tags:
+      - Organizations
+      operationId: /lookups/v1/organizations
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: translationFilter
+        in: query
+        description: "Filters the translations by the given text. If the text appears in the the\r\ntranslation,\
+          \ then it will be returned."
+        required: false
+        type: string
+        default: ''
+      - name: includeInactive
+        in: query
+        description: "Include organizations that are no longer active. The default behavior is to not\r\
+          \ninclude inactive organizations."
+        required: false
+        type: boolean
+        default: false
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicOrganization'
+      description: Gets the list of active organizations.
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/regstatus:
+    get:
+      tags:
+      - RegStatus
+      operationId: /lookups/v1/regstatus
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: includeInactive
+        in: query
+        required: false
+        type: boolean
+        default: false
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicRegStatus'
+      description: Gets the list of school type codes.
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/repeattypes:
+    get:
+      tags:
+      - RepeatTypes
+      operationId: /lookups/v1/repeattypes
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicRepeatType'
+      description: Get repeat type code and translation
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/requirementcourses:
+    get:
+      tags:
+      - RequirementCourses
+      operationId: /lookups/v1/requirementcourses
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: quarter
+        in: query
+        description: A date within a quarter in format YYYYMMDD. This cannot be used with parameter type.
+        required: false
+        type: string
+        default: ''
+      - name: type
+        in: query
+        description: "This can be (default) 'firstdayofquarter', 'lastdayoffinals', 'lastdayofschedule'.\r\
+          \nThis cannot be used with parameter quarter."
+        required: false
+        type: string
+        default: ''
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicCollegeRequirementCourse'
+      description: "Gets the list of college requirement courses.\r\n([Data Dictionary - College Requirement\
+        \ Courses](https://dataservices.sa.ucsb.edu/_layouts/15/ReportServer/RSViewerPage.aspx?rv:RelativeReportUrl=/Lookup%20Tables/College%20Requirement%20Courses.rdl&amp;Source=https%3A%2F%2Fdataservices%2Esa%2Eucsb%2Eedu%2FLookup%2520Tables%2FForms%2FAllItems%2Easpx))"
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/requirements:
+    get:
+      tags:
+      - Requirements
+      operationId: /lookups/v1/requirements
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: includeInactive
+        in: query
+        description: Include object major emphasis combinations that are no longer active. This cannot
+          be used with code.
+        required: false
+        type: boolean
+        default: false
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicCollegeRequirement'
+      description: "Gets the list of college requirements.\r\n([Data Dictionary - College Requirements](https://dataservices.sa.ucsb.edu/_layouts/15/ReportServer/RSViewerPage.aspx?rv:RelativeReportUrl=/Lookup%20Tables/College%20Requirements.rdl&amp;Source=https%3A%2F%2Fdataservices%2Esa%2Eucsb%2Eedu%2FLookup%2520Tables%2FForms%2FAllItems%2Easpx))\r\
+        \n([Reg Catalog - Degree Requirements](https://my.sa.ucsb.edu/catalog/2012-2013/CollegesDepartments/ls-intro/DegreeRequirements.aspx))"
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/schooltypes:
+    get:
+      tags:
+      - SchoolTypes
+      operationId: /lookups/v1/schooltypes
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicSchoolType'
+      description: Gets the list of school type codes.
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/studyloadstatus:
+    get:
+      tags:
+      - StudyLoadStatus
+      operationId: /lookups/v1/studyloadstatus
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: includeInactive
+        in: query
+        required: false
+        type: boolean
+        default: false
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicStudyLoadStatus'
+      description: Gets the list of school type codes.
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/subjects/{code}:
+    get:
+      tags:
+      - Subjects
+      operationId: /lookups/v1/subjects/{code}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: code
+        in: path
+        description: The subject code to match.
+        required: true
+        type: string
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/AcademicSubject'
+      description: Gets an active subject.
+      security:
+      - ucsb-api-key: []
+  /lookups/v1/subjects:
+    get:
+      tags:
+      - Subjects
+      operationId: /lookups/v1/subjects
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: translationFilter
+        in: query
+        description: "Filters the translations by the given text. If the text appears in the the\r\ntranslation,\
+          \ then it will be returned."
+        required: false
+        type: string
+        default: ''
+      - name: deptCode
+        in: query
+        description: The subject code to match.
+        required: false
+        type: string
+        default: ''
+      - name: includeInactive
+        in: query
+        description: Include subjects that are no longer active.
+        required: false
+        type: boolean
+        default: false
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.6'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademicSubject'
+      description: Gets the list of active subjects.
+      security:
+      - ucsb-api-key: []
+definitions:
+  AcademicAdmitLevel:
+    type: object
+    properties:
+      admitLevelCode:
+        type: string
+      admitLevelTranslation:
+        type: string
+  AcademicClassification:
+    type: object
+    properties:
+      classificationCode:
+        type: string
+      classificationTranslation:
+        type: string
+  AcademicClassLevel:
+    type: object
+    properties:
+      classLevelCode:
+        type: string
+      classLevelTranslation:
+        type: string
+      level:
+        type: string
+      unitsLow:
+        format: double
+        type: number
+      unitsHigh:
+        format: double
+        type: number
+      comments:
+        type: string
+  AcademicCollege:
+    type: object
+    properties:
+      collegeCode:
+        type: string
+      collegeTranslation:
+        type: string
+      orgCode:
+        type: string
+      inactive:
+        type: boolean
+  AcademicCourseRepeat:
+    type: object
+    properties:
+      repeatCode:
+        type: string
+      repeatTranslation:
+        type: string
+  AcademicCourseStatus:
+    type: object
+    properties:
+      courseStatusCode:
+        type: string
+      courseStatusTranslation:
+        type: string
+  AcademicDays:
+    type: object
+    properties:
+      dayCode:
+        type: string
+      dayCodeTranslation:
+        type: string
+  AcademicDegreeStatus:
+    type: object
+    properties:
+      degreeStatusCode:
+        type: string
+      degreeStatusTranslation:
+        type: string
+  AcademicDepartment:
+    type: object
+    properties:
+      deptCode:
+        type: string
+      deptTranslationShort:
+        type: string
+      deptTranslation:
+        type: string
+      collegeCode:
+        type: string
+      divisionCode:
+        type: string
+      orgCode:
+        type: string
+      inactive:
+        type: boolean
+  AcademicDivision:
+    type: object
+    properties:
+      divisionCode:
+        type: string
+      divisionTranslationShort:
+        type: string
+      divisionTranslation:
+        type: string
+      inactive:
+        type: boolean
+  AcademicEmphasis:
+    type: object
+    properties:
+      emphasisCode:
+        type: string
+      emphasisTranslation:
+        type: string
+      inactive:
+        type: boolean
+  AcademicFeeStatus:
+    type: object
+    properties:
+      feeStatusCode:
+        type: string
+      feeStatusTranslation:
+        type: string
+      comments:
+        type: string
+      inactive:
+        type: boolean
+  AcademicGenderIdentity:
+    type: object
+    properties:
+      genderIdentityCode:
+        type: string
+      genderIdentityTranslation:
+        type: string
+      genderIdentityUCOPCode:
+        type: string
+  GenderPronoun:
+    type: object
+    properties:
+      pronounCode:
+        type: string
+      pronounTranslation:
+        type: string
+      pronounTransShort:
+        type: string
+      pronounNominative:
+        type: string
+  AcademicGrade:
+    type: object
+    properties:
+      gradeCode:
+        type: string
+      gradeTranslation:
+        type: string
+      value:
+        format: double
+        type: number
+      comments:
+        type: string
+  AcademicGradingOption:
+    type: object
+    properties:
+      gradingOptionCode:
+        type: string
+      gradingOptionTranslation:
+        type: string
+  HealthcheckMessage:
+    type: object
+    properties:
+      component:
+        type: string
+      message:
+        type: string
+  HealthcheckResponseModel:
+    type: object
+    properties:
+      version:
+        type: string
+      status:
+        type: string
+      details:
+        type: array
+        items:
+          $ref: '#/definitions/HealthcheckMessageModel'
+  HealthcheckMessageModel:
+    type: object
+    properties:
+      component:
+        type: string
+      message:
+        type: string
+  AcademicInstructionType:
+    type: object
+    properties:
+      instructionTypeCode:
+        type: string
+      instructionTypeTranslation:
+        type: string
+  AcademicInstructorFunction:
+    type: object
+    properties:
+      instructorFunctionCode:
+        type: string
+      instructorFunctionTranslation:
+        type: string
+  AcademicInternationalStudent:
+    type: object
+    properties:
+      internationalStudentCode:
+        type: string
+      internationalStudentTranslation:
+        type: string
+  AcademicMajor:
+    type: object
+    properties:
+      majorCode:
+        type: string
+      majorTranslationShort:
+        type: string
+      majorTranslation:
+        type: string
+      collegeCode:
+        type: string
+      preMajorCode:
+        type: string
+      deptCode:
+        type: string
+      inactive:
+        type: boolean
+  AcademicMinor:
+    type: object
+    properties:
+      minorCode:
+        type: string
+      minorTranslationShort:
+        type: string
+      minorTranslation:
+        type: string
+      collegeCode:
+        type: string
+      departmentCode:
+        type: string
+      inactive:
+        type: boolean
+  AcademicMultiEthnicity:
+    type: object
+    properties:
+      multiEthnicityCode:
+        type: string
+      multiEthnicityTranslation:
+        type: string
+  AcademicObjective:
+    type: object
+    properties:
+      objCode:
+        type: string
+      objTranslation:
+        type: string
+      objTypeCode:
+        type: string
+      objTypeTransaltion:
+        type: string
+      objLevel:
+        type: string
+      objLevelCode:
+        type: string
+      inactive:
+        type: boolean
+  AcademicObjMajEmp:
+    type: object
+    properties:
+      objMajEmpCode:
+        type: string
+      objCode:
+        type: string
+      majorCode:
+        type: string
+      emphasisCode:
+        type: string
+      collegeCode:
+        type: string
+      deptCode:
+        type: string
+      objLevel:
+        type: string
+      objLevelCode:
+        type: string
+      obtainDegree:
+        type: string
+      inactive:
+        type: boolean
+  AcademicOrganization:
+    type: object
+    properties:
+      orgCode:
+        type: string
+      orgTranslationShort:
+        type: string
+      orgTranslation:
+        type: string
+      inactive:
+        type: boolean
+  AcademicRegStatus:
+    type: object
+    properties:
+      regStatusCode:
+        type: string
+      regStatusTranslation:
+        type: string
+      comments:
+        type: string
+      inactive:
+        type: boolean
+  AcademicRepeatType:
+    type: object
+    properties:
+      repeatTypeCode:
+        type: string
+      repeatTypeTranslation:
+        type: string
+  AcademicCollegeRequirementCourse:
+    type: object
+    properties:
+      requirementCode:
+        type: string
+      collegeCode:
+        type: string
+      courseCode:
+        type: string
+      startQuarter:
+        type: string
+      thruQuarter:
+        type: string
+  AcademicCollegeRequirement:
+    type: object
+    properties:
+      requirementCode:
+        type: string
+      requirementTranslation:
+        type: string
+      collegeCode:
+        type: string
+      objCode:
+        type: string
+      courseCount:
+        format: int32
+        type: integer
+      units:
+        format: double
+        type: number
+      inactive:
+        type: boolean
+  AcademicSchoolType:
+    type: object
+    properties:
+      schoolTypeCode:
+        type: string
+      description:
+        type: string
+  AcademicStudyLoadStatus:
+    type: object
+    properties:
+      studyLoadStatusCode:
+        type: string
+      studyLoadStatusTranslation:
+        type: string
+      inactive:
+        type: boolean
+  AcademicSubject:
+    type: object
+    properties:
+      subjectCode:
+        type: string
+      subjectTranslation:
+        type: string
+      deptCode:
+        type: string
+      collegeCode:
+        type: string
+      relatedDeptCode:
+        type: string
+      inactive:
+        type: boolean

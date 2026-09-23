@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ucsb/main/json-schema/ucsb-employee-job-schema.json",
+  "title": "EmployeeJobModel",
+  "description": "An employee job record from the UCPath-backed Employment and Job Data API. Private.",
+  "type": "object",
+  "properties": {
+    "employeeId": {
+      "description": "The 8-character employee number (treat this as a string)",
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 8
+    },
+    "jobCode": {
+      "description": "The unique job code that represents this job",
+      "type": "string",
+      "maxLength": 6
+    },
+    "jobClassCode": {
+      "description": "???",
+      "type": "string",
+      "maxLength": 2
+    },
+    "hireDate": {
+      "description": "The hire date in YYYYMMDD format",
+      "type": "string"
+    },
+    "terminationDate": {
+      "description": "The termination date in YYYYMMDD format",
+      "type": "string"
+    },
+    "deptCode": {
+      "description": "The primary HR department associated with job.",
+      "type": "string",
+      "maxLength": 4
+    },
+    "fte": {
+      "description": "The percentage allocation of the employee to the job.",
+      "type": "number",
+      "format": "float"
+    }
+  },
+  "x-source": "openapi/ucsb-employee-job-openapi.yml",
+  "x-method": "derived",
+  "x-generated": "2026-08-30"
+}

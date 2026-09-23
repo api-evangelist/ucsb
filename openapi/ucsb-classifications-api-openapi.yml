@@ -1,0 +1,58 @@
+openapi: 3.2.0
+info:
+  version: v1.6
+  title: Student Record Code Lookups Classifications API
+  description: Code Lookups from the Office of the Registrar.
+servers:
+- url: https://api.ucsb.edu/students
+tags:
+- name: Classifications
+paths:
+  /lookups/v1/classifications:
+    get:
+      tags:
+      - Classifications
+      operationId: /lookups/v1/classifications
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicClassification'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicClassification'
+      description: 'Gets the list of classifications.
+
+        (Data Dictionary - Classifications)'
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/classifications
+      x-summary-source: derived
+components:
+  schemas:
+    AcademicClassification:
+      type: object
+      properties:
+        classificationCode:
+          type: string
+        classificationTranslation:
+          type: string
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey

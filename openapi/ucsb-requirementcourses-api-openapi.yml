@@ -1,0 +1,80 @@
+openapi: 3.2.0
+info:
+  version: v1.6
+  title: Student Record Code Lookups Requirement Courses API
+  description: Code Lookups from the Office of the Registrar.
+servers:
+- url: https://api.ucsb.edu/students
+tags:
+- name: RequirementCourses
+paths:
+  /lookups/v1/requirementcourses:
+    get:
+      tags:
+      - RequirementCourses
+      operationId: /lookups/v1/requirementcourses
+      parameters:
+      - name: quarter
+        in: query
+        description: A date within a quarter in format YYYYMMDD. This cannot be used with parameter type.
+        required: false
+        schema:
+          type: string
+          default: ''
+      - name: type
+        in: query
+        description: 'This can be (default) ''firstdayofquarter'', ''lastdayoffinals'', ''lastdayofschedule''.
+
+          This cannot be used with parameter quarter.'
+        required: false
+        schema:
+          type: string
+          default: ''
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicCollegeRequirementCourse'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicCollegeRequirementCourse'
+      description: 'Gets the list of college requirement courses.
+
+        (Data Dictionary - College Requirement Courses)'
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/requirementcourses
+      x-summary-source: derived
+components:
+  schemas:
+    AcademicCollegeRequirementCourse:
+      type: object
+      properties:
+        requirementCode:
+          type: string
+        collegeCode:
+          type: string
+        courseCode:
+          type: string
+        startQuarter:
+          type: string
+        thruQuarter:
+          type: string
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey

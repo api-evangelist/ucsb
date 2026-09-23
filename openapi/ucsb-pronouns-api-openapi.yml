@@ -1,0 +1,103 @@
+openapi: 3.2.0
+info:
+  version: v1.6
+  title: Student Record Code Lookups Pronouns API
+  description: Code Lookups from the Office of the Registrar.
+servers:
+- url: https://api.ucsb.edu/students
+tags:
+- name: Pronouns
+paths:
+  /lookups/v1/pronouns/{code}:
+    get:
+      tags:
+      - Pronouns
+      operationId: /lookups/v1/pronouns/{code}
+      parameters:
+      - name: code
+        in: path
+        description: The gender pronoun code to match.
+        required: true
+        schema:
+          type: string
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenderPronoun'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GenderPronoun'
+      description: Gets a gender pronoun object
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/pronouns/{code}
+      x-summary-source: derived
+  /lookups/v1/pronouns:
+    get:
+      tags:
+      - Pronouns
+      operationId: /lookups/v1/pronouns
+      parameters:
+      - name: translationFilter
+        in: query
+        description: 'Filters the translations by the given text. If the text appears in the the
+
+          translation, then it will be returned.'
+        required: false
+        schema:
+          type: string
+          default: ''
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GenderPronoun'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GenderPronoun'
+      description: Gets the list of gender pronouns.
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/pronouns
+      x-summary-source: derived
+components:
+  schemas:
+    GenderPronoun:
+      type: object
+      properties:
+        pronounCode:
+          type: string
+        pronounTranslation:
+          type: string
+        pronounTransShort:
+          type: string
+        pronounNominative:
+          type: string
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey

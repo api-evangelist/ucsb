@@ -1,0 +1,673 @@
+# x-archived-from: ucsb-academic-curriculums-openapi.yml
+# x-archived-on: 2026-09-16
+swagger: '2.0'
+info:
+  version: v3
+  title: Academic Curriculum v3.0
+  description: Public curriculum api for class and class section search. The data provided is intended
+    to be used to populate drop downs, validate data entry, and provide information for planning and sharing.
+    The data doesn't change and can be cached for limited period of times to enable easier lookups.
+  x-source-url: https://developer.ucsb.edu/sites/default/files/openapi/curriculums-v3_0_0.yaml
+  x-last-validated: '2026-08-30'
+  x-operator: institution
+host: api.ucsb.edu
+basePath: /academics/curriculums
+schemes:
+- https
+securityDefinitions:
+  ucsb-api-key:
+    name: ucsb-api-key
+    in: header
+    type: apiKey
+security:
+- ucsb-api-key: []
+paths:
+  /v3/classes/{quarter}/{enrollcode}:
+    get:
+      tags:
+      - Classes
+      summary: Get class information by quarter and the enrollCode
+      operationId: Classes_GetClassesByEnrollCodeAsync
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: quarter
+        in: path
+        description: Quarter with format YYYYQ
+        required: true
+        type: string
+      - name: enrollcode
+        in: path
+        description: EnrollCode an unique number assigned to a curriculum, Enroll code should be 5 chars
+        required: true
+        type: string
+      - name: includeClassSections
+        in: query
+        description: Include class sections default to true
+        required: false
+        type: boolean
+        default: true
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '3.0'
+      responses:
+        '200':
+          description: Get class by quarter and enrollCode
+          schema:
+            $ref: '#/definitions/Class'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          schema:
+            $ref: '#/definitions/WebApiInvalidModel'
+        '404':
+          description: Resource cannot be found. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+  /v3/classes/search:
+    get:
+      tags:
+      - Classes
+      summary: "Search class and related information by multiple criteria,\r\nQuarter is a required search\
+        \ criteria"
+      operationId: Classes_GetClassesAsync
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: quarter
+        in: query
+        description: Quarter with format YYYYQ
+        required: true
+        type: string
+      - name: courseId
+        in: query
+        description: "13 character course Id with format SSSSSPPPNNNNUUU , Fist 5 char is course subject,\
+          \ Next 3 char is course prefix then next 3 char is course number and last 2 char is course suffix.\r\
+          \nFor example 'ES 1- 16B ' can be broken down in subject 'ES ' prefix '1- ' number ' 16' suffix\
+          \ 'B"
+        required: false
+        type: string
+      - name: enrollCode
+        in: query
+        description: EnrollCode an unique number assigned to a curriculum, Enroll code should be 5 chars
+        required: false
+        type: string
+      - name: session
+        in: query
+        description: Session number only for summer quarter
+        required: false
+        type: string
+      - name: subjectCode
+        in: query
+        description: The subject code to match First 8 Char of CourseId
+        required: false
+        type: string
+      - name: deptCode
+        in: query
+        description: The department code to match, Get course by Dept
+        required: false
+        type: string
+      - name: objLevelCode
+        in: query
+        description: 1 character code, The academic program objective level must be 'G'raduate or 'U'ndergraduate,
+          'L' for Undergraduate lower division and 'S' for Undergraduate upper division
+        required: false
+        type: string
+      - name: title
+        in: query
+        description: Title of the course, can be searched by few words
+        required: false
+        type: string
+      - name: areas
+        in: query
+        description: Get courses from an area
+        required: false
+        type: string
+      - name: openSections
+        in: query
+        description: Get courses by any open sections
+        required: false
+        type: boolean
+      - name: nonRestriction
+        in: query
+        description: Search for courses with no restrictions
+        required: false
+        type: boolean
+      - name: nonPreReq
+        in: query
+        description: Search for courses which do not have any prerequisite
+        required: false
+        type: boolean
+      - name: minUnits
+        in: query
+        description: Minimum number of units for the course, Both minimum and maximum units are required
+          for minimum and maximum unit search
+        required: false
+        type: number
+        format: double
+      - name: maxUnits
+        in: query
+        description: Maximum number of units for the course, Both minimum and maximum units are required
+          for minimum and maximum unit search
+        required: false
+        type: number
+        format: double
+      - name: minStartTime
+        in: query
+        description: Minimum start time with 24 hr time format 'NNN' to 'NNNN' for example 900 is 9am
+          to 1130 to 11:30 am
+        required: false
+        type: integer
+        format: int32
+      - name: maxStartTime
+        in: query
+        description: Maximum start time with 24 hr time format 'NNN' to 'NNNN' for example 900 is 9am
+          to 1130 to 11:30 am
+        required: false
+        type: integer
+        format: int32
+      - name: days
+        in: query
+        description: Days of Instruction for course for example 'M W ' means instruction happens on Monday
+          and wednesday For mode translation on day code look at Days interface at public api
+        required: false
+        type: string
+      - name: instructor
+        in: query
+        description: Name of Instructor
+        required: false
+        type: string
+      - name: pageNumber
+        in: query
+        description: page number of pagination
+        required: false
+        type: integer
+        format: int32
+        default: 1
+      - name: pageSize
+        in: query
+        description: Number of Courses you want to be returned, it will only return maximum 500 classes
+          per page
+        required: false
+        type: integer
+        format: int32
+        default: 10
+      - name: includeClassSections
+        in: query
+        description: Include lass Sections default to true
+        required: false
+        type: boolean
+        default: true
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '3.0'
+      responses:
+        '200':
+          description: Search for classes by criteria
+          schema:
+            $ref: '#/definitions/ClassModel'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          schema:
+            $ref: '#/definitions/WebApiInvalidModel'
+        '404':
+          description: Resource cannot be found. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+  /v3/classsection/{quarter}/{enrollcode}:
+    get:
+      tags:
+      - ClassSection
+      summary: Get class info by quarter and enrollCode
+      operationId: ClassSection_GetClassesByEnrollCodeAsync
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: quarter
+        in: path
+        description: Quarter with format YYYYQ
+        required: true
+        type: string
+      - name: enrollcode
+        in: path
+        description: EnrollCode an unique number assigned to a curriculum, Enroll code should be 5 chars
+        required: true
+        type: string
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '3.0'
+      responses:
+        '200':
+          description: Get class by quarter and enrollCode
+          schema:
+            $ref: '#/definitions/Class'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          schema:
+            $ref: '#/definitions/WebApiInvalidModel'
+        '404':
+          description: Resource cannot be found. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+  /v3/classspaceavailability/{quarter}:
+    get:
+      tags:
+      - ClassSpaceAvailability
+      summary: "Class space availability endpoint for getting space in a class or all classes in quarter.\r\
+        \nQuarter is required."
+      operationId: ClassSpaceAvailability_GetClassSpaceByPageAsync
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: quarter
+        in: path
+        description: Quarter with format YYYYQ
+        required: true
+        type: string
+      - name: enrollCode
+        in: query
+        description: EnrollCode an unique number assigned to a curriculum, Enroll code should be 5 chars
+        required: false
+        type: string
+      - name: pageNumber
+        in: query
+        description: page number of pagination
+        required: false
+        type: integer
+        format: int32
+        default: 1
+      - name: pageSize
+        in: query
+        description: Number of Courses you want to be returned, it will only return maximum 500 classes
+          per page
+        required: false
+        type: integer
+        format: int32
+        default: 10
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '3.0'
+      responses:
+        '200':
+          description: Get class space by quarter and/or enrollCode
+          schema:
+            $ref: '#/definitions/ClassSpaceModel'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          schema:
+            $ref: '#/definitions/WebApiInvalidModel'
+        '404':
+          description: Resource cannot be found. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+  /v3/finals:
+    get:
+      tags:
+      - Finals
+      summary: Get Final Exam information for a course by quarter and enrollCode
+      operationId: Finals_GetFinalsAsync
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: quarter
+        in: query
+        description: Quarter with format YYYYQ
+        required: true
+        type: string
+      - name: enrollCode
+        in: query
+        description: EnrollCode an unique number assigned to a curriculum
+        required: true
+        type: string
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '3.0'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/FinalExam'
+definitions:
+  Class:
+    description: Master course info
+    type: object
+    properties:
+      quarter:
+        description: Quarter with format YYYYQ
+        type: string
+      courseId:
+        description: "13 character course Id with format SSSSSPPPNNNNUUU , Fist 5 char is course subject,\
+          \ Next 3 char is course prefix then next 3 char is course number and last 2 char is course suffix.\r\
+          \nFor example 'ES 1- 16B ' can be broken down in subject 'ES ' prefix '1- ' number ' 16' suffix\
+          \ 'B"
+        type: string
+      title:
+        description: Course Title from curriculum catalog
+        type: string
+      contactHours:
+        format: double
+        description: Primary hours for course
+        type: number
+      description:
+        description: Detail descriptions for the course
+        type: string
+      college:
+        description: "College code approved for the course\r\nplease refer to Student Record Code Lookups\
+          \ API for translations"
+        type: string
+      objLevelCode:
+        description: "1 character code, The academic program objective level must be 'G'raduate or 'U'ndergraduate\
+          \ ,\r\n'L' for Undergraduate lower division and 'S' for Undergraduate upper division"
+        type: string
+      subjectArea:
+        description: The subject code to match First 8 Char of CourseId
+        type: string
+      unitsFixed:
+        format: double
+        description: Number of fixed units for the course
+        type: number
+      unitsVariableHigh:
+        format: double
+        description: Number of variable units for the course
+        type: number
+      unitsVariableLow:
+        format: double
+        description: Number of low units for the course
+        type: number
+      delayedSectioning:
+        description: delayed sectioning for the course
+        type: string
+      inProgressCourse:
+        description: If course is in progress
+        type: string
+      gradingOption:
+        description: Grading options for the course
+        type: string
+      instructionType:
+        description: Instruction type for primary sections (ending with 00)
+        type: string
+      instructionTypeSecondary:
+        description: Instruction type for secondary sections (ending with a number > 00)
+        type: string
+      onLineCourse:
+        description: If the course is online ?
+        type: boolean
+      deptCode:
+        description: "department code for the course\r\nplease refer look up api for translations"
+        type: string
+      generalEducation:
+        description: list of GeCode and GeCollege
+        type: array
+        items:
+          $ref: '#/definitions/GeneralEducation'
+      classSections:
+        description: list of sections associated with the class
+        type: array
+        items:
+          $ref: '#/definitions/ClassSection'
+  GeneralEducation:
+    description: General education code and college
+    type: object
+    properties:
+      geCode:
+        description: General education code
+        type: string
+      geCollege:
+        description: General education college
+        type: string
+  ClassSection:
+    description: Section information for a class
+    type: object
+    properties:
+      enrollCode:
+        description: "EnrollCode an unique number assigned\r\nto a curriculum"
+        type: string
+      section:
+        description: Section number of the course
+        type: string
+      session:
+        description: Session number only for summer quarter
+        type: string
+      classClosed:
+        description: If the class is closed
+        type: string
+      courseCancelled:
+        description: Is course cancelled
+        type: string
+      gradingOptionCode:
+        description: "Grading Options Code like Pass/No Pass (P/NP)\r\nOr Letter Grades (L)\r\nSee more\
+          \ GradingOptionsCode and GradingOptionsTranslation on GradingOptions interface\r\non Student\
+          \ Record Code Lookups API"
+        type: string
+      enrolledTotal:
+        format: int32
+        description: total number of enrollments in the course
+        type: integer
+      maxEnroll:
+        format: int32
+        description: max number of students can be enrolled in the section
+        type: integer
+      secondaryStatus:
+        description: Secondary Status of the course
+        type: string
+      departmentApprovalRequired:
+        description: Is department approval required for enrollment in the section
+        type: boolean
+      instructorApprovalRequired:
+        description: Is instructor approval required for enrollment in the section
+        type: boolean
+      restrictionLevel:
+        description: Is there restriction on the level of the course
+        type: string
+      restrictionMajor:
+        description: RestrictionMajor being a limit on which majors can add into the course
+        type: string
+      restrictionMajorPass:
+        description: "RestrictionMajorPass limits it to a certain major registration pass only,\r\nmeaning\
+          \ once that registration pass is over, then the limit is no longer enforced"
+        type: string
+      restrictionMinor:
+        description: RestrictionMinors being a limit on which minors can add into the course
+        type: string
+      restrictionMinorPass:
+        description: "RestrictionMinorPass limits it to a certain minor registration pass only,\r\nmeaning\
+          \ once that registration pass is over, then the limit is no longer enforced"
+        type: string
+      concurrentCourses:
+        description: concurrent course for the section
+        type: array
+        items:
+          type: string
+      timeLocations:
+        description: Time location for the section
+        type: array
+        items:
+          $ref: '#/definitions/ClassTimeLocation'
+      instructors:
+        description: instructor the section
+        type: array
+        items:
+          $ref: '#/definitions/ClassInstructor'
+  ClassTimeLocation:
+    description: time location for the section
+    type: object
+    properties:
+      room:
+        description: Room where course is offered
+        type: string
+      building:
+        description: Building for the room
+        type: string
+      roomCapacity:
+        format: int32
+        description: Capacity of the room
+        type: integer
+      days:
+        description: "Days of Instruction for course for example 'M W    ' means instruction happens on\
+          \ Monday and wednesday\r\nFor mode translation on day code look at Days interface at Student\
+          \ Record Code Lookups API"
+        type: string
+      beginTime:
+        description: "Begin time for a course\r\nHH:mm format"
+        type: string
+      endTime:
+        description: "End time of the course\r\nHH:mm format"
+        type: string
+  ClassInstructor:
+    description: Instructor of the section and class
+    type: object
+    properties:
+      instructor:
+        description: Name of the Instructor
+        type: string
+      functionCode:
+        description: "Instruction Function.\r\nSee more InstructionFunctionCode and InstructionFunctionTranslation\
+          \ on InstructionFunction interface\r\nSee translation on Student Record Code Lookups API"
+        type: string
+  WebApiInvalidModel:
+    type: object
+    properties:
+      message:
+        type: string
+      modelState:
+        type: object
+        additionalProperties:
+          type: array
+          items:
+            type: string
+  SimpleMessageModel:
+    type: object
+    properties:
+      message:
+        type: string
+  ClassModel:
+    type: object
+    properties:
+      pageNumber:
+        format: int32
+        description: page number for pagination
+        type: integer
+      pageSize:
+        format: int32
+        description: "how many courses user want to be returned on one page\r\nimp - one course can have\
+          \ multiple sections"
+        type: integer
+      total:
+        format: int32
+        description: Total number of courses for the search criteria
+        type: integer
+      classes:
+        description: "List of Classes\r\nclass include all the related sections"
+        type: array
+        items:
+          $ref: '#/definitions/Class'
+  ClassSpaceModel:
+    type: object
+    properties:
+      pageNumber:
+        format: int32
+        description: page number for pagination
+        type: integer
+      pageSize:
+        format: int32
+        description: "how many courses user want to be returned on one page\r\nimp - one course can have\
+          \ multiple sections"
+        type: integer
+      total:
+        format: int32
+        description: Total number of courses for the search criteria
+        type: integer
+      classSpaces:
+        description: Available space in the class
+        type: array
+        items:
+          $ref: '#/definitions/ClassSpace'
+  ClassSpace:
+    description: Available space in the class
+    type: object
+    properties:
+      courseId:
+        description: "13 character course Id with format SSSSSPPPNNNNUUU , Fist 5 char is course subject,\
+          \ Next 3 char is course prefix then next 3 char is course number and last 2 char is course suffix.\r\
+          \nFor example 'ES 1- 16B ' can be broken down in subject 'ES ' prefix '1- ' number ' 16' suffix\
+          \ 'B"
+        type: string
+      classSpaceAvailabilities:
+        description: List of available class spaces by section
+        type: array
+        items:
+          $ref: '#/definitions/ClassSpaceAvailability'
+  ClassSpaceAvailability:
+    description: class space availability by section
+    type: object
+    properties:
+      section:
+        description: Section number of the course
+        type: string
+      enrollCode:
+        description: EnrollCode an unique number assigned to a curriculum, Enroll code should be 5 chars
+        type: string
+      enrolledTotal:
+        format: int32
+        description: Total number of enrollments in the section
+        type: integer
+      maxEnroll:
+        format: int32
+        description: Max number of students can be enrolled in the section
+        type: integer
+  FinalExam:
+    description: Final Exam for a course
+    type: object
+    properties:
+      hasFinals:
+        description: is there a final exam for the course
+        type: boolean
+      comments:
+        description: Comments for the exam
+        type: string
+      examDay:
+        description: Day of Exam
+        type: string
+      examDate:
+        description: Date of Exam
+        type: string
+      beginTime:
+        description: Begin time for the Exam
+        type: string
+      endTime:
+        description: End time for the exam
+        type: string

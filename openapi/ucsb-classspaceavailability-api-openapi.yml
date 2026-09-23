@@ -1,0 +1,177 @@
+openapi: 3.2.0
+info:
+  version: v3
+  title: Academic Curriculum v3.0 Class Space Availability API
+  description: Public curriculum api for class and class section search. The data provided is intended to be used to populate drop downs, validate data entry, and provide information for planning and sharing. The data doesn't change and can be cached for limited period of times to enable easier lookups.
+servers:
+- url: https://api.ucsb.edu/academics/curriculums
+security:
+- ucsb-api-key: []
+tags:
+- name: ClassSpaceAvailability
+paths:
+  /v3/classspaceavailability/{quarter}:
+    get:
+      tags:
+      - ClassSpaceAvailability
+      summary: Class space availability endpoint for getting space in a class or all classes…
+      operationId: ClassSpaceAvailability_GetClassSpaceByPageAsync
+      parameters:
+      - name: quarter
+        in: path
+        description: Quarter with format YYYYQ
+        required: true
+        schema:
+          type: string
+      - name: enrollCode
+        in: query
+        description: EnrollCode an unique number assigned to a curriculum, Enroll code should be 5 chars
+        required: false
+        schema:
+          type: string
+      - name: pageNumber
+        in: query
+        description: page number of pagination
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 1
+      - name: pageSize
+        in: query
+        description: Number of Courses you want to be returned, it will only return maximum 500 classes per page
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 10
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '3.0'
+      responses:
+        '200':
+          description: Get class space by quarter and/or enrollCode
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClassSpaceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ClassSpaceModel'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ClassSpaceModel'
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/ClassSpaceModel'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+        '404':
+          description: Resource cannot be found. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+components:
+  schemas:
+    ClassSpaceModel:
+      type: object
+      properties:
+        pageNumber:
+          format: int32
+          description: page number for pagination
+          type: integer
+        pageSize:
+          format: int32
+          description: 'how many courses user want to be returned on one page
+
+            imp - one course can have multiple sections'
+          type: integer
+        total:
+          format: int32
+          description: Total number of courses for the search criteria
+          type: integer
+        classSpaces:
+          description: Available space in the class
+          type: array
+          items:
+            $ref: '#/components/schemas/ClassSpace'
+    ClassSpace:
+      description: Available space in the class
+      type: object
+      properties:
+        courseId:
+          description: '13 character course Id with format SSSSSPPPNNNNUUU , Fist 5 char is course subject, Next 3 char is course prefix then next 3 char is course number and last 2 char is course suffix.
+
+            For example ''ES 1- 16B '' can be broken down in subject ''ES '' prefix ''1- '' number '' 16'' suffix ''B'
+          type: string
+        classSpaceAvailabilities:
+          description: List of available class spaces by section
+          type: array
+          items:
+            $ref: '#/components/schemas/ClassSpaceAvailability'
+    WebApiInvalidModel:
+      type: object
+      properties:
+        message:
+          type: string
+        modelState:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    ClassSpaceAvailability:
+      description: class space availability by section
+      type: object
+      properties:
+        section:
+          description: Section number of the course
+          type: string
+        enrollCode:
+          description: EnrollCode an unique number assigned to a curriculum, Enroll code should be 5 chars
+          type: string
+        enrolledTotal:
+          format: int32
+          description: Total number of enrollments in the section
+          type: integer
+        maxEnroll:
+          format: int32
+          description: Max number of students can be enrolled in the section
+          type: integer
+    SimpleMessageModel:
+      type: object
+      properties:
+        message:
+          type: string
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey

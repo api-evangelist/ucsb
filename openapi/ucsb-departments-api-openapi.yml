@@ -1,0 +1,332 @@
+openapi: 3.2.0
+info:
+  title: Ucsb Departments API
+  version: '1.0'
+  description: 'Operations tagged Departments across 2 of this provider''s published API definitions: gmc-department-accounts_0.yaml, lookups-v1.6.out_.api__0.yaml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.ucsb.edu/administration/financial/accounts
+- url: https://test.api.ucsb.edu/administration/financial/accounts
+- url: https://dev.api.ucsb.edu/administration/financial/accounts
+- url: https://api.ucsb.edu/students
+tags:
+- name: Departments
+paths:
+  /departments/v1/{departmentCode}:
+    get:
+      tags:
+      - Departments
+      summary: Get departments and their chart fields by parent department
+      description: ''
+      parameters:
+      - name: departmentCode
+        in: path
+        description: 4 chars department code
+        required: true
+        schema:
+          type: string
+      - name: includeChartfields
+        in: query
+        description: Include Department Chartfields
+        schema:
+          type: boolean
+          default: true
+      responses:
+        '200':
+          description: Returns a list of child departments and their chartfields
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DepartmentModel'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DepartmentModel'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '500':
+          description: Server Error
+      security:
+      - ucsbApiKey: []
+      operationId: getDepartmentsV1ByDepartmentCode
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.ucsb.edu/administration/financial/accounts
+    - url: https://test.api.ucsb.edu/administration/financial/accounts
+    - url: https://dev.api.ucsb.edu/administration/financial/accounts
+  /lookups/v1/departments/{code}:
+    get:
+      tags:
+      - Departments
+      operationId: /lookups/v1/departments/{code}
+      parameters:
+      - name: code
+        in: path
+        description: The department code to match.
+        required: true
+        schema:
+          type: string
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcademicDepartment'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/AcademicDepartment'
+      description: 'Gets an active departments.
+
+        (Data Dictionary - Academic Department)'
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/departments/{code}
+      x-summary-source: derived
+    servers:
+    - url: https://api.ucsb.edu/students
+  /lookups/v1/departments:
+    get:
+      tags:
+      - Departments
+      operationId: /lookups/v1/departments
+      parameters:
+      - name: college
+        in: query
+        description: 'Filter the list of departments by the college. Possible values are
+
+          an empty string/null, L&amp;S, ENGR, CRST, ESM, GRAD, GSE.
+
+          ([Data Dictionary - College](https://dataservices.sa.ucsb.edu/_layouts/15/ReportServer/RSViewerPage.aspx?rv:RelativeReportUrl=/Lookup%20Tables/College.rdl&amp;Source=https%3A%2F%2Fdataservices%2Esa%2Eucsb%2Eedu%2FPages%2FLookup_Tables%2Easpx))'
+        required: false
+        schema:
+          type: string
+          default: ''
+      - name: translationFilter
+        in: query
+        description: 'Filters the translations by the given text. If the text appears in the the
+
+          translation, then it will be returned.'
+        required: false
+        schema:
+          type: string
+          default: ''
+      - name: includeInactive
+        in: query
+        description: 'Include departments that are no longer active. The default behavior is to not
+
+          include inactive departments.'
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicDepartment'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicDepartment'
+      description: 'Gets the list of active departments.
+
+        (Data Dictionary - Academic Department)'
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/departments
+      x-summary-source: derived
+    servers:
+    - url: https://api.ucsb.edu/students
+components:
+  schemas:
+    DepartmentModel:
+      type: object
+      properties:
+        deptCode:
+          type:
+          - string
+          - 'null'
+          description: Department Code
+        deptName:
+          type:
+          - string
+          - 'null'
+          description: Department Name
+        reportTo:
+          type:
+          - string
+          - 'null'
+          description: DepartmentModel to which this department report to
+        enabled:
+          type: boolean
+          description: Department Enabled flag
+        updateDate:
+          type: string
+          description: Last time department was updated
+          format: date-time
+        costTypes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CostTypeModel'
+          description: department Cost Types
+        costCenters:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CostCenterModel'
+          description: Department Cost Centers
+        projectCodes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ProjectCodeModel'
+          description: Department Project Codes
+      additionalProperties: false
+      description: ''
+    ProjectCodeModel:
+      type: object
+      properties:
+        projectCode:
+          type:
+          - string
+          - 'null'
+        projectCodeDesc:
+          type:
+          - string
+          - 'null'
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        updateDate:
+          type: string
+          format: date-time
+      additionalProperties: false
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties:
+        type: object
+        additionalProperties: false
+    CostTypeModel:
+      type: object
+      properties:
+        costType:
+          type:
+          - string
+          - 'null'
+        costTypeDesc:
+          type:
+          - string
+          - 'null'
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        updateDate:
+          type: string
+          format: date-time
+      additionalProperties: false
+    CostCenterModel:
+      type: object
+      properties:
+        costCenter:
+          type:
+          - string
+          - 'null'
+          description: ''
+        costCenterDesc:
+          type:
+          - string
+          - 'null'
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        updateDate:
+          type: string
+          format: date-time
+      additionalProperties: false
+    AcademicDepartment:
+      type: object
+      properties:
+        deptCode:
+          type: string
+        deptTranslationShort:
+          type: string
+        deptTranslation:
+          type: string
+        collegeCode:
+          type: string
+        divisionCode:
+          type: string
+        orgCode:
+          type: string
+        inactive:
+          type: boolean
+  securitySchemes:
+    ucsbApiKey:
+      type: apiKey
+      name: ucsb-api-key
+      in: header
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey
+x-refined-from:
+- gmc-department-accounts_0.yaml
+- lookups-v1.6.out_.api__0.yaml

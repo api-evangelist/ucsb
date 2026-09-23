@@ -1,0 +1,64 @@
+openapi: 3.2.0
+info:
+  version: v1.6
+  title: Student Record Code Lookups Grading Options API
+  description: Code Lookups from the Office of the Registrar.
+servers:
+- url: https://api.ucsb.edu/students
+tags:
+- name: GradingOptions
+paths:
+  /lookups/v1/gradingoptions:
+    get:
+      tags:
+      - GradingOptions
+      operationId: /lookups/v1/gradingoptions
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicGradingOption'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicGradingOption'
+      description: 'Get list of character code which describes grading options and translations.The grading options
+
+        can be pass no pass (P, NP) and letter grades like (A,B, C). For graduate student Pass/No Pass grade value is "S" and "U"
+
+        for satisfactory and Non satisfactory
+
+        P - Pass/No Pass
+
+        L - Letter Grade'
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/gradingoptions
+      x-summary-source: derived
+components:
+  schemas:
+    AcademicGradingOption:
+      type: object
+      properties:
+        gradingOptionCode:
+          type: string
+        gradingOptionTranslation:
+          type: string
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey

@@ -1,0 +1,26 @@
+{
+  "x-generated": "2026-08-30",
+  "x-method": "derived",
+  "x-source": "openapi/ucsb-clas-schedules-openapi.yml",
+  "x-note": "CLAS Schedules is one of only two UCSB contracts published as OpenAPI 3.0.1 rather than Swagger 2.0, and it is the only one that marks ucsb-api-version REQUIRED on every operation.",
+  "request": {
+    "method": "GET",
+    "url": "https://api.ucsb.edu/academics/clas/schedules/v1/subjects/term",
+    "headers": {
+      "ucsb-api-key": "YOUR_CONSUMER_KEY",
+      "ucsb-api-version": "1.0",
+      "Accept": "application/json"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": [
+      {
+        "subjectCode": "CHEM",
+        "subjectDescription": "Chemistry",
+        "term": "20264",
+        "workshopCategory": "Group Tutorial"
+      }
+    ]
+  }
+}

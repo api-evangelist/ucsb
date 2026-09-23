@@ -1,0 +1,78 @@
+openapi: 3.2.0
+info:
+  version: v1.6
+  title: Student Record Code Lookups Organizations API
+  description: Code Lookups from the Office of the Registrar.
+servers:
+- url: https://api.ucsb.edu/students
+tags:
+- name: Organizations
+paths:
+  /lookups/v1/organizations:
+    get:
+      tags:
+      - Organizations
+      operationId: /lookups/v1/organizations
+      parameters:
+      - name: translationFilter
+        in: query
+        description: 'Filters the translations by the given text. If the text appears in the the
+
+          translation, then it will be returned.'
+        required: false
+        schema:
+          type: string
+          default: ''
+      - name: includeInactive
+        in: query
+        description: 'Include organizations that are no longer active. The default behavior is to not
+
+          include inactive organizations.'
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicOrganization'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicOrganization'
+      description: Gets the list of active organizations.
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/organizations
+      x-summary-source: derived
+components:
+  schemas:
+    AcademicOrganization:
+      type: object
+      properties:
+        orgCode:
+          type: string
+        orgTranslationShort:
+          type: string
+        orgTranslation:
+          type: string
+        inactive:
+          type: boolean
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey

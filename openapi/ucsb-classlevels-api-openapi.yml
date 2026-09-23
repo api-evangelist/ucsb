@@ -1,0 +1,68 @@
+openapi: 3.2.0
+info:
+  version: v1.6
+  title: Student Record Code Lookups Class Levels API
+  description: Code Lookups from the Office of the Registrar.
+servers:
+- url: https://api.ucsb.edu/students
+tags:
+- name: ClassLevels
+paths:
+  /lookups/v1/classlevels:
+    get:
+      tags:
+      - ClassLevels
+      operationId: /lookups/v1/classlevels
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicClassLevel'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicClassLevel'
+      description: 'Gets the list of class levels.
+
+        (Data Dictionary - Class Levels)'
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/classlevels
+      x-summary-source: derived
+components:
+  schemas:
+    AcademicClassLevel:
+      type: object
+      properties:
+        classLevelCode:
+          type: string
+        classLevelTranslation:
+          type: string
+        level:
+          type: string
+        unitsLow:
+          format: double
+          type: number
+        unitsHigh:
+          format: double
+          type: number
+        comments:
+          type: string
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey

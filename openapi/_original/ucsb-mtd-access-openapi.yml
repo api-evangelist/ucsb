@@ -1,0 +1,57 @@
+# x-archived-from: ucsb-mtd-access-openapi.yml
+# x-archived-on: 2026-09-16
+swagger: '2.0'
+info:
+  version: v1
+  title: Registrar MTD Access v1.0
+  description: List of student perms that are valid to use the MTD bus service.
+  x-source-url: https://developer.ucsb.edu/sites/default/files/openapi/mtdaccess-v1.out_.api-2.yaml
+  x-last-validated: '2026-08-30'
+  x-operator: institution
+host: api.ucsb.edu
+basePath: /students/private
+schemes:
+- https
+securityDefinitions:
+  ucsb-api-key:
+    name: ucsb-api-key
+    in: header
+    type: apiKey
+  BasicAuth:
+    type: basic
+security:
+- ucsb-api-key: []
+- BasicAuth: []
+paths:
+  /mtdaccess/v1/perms:
+    get:
+      tags:
+      - Perms
+      operationId: /mtdaccess/v1/perms
+      security:
+      - ucsb-api-key: []
+      - BasicAuth: []
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: ucsb-api-version
+        in: query
+        required: false
+        type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              type: string
+      description: "<para>\r\n            A list of all perm numbers (7-digit) for students who are currently\
+        \ able to ride MTD using\r\n            a student pass.\r\n            </para>\r\n<para>\r\n \
+        \           Students qualify for bus ride starting one week prior to first day of classes for\
+        \ current quarter\r\n            and thru the end of the second week of the next quarter. Summer\
+        \ session is treated as any other quarter.\r\n            </para>\r\n<para>\r\n            Include\
+        \ students with this criteria: (Reg status is R or W) and (Fee Status is not blank and not N)\r\
+        \n            </para>"
+definitions: {}

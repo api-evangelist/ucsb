@@ -1,0 +1,176 @@
+openapi: 3.0.1
+info:
+  title: Department Chartfield
+  description: 'Departments and their chartfields, cost types, cost centers and project codes, by parent department code from the GMC.  This service will return department child descendents.'
+  version: '1.0'
+servers:
+  - url: 'https://api.ucsb.edu/administration/financial/accounts'
+  - url: 'https://test.api.ucsb.edu/administration/financial/accounts'
+  - url: 'https://dev.api.ucsb.edu/administration/financial/accounts'
+paths:
+  '/departments/v1/{departmentCode}':
+    get:
+      tags:
+        - Departments
+      summary: Get departments and their chart fields by parent department
+      description: ''
+      parameters:
+        - name: departmentCode
+          in: path
+          description: 4 chars department code
+          required: true
+          schema:
+            type: string
+        - name: includeChartfields
+          in: query
+          description: Include Department Chartfields
+          schema:
+            type: boolean
+            default: true
+      responses:
+        '200':
+          description: Returns a list of child departments and their chartfields
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DepartmentModel'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DepartmentModel'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '500':
+          description: Server Error
+components:
+  schemas:
+    CostTypeModel:
+      type: object
+      properties:
+        costType:
+          type: string
+          nullable: true
+        costTypeDesc:
+          type: string
+          nullable: true
+        enabled:
+          type: boolean
+          nullable: true
+        updateDate:
+          type: string
+          format: date-time
+      additionalProperties: false
+    CostCenterModel:
+      type: object
+      properties:
+        costCenter:
+          type: string
+          description: ''
+          nullable: true
+        costCenterDesc:
+          type: string
+          nullable: true
+        enabled:
+          type: boolean
+          nullable: true
+        updateDate:
+          type: string
+          format: date-time
+      additionalProperties: false
+    ProjectCodeModel:
+      type: object
+      properties:
+        projectCode:
+          type: string
+          nullable: true
+        projectCodeDesc:
+          type: string
+          nullable: true
+        enabled:
+          type: boolean
+          nullable: true
+        updateDate:
+          type: string
+          format: date-time
+      additionalProperties: false
+    DepartmentModel:
+      type: object
+      properties:
+        deptCode:
+          type: string
+          description: Department Code
+          nullable: true
+        deptName:
+          type: string
+          description: Department Name
+          nullable: true
+        reportTo:
+          type: string
+          description: DepartmentModel to which this department report to
+          nullable: true
+        enabled:
+          type: boolean
+          description: Department Enabled flag
+        updateDate:
+          type: string
+          description: Last time department was updated
+          format: date-time
+        costTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/CostTypeModel'
+          description: department Cost Types
+          nullable: true
+        costCenters:
+          type: array
+          items:
+            $ref: '#/components/schemas/CostCenterModel'
+          description: Department Cost Centers
+          nullable: true
+        projectCodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectCodeModel'
+          description: Department Project Codes
+          nullable: true
+      additionalProperties: false
+      description: ''
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          nullable: true
+      additionalProperties:
+        type: object
+        additionalProperties: false
+  securitySchemes:
+    ucsbApiKey:
+      type: apiKey
+      name: ucsb-api-key
+      in: header
+security:
+  - ucsbApiKey: []

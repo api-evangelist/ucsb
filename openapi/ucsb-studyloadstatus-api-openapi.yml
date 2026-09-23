@@ -1,0 +1,64 @@
+openapi: 3.2.0
+info:
+  version: v1.6
+  title: Student Record Code Lookups Study Load Status API
+  description: Code Lookups from the Office of the Registrar.
+servers:
+- url: https://api.ucsb.edu/students
+tags:
+- name: StudyLoadStatus
+paths:
+  /lookups/v1/studyloadstatus:
+    get:
+      tags:
+      - StudyLoadStatus
+      operationId: /lookups/v1/studyloadstatus
+      parameters:
+      - name: includeInactive
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicStudyLoadStatus'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicStudyLoadStatus'
+      description: Gets the list of school type codes.
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/studyloadstatus
+      x-summary-source: derived
+components:
+  schemas:
+    AcademicStudyLoadStatus:
+      type: object
+      properties:
+        studyLoadStatusCode:
+          type: string
+        studyLoadStatusTranslation:
+          type: string
+        inactive:
+          type: boolean
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey

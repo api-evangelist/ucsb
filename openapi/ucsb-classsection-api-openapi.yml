@@ -1,0 +1,321 @@
+openapi: 3.2.0
+info:
+  version: v3
+  title: Academic Curriculum v3.0 Class Section API
+  description: Public curriculum api for class and class section search. The data provided is intended to be used to populate drop downs, validate data entry, and provide information for planning and sharing. The data doesn't change and can be cached for limited period of times to enable easier lookups.
+servers:
+- url: https://api.ucsb.edu/academics/curriculums
+security:
+- ucsb-api-key: []
+tags:
+- name: ClassSection
+paths:
+  /v3/classsection/{quarter}/{enrollcode}:
+    get:
+      tags:
+      - ClassSection
+      summary: Get class info by quarter and enrollCode
+      operationId: ClassSection_GetClassesByEnrollCodeAsync
+      parameters:
+      - name: quarter
+        in: path
+        description: Quarter with format YYYYQ
+        required: true
+        schema:
+          type: string
+      - name: enrollcode
+        in: path
+        description: EnrollCode an unique number assigned to a curriculum, Enroll code should be 5 chars
+        required: true
+        schema:
+          type: string
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '3.0'
+      responses:
+        '200':
+          description: Get class by quarter and enrollCode
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Class'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Class'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Class'
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/Class'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+        '404':
+          description: Resource cannot be found. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+components:
+  schemas:
+    GeneralEducation:
+      description: General education code and college
+      type: object
+      properties:
+        geCode:
+          description: General education code
+          type: string
+        geCollege:
+          description: General education college
+          type: string
+    ClassSection:
+      description: Section information for a class
+      type: object
+      properties:
+        enrollCode:
+          description: 'EnrollCode an unique number assigned
+
+            to a curriculum'
+          type: string
+        section:
+          description: Section number of the course
+          type: string
+        session:
+          description: Session number only for summer quarter
+          type: string
+        classClosed:
+          description: If the class is closed
+          type: string
+        courseCancelled:
+          description: Is course cancelled
+          type: string
+        gradingOptionCode:
+          description: 'Grading Options Code like Pass/No Pass (P/NP)
+
+            Or Letter Grades (L)
+
+            See more GradingOptionsCode and GradingOptionsTranslation on GradingOptions interface
+
+            on Student Record Code Lookups API'
+          type: string
+        enrolledTotal:
+          format: int32
+          description: total number of enrollments in the course
+          type: integer
+        maxEnroll:
+          format: int32
+          description: max number of students can be enrolled in the section
+          type: integer
+        secondaryStatus:
+          description: Secondary Status of the course
+          type: string
+        departmentApprovalRequired:
+          description: Is department approval required for enrollment in the section
+          type: boolean
+        instructorApprovalRequired:
+          description: Is instructor approval required for enrollment in the section
+          type: boolean
+        restrictionLevel:
+          description: Is there restriction on the level of the course
+          type: string
+        restrictionMajor:
+          description: RestrictionMajor being a limit on which majors can add into the course
+          type: string
+        restrictionMajorPass:
+          description: 'RestrictionMajorPass limits it to a certain major registration pass only,
+
+            meaning once that registration pass is over, then the limit is no longer enforced'
+          type: string
+        restrictionMinor:
+          description: RestrictionMinors being a limit on which minors can add into the course
+          type: string
+        restrictionMinorPass:
+          description: 'RestrictionMinorPass limits it to a certain minor registration pass only,
+
+            meaning once that registration pass is over, then the limit is no longer enforced'
+          type: string
+        concurrentCourses:
+          description: concurrent course for the section
+          type: array
+          items:
+            type: string
+        timeLocations:
+          description: Time location for the section
+          type: array
+          items:
+            $ref: '#/components/schemas/ClassTimeLocation'
+        instructors:
+          description: instructor the section
+          type: array
+          items:
+            $ref: '#/components/schemas/ClassInstructor'
+    ClassTimeLocation:
+      description: time location for the section
+      type: object
+      properties:
+        room:
+          description: Room where course is offered
+          type: string
+        building:
+          description: Building for the room
+          type: string
+        roomCapacity:
+          format: int32
+          description: Capacity of the room
+          type: integer
+        days:
+          description: 'Days of Instruction for course for example ''M W    '' means instruction happens on Monday and wednesday
+
+            For mode translation on day code look at Days interface at Student Record Code Lookups API'
+          type: string
+        beginTime:
+          description: 'Begin time for a course
+
+            HH:mm format'
+          type: string
+        endTime:
+          description: 'End time of the course
+
+            HH:mm format'
+          type: string
+    ClassInstructor:
+      description: Instructor of the section and class
+      type: object
+      properties:
+        instructor:
+          description: Name of the Instructor
+          type: string
+        functionCode:
+          description: 'Instruction Function.
+
+            See more InstructionFunctionCode and InstructionFunctionTranslation on InstructionFunction interface
+
+            See translation on Student Record Code Lookups API'
+          type: string
+    WebApiInvalidModel:
+      type: object
+      properties:
+        message:
+          type: string
+        modelState:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    Class:
+      description: Master course info
+      type: object
+      properties:
+        quarter:
+          description: Quarter with format YYYYQ
+          type: string
+        courseId:
+          description: '13 character course Id with format SSSSSPPPNNNNUUU , Fist 5 char is course subject, Next 3 char is course prefix then next 3 char is course number and last 2 char is course suffix.
+
+            For example ''ES 1- 16B '' can be broken down in subject ''ES '' prefix ''1- '' number '' 16'' suffix ''B'
+          type: string
+        title:
+          description: Course Title from curriculum catalog
+          type: string
+        contactHours:
+          format: double
+          description: Primary hours for course
+          type: number
+        description:
+          description: Detail descriptions for the course
+          type: string
+        college:
+          description: 'College code approved for the course
+
+            please refer to Student Record Code Lookups API for translations'
+          type: string
+        objLevelCode:
+          description: '1 character code, The academic program objective level must be ''G''raduate or ''U''ndergraduate ,
+
+            ''L'' for Undergraduate lower division and ''S'' for Undergraduate upper division'
+          type: string
+        subjectArea:
+          description: The subject code to match First 8 Char of CourseId
+          type: string
+        unitsFixed:
+          format: double
+          description: Number of fixed units for the course
+          type: number
+        unitsVariableHigh:
+          format: double
+          description: Number of variable units for the course
+          type: number
+        unitsVariableLow:
+          format: double
+          description: Number of low units for the course
+          type: number
+        delayedSectioning:
+          description: delayed sectioning for the course
+          type: string
+        inProgressCourse:
+          description: If course is in progress
+          type: string
+        gradingOption:
+          description: Grading options for the course
+          type: string
+        instructionType:
+          description: Instruction type for primary sections (ending with 00)
+          type: string
+        instructionTypeSecondary:
+          description: Instruction type for secondary sections (ending with a number > 00)
+          type: string
+        onLineCourse:
+          description: If the course is online ?
+          type: boolean
+        deptCode:
+          description: 'department code for the course
+
+            please refer look up api for translations'
+          type: string
+        generalEducation:
+          description: list of GeCode and GeCollege
+          type: array
+          items:
+            $ref: '#/components/schemas/GeneralEducation'
+        classSections:
+          description: list of sections associated with the class
+          type: array
+          items:
+            $ref: '#/components/schemas/ClassSection'
+    SimpleMessageModel:
+      type: object
+      properties:
+        message:
+          type: string
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey

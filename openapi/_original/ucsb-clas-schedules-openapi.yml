@@ -1,0 +1,509 @@
+# x-archived-from: ucsb-clas-schedules-openapi.yml
+# x-archived-on: 2026-09-16
+openapi: 3.0.1
+info:
+  title: CLAS Schedules
+  version: v1.0
+  description: Public CLAS Schedules information. The API is intended to share information about the schedules
+    for the Tutorial Groups and Workshop Skills including their terms/quarters and enrollment dates.
+  x-source-url: https://developer.ucsb.edu/sites/default/files/openapi/schedules-v1.drupal.yaml
+  x-last-validated: '2026-08-30'
+  x-operator: institution
+servers:
+- url: https://api.ucsb.edu/academics/clas/schedules/v1
+security:
+- ucsb-api-key: []
+- basicAuth: []
+paths:
+  /subjects/term:
+    get:
+      tags:
+      - Schedules
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '1.0'
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TermInfo'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TermInfo'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/TermInfo'
+        '400':
+          description: Bad or malformed request. This returns a Problem Details object (https://tools.ietf.org/html/rfc7807).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        x-400-apiversion:
+          description: If the ApiVersion information cannot be inferred correctly, an error message describing
+            the issue is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiVersionError'
+  /subjects:
+    get:
+      tags:
+      - Schedules
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '1.0'
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subject'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subject'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subject'
+        '400':
+          description: Bad or malformed request. This returns a Problem Details object (https://tools.ietf.org/html/rfc7807).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        x-400-apiversion:
+          description: If the ApiVersion information cannot be inferred correctly, an error message describing
+            the issue is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiVersionError'
+  /subjects/{subjectcode}:
+    get:
+      tags:
+      - Schedules
+      parameters:
+      - name: subjectcode
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: ucsb-api-version
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '1.0'
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Schedule'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Schedule'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Schedule'
+        '400':
+          description: Bad or malformed request. This returns a Problem Details object (https://tools.ietf.org/html/rfc7807).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        x-400-apiversion:
+          description: If the ApiVersion information cannot be inferred correctly, an error message describing
+            the issue is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiVersionError'
+  /skills/term:
+    get:
+      tags:
+      - Schedules
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '1.0'
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TermInfo'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TermInfo'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/TermInfo'
+        '400':
+          description: Bad or malformed request. This returns a Problem Details object (https://tools.ietf.org/html/rfc7807).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        x-400-apiversion:
+          description: If the ApiVersion information cannot be inferred correctly, an error message describing
+            the issue is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiVersionError'
+  /skills:
+    get:
+      tags:
+      - Schedules
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '1.0'
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkshopCategory'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkshopCategory'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkshopCategory'
+        '400':
+          description: Bad or malformed request. This returns a Problem Details object (https://tools.ietf.org/html/rfc7807).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        x-400-apiversion:
+          description: If the ApiVersion information cannot be inferred correctly, an error message describing
+            the issue is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiVersionError'
+  /skills/{skillcode}:
+    get:
+      tags:
+      - Schedules
+      parameters:
+      - name: skillcode
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: ucsb-api-version
+        in: header
+        required: true
+        schema:
+          type: string
+          default: '1.0'
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkshopTitle'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkshopTitle'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkshopTitle'
+        '400':
+          description: Bad or malformed request. This returns a Problem Details object (https://tools.ietf.org/html/rfc7807).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        x-400-apiversion:
+          description: If the ApiVersion information cannot be inferred correctly, an error message describing
+            the issue is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiVersionError'
+components:
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey
+    basicAuth:
+      type: http
+      scheme: basic
+  schemas:
+    ApiVersionError:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ApiVersionErrorDetail'
+      additionalProperties: false
+    ApiVersionErrorDetail:
+      type: object
+      properties:
+        code:
+          type: string
+          nullable: true
+        message:
+          type: string
+          nullable: true
+        target:
+          type: string
+          nullable: true
+        innerError:
+          type: string
+          nullable: true
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiVersionErrorDetail'
+          nullable: true
+      additionalProperties: false
+    EnrollDates:
+      required:
+      - term
+      type: object
+      properties:
+        enrollDatesPk:
+          type: integer
+          description: Unique Id of the Alpha Object
+          format: int32
+        term:
+          maxLength: 5
+          minLength: 0
+          type: string
+          description: The term
+        session:
+          maxLength: 1
+          minLength: 0
+          type: string
+          description: The session
+          nullable: true
+        enrollStart:
+          type: string
+          description: Enroll Start
+          format: date-time
+        enrollEnd:
+          type: string
+          description: Enroll End
+          format: date-time
+      additionalProperties: false
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          nullable: true
+      additionalProperties: {}
+    Schedule:
+      type: object
+      properties:
+        subjectCode:
+          type: string
+          nullable: true
+        subjectName:
+          type: string
+          nullable: true
+        courseNo:
+          type: string
+          nullable: true
+        session:
+          type: string
+          nullable: true
+        instructor:
+          type: string
+          nullable: true
+        groupLecturePK:
+          type: integer
+          format: int32
+        lectureDays:
+          type: string
+          nullable: true
+        lectureTime:
+          type: string
+          nullable: true
+        lectureLocation:
+          type: string
+          nullable: true
+        groupCode:
+          type: string
+          nullable: true
+        tutor:
+          type: string
+          nullable: true
+        groupDays:
+          type: string
+          nullable: true
+        groupTime:
+          type: string
+          nullable: true
+        isNew:
+          type: boolean
+      additionalProperties: false
+    Subject:
+      required:
+      - subjectCode
+      type: object
+      properties:
+        subjectCode:
+          maxLength: 5
+          minLength: 0
+          type: string
+        subjectName:
+          maxLength: 25
+          minLength: 0
+          type: string
+          nullable: true
+        schedules:
+          type: array
+          items:
+            $ref: '#/components/schemas/Schedule'
+          nullable: true
+      additionalProperties: false
+    TermInfo:
+      type: object
+      properties:
+        term:
+          type: string
+          nullable: true
+        quarter:
+          type: string
+          nullable: true
+        year:
+          type: string
+          nullable: true
+        isSession:
+          type: boolean
+        enrollDates:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnrollDates'
+          nullable: true
+        message:
+          type: string
+          nullable: true
+      additionalProperties: false
+    WorkshopCategory:
+      type: object
+      properties:
+        term:
+          type: string
+          nullable: true
+        workshopCategoryPk:
+          type: integer
+          format: int32
+        workshopCategoryName:
+          type: string
+          nullable: true
+        workshopTitles:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopTitle'
+          nullable: true
+      additionalProperties: false
+    WorkshopSchedule:
+      type: object
+      properties:
+        workshopCategoryPk:
+          type: integer
+          format: int32
+        workshopSkillClassPk:
+          type: integer
+          format: int32
+        workshopCode:
+          type: string
+          nullable: true
+        workshopDate:
+          type: string
+          nullable: true
+        workshopTime:
+          type: string
+          nullable: true
+        sessionCount:
+          type: integer
+          format: int32
+      additionalProperties: false
+    WorkshopTitle:
+      type: object
+      properties:
+        workshopCategoryPk:
+          type: integer
+          format: int32
+        workshopSkillClassPk:
+          type: integer
+          format: int32
+        workshopTitleName:
+          type: string
+          nullable: true
+        htmlDescription:
+          type: string
+          nullable: true
+        workshopSchedules:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopSchedule'
+          nullable: true
+      additionalProperties: false

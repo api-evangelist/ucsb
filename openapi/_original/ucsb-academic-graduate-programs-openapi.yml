@@ -1,0 +1,173 @@
+# x-archived-from: ucsb-academic-graduate-programs-openapi.yml
+# x-archived-on: 2026-09-16
+swagger: '2.0'
+info:
+  version: v1
+  title: Graduate Division Grad Programs
+  description: This is designed to return information about the existing graduate programs and the details
+    from graduate division, all public information.
+  x-source-url: https://developer.ucsb.edu/sites/default/files/openapi/gradprograms-v1.out_.api_.yaml
+  x-last-validated: '2026-08-30'
+  x-operator: institution
+host: api.ucsb.edu
+basePath: /academics/gradprograms/v1
+schemes:
+- https
+securityDefinitions:
+  ucsb-api-key:
+    name: ucsb-api-key
+    in: header
+    type: apiKey
+security:
+- ucsb-api-key: []
+paths:
+  /programs:
+    get:
+      tags:
+      - Programs
+      operationId: /programs
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.0'
+      responses:
+        '200':
+          description: Returns a list of basic graduate program information
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GraduateProgram'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          schema:
+            $ref: '#/definitions/WebApiInvalidModel'
+        '401':
+          description: Unauthorized. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+        '404':
+          description: Resource cannot be found. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+  /programs/{id}:
+    get:
+      tags:
+      - Programs
+      operationId: /programs/{id}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+        format: int32
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.0'
+      responses:
+        '200':
+          description: Returns a graduate program details information.
+          schema:
+            $ref: '#/definitions/GraduateProgramDetail'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          schema:
+            $ref: '#/definitions/WebApiInvalidModel'
+        '401':
+          description: Unauthorized. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+        '404':
+          description: Resource cannot be found. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+definitions:
+  GraduateProgram:
+    type: object
+    properties:
+      id:
+        format: int32
+        description: Graduate Program's unique identifier
+        type: integer
+      displayName:
+        description: The Graduate Program display name
+        type: string
+      degrees:
+        description: Graduate Program's list of degrees, comma delimited
+        type: string
+  WebApiInvalidModel:
+    type: object
+    properties:
+      message:
+        type: string
+      modelState:
+        type: object
+        additionalProperties:
+          type: array
+          items:
+            type: string
+  SimpleMessageModel:
+    type: object
+    properties:
+      message:
+        type: string
+  GraduateProgramDetail:
+    description: ''
+    type: object
+    properties:
+      id:
+        format: int32
+        description: Graduate Program unique identifier
+        type: integer
+      majorCode:
+        description: 5 character major code
+        type: string
+      departmentCode:
+        description: 5 character department code
+        type: string
+      displayName:
+        description: Graduate Program's display name
+        type: string
+      description:
+        description: Graduate Program's description , html formatted
+        type: string
+      website:
+        description: Graduate Program's web site
+        type: string
+      address:
+        description: Graduate Program's address
+        type: string
+      phone:
+        description: Graduate Program's phone
+        type: string
+      email:
+        description: Graduate Program's email address
+        type: string
+      degrees:
+        description: list of degrees, separated by comma
+        type: string
+      requirements:
+        description: list of requirements, html formatted
+        type: string
+      deadlines:
+        description: Graduate Program's deadlines, comma separated
+        type: string
+      emphases:
+        description: List of emphases, semicolon separated
+        type: string
+      specializations:
+        description: List of specialization, semicolon separated
+        type: string

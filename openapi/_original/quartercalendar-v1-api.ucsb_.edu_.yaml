@@ -1,0 +1,239 @@
+swagger: '2.0'
+info:
+  version: v1
+  title: Academic Quarter Calendar
+  description: Quarter Calendar information from the Office of the Registrar.
+host: api.ucsb.edu
+basePath: /academics
+schemes:
+  - https
+securityDefinitions:
+  ucsb-api-key:
+    name: ucsb-api-key
+    in: header
+    type: apiKey
+paths:
+  /quartercalendar/v1/quarters/current:
+    get:
+      tags:
+        - Quarters
+      operationId: /quartercalendar/v1/quarters/current
+      consumes: []
+      produces:
+        - application/json
+        - text/json
+      parameters:
+        - name: type
+          in: query
+          description: "This can be (default) 'firstdayofquarter',\r\n            'lastdayoffinals'."
+          required: false
+          type: string
+          default: ''
+        - name: ucsb-api-version
+          in: header
+          description: The requested API version
+          required: false
+          type: string
+          default: '1.0'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/QuarterCalendar'
+      description: "Returns the current quarter. The criteria is today's date and the search <param name=\"type\" />.\r\nThe search type can be 'firstdayofquarter' (default), 'lastdayoffinals'.\r\nThis data is also available in a human readable format at\r\n([Data Dictionary - Quarter Calendar](https://dataservices.sa.ucsb.edu/_layouts/15/ReportServer/RSViewerPage.aspx?rv:RelativeReportUrl=/Lookup%20Tables/Quarter%20Calendar.rdl&amp;Source=https%3A%2F%2Fdataservices%2Esa%2Eucsb%2Eedu%2FLookup%2520Tables%2FForms%2FAllItems%2Easpx))"
+      security:
+        - ucsb-api-key: []
+  /quartercalendar/v1/quarters:
+    get:
+      tags:
+        - Quarters
+      operationId: /quartercalendar/v1/quarters
+      consumes: []
+      produces:
+        - application/json
+        - text/json
+      parameters:
+        - name: quarter
+          in: query
+          description: A specific quarter. If this is used all other parameters are ignored.
+          required: false
+          type: string
+          default: ''
+        - name: date
+          in: query
+          description: A date within a quarter in format YYYYMMDD.
+          required: false
+          type: string
+          default: ''
+        - name: type
+          in: query
+          description: "Used with date parameter. This can be (default) 'firstdayofquarter' or\r\n            'lastdayoffinals'."
+          required: false
+          type: string
+          default: ''
+        - name: ucsb-api-version
+          in: header
+          description: The requested API version
+          required: false
+          type: string
+          default: '1.0'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/QuarterCalendar'
+      description: "Search for a listing of quarters that fit the criteria. All quarters can be returned or\r\na specific quarter. If the quarter parameter is used, all other parameters are ignored.\r\nThe date parameter can be used to filter the list down to a quarter that contains the\r\ngive date (YYYYMMDD format). On the date search the criteria for which date is compared\r\nagainst the search day can be 'firstdayofquarter' or 'lastdayoffinals'.\r\nThis data is also available in a human readable format at\r\n([Data Dictionary - Quarter Calendar](https://dataservices.sa.ucsb.edu/_layouts/15/ReportServer/RSViewerPage.aspx?rv:RelativeReportUrl=/Lookup%20Tables/Quarter%20Calendar.rdl&amp;Source=https%3A%2F%2Fdataservices%2Esa%2Eucsb%2Eedu%2FLookup%2520Tables%2FForms%2FAllItems%2Easpx))"
+      security:
+        - ucsb-api-key: []
+  /quartercalendar/v1/sessions/current:
+    get:
+      tags:
+        - Sessions
+      operationId: /quartercalendar/v1/sessions/current
+      consumes: []
+      produces:
+        - application/json
+        - text/json
+      parameters:
+        - name: ucsb-api-version
+          in: header
+          description: The requested API version
+          required: false
+          type: string
+          default: '1.0'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SessionCalendar'
+      description: Get Session Information by quarter
+      security:
+        - ucsb-api-key: []
+  /quartercalendar/v1/sessions:
+    get:
+      tags:
+        - Sessions
+      operationId: /quartercalendar/v1/sessions
+      consumes: []
+      produces:
+        - application/json
+        - text/json
+      parameters:
+        - name: quarter
+          in: query
+          description: quarter
+          required: false
+          type: string
+          default: ''
+        - name: date
+          in: query
+          required: false
+          type: string
+          default: ''
+        - name: ucsb-api-version
+          in: header
+          description: The requested API version
+          required: false
+          type: string
+          default: '1.0'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SessionCalendar'
+      description: Get Session Information by quarter
+      security:
+        - ucsb-api-key: []
+definitions:
+  QuarterCalendar:
+    type: object
+    properties:
+      quarter:
+        type: string
+      qyy:
+        type: string
+      name:
+        type: string
+      category:
+        type: string
+        readOnly: true
+      academicYear:
+        type: string
+        readOnly: true
+      firstDayOfClasses:
+        format: date-time
+        type: string
+      lastDayOfClasses:
+        format: date-time
+        type: string
+      firstDayOfFinals:
+        format: date-time
+        type: string
+      lastDayOfFinals:
+        format: date-time
+        type: string
+      firstDayOfQuarter:
+        format: date-time
+        type: string
+      lastDayOfSchedule:
+        format: date-time
+        type: string
+      pass1Begin:
+        format: date-time
+        type: string
+      pass2Begin:
+        format: date-time
+        type: string
+      pass3Begin:
+        format: date-time
+        type: string
+      feeDeadline:
+        format: date-time
+        type: string
+      lastDayToAddUnderGrad:
+        format: date-time
+        type: string
+      lastDayToAddGrad:
+        format: date-time
+        type: string
+      lastDayThirdWeek:
+        format: date-time
+        type: string
+  SessionCalendar:
+    type: object
+    properties:
+      quarter:
+        type: string
+      sessionNumber:
+        type: string
+      firstDayOfClasses:
+        format: date-time
+        type: string
+      firstDayOfFinals:
+        format: date-time
+        type: string
+      lastDayOfClasses:
+        format: date-time
+        type: string
+      lastDayOfFinals:
+        format: date-time
+        type: string
+      lastDayToAddGrad:
+        format: date-time
+        type: string
+      lastDayToAddUnderGrad:
+        format: date-time
+        type: string
+      lastDayToCancel:
+        format: date-time
+        type: string
+      lastDayToDropGrad:
+        format: date-time
+        type: string
+      lastDayToDropUnderGrad:
+        format: date-time
+        type: string

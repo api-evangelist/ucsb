@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ucsb/main/json-schema/ucsb-student-registration-schema.json",
+  "title": "Registration",
+  "description": "A student registration record for a quarter, including registration status and unit counts.",
+  "required": [
+    "perm",
+    "quarter"
+  ],
+  "type": "object",
+  "properties": {
+    "perm": {
+      "description": "Student 7 character perm",
+      "maxLength": 7,
+      "minLength": 0,
+      "type": "string"
+    },
+    "quarter": {
+      "description": "Quarter with format YYYYQ",
+      "maxLength": 5,
+      "minLength": 0,
+      "type": "string"
+    },
+    "classLevelCode": {
+      "description": "Class level code for the quarter. See public look up api for translations",
+      "maxLength": 2,
+      "minLength": 0,
+      "type": "string"
+    },
+    "classificationCode": {
+      "description": "Classification code for the quarter. See public look up api for translations",
+      "maxLength": 1,
+      "minLength": 0,
+      "type": "string"
+    },
+    "regStatusCode": {
+      "description": "Registration status code for the quarter. See public look up api for translations",
+      "maxLength": 1,
+      "minLength": 0,
+      "type": "string"
+    },
+    "feeStatusCode": {
+      "description": "Fee status code for the quarter. See public look up api for translations",
+      "maxLength": 1,
+      "minLength": 0,
+      "type": "string"
+    },
+    "objLevelCode": {
+      "description": "Object level code for the quarter. See public look up api for translations",
+      "maxLength": 1,
+      "minLength": 0,
+      "type": "string"
+    },
+    "registeredPaidFlag": {
+      "description": "When (RegStatus code is either 'R' or 'E') and (Fee Status code is not empty)",
+      "maxLength": 1,
+      "minLength": 0,
+      "type": "string"
+    },
+    "eapReciprocityFlag": {
+      "description": "Check if the student is on EAP Reciprocity",
+      "maxLength": 1,
+      "minLength": 0,
+      "type": "string"
+    },
+    "studyLoadStatus": {
+      "description": "Status of the study load example value - F (full time), H (half time)",
+      "maxLength": 1,
+      "minLength": 0,
+      "type": "string"
+    },
+    "studyLoadUnits": {
+      "format": "double",
+      "description": "Total Study load units for the quarter",
+      "maximum": 99,
+      "minimum": 0,
+      "pattern": "^\\d+\\.\\d{1,2}$",
+      "type": "number"
+    },
+    "appointment1BeginDateTime": {
+      "format": "date-time",
+      "description": "First Appointment Begin date and time",
+      "type": "string"
+    },
+    "appointment2BeginDateTime": {
+      "format": "date-time",
+      "description": "Second Appointment Begin date and time",
+      "type": "string"
+    },
+    "appointment3BeginDateTime": {
+      "format": "date-time",
+      "description": "Third Appointment Begin date and time",
+      "type": "string"
+    }
+  },
+  "x-source": "openapi/ucsb-student-registrations-openapi.yml",
+  "x-method": "derived",
+  "x-generated": "2026-08-30"
+}

@@ -1,0 +1,124 @@
+openapi: 3.2.0
+info:
+  version: v1
+  title: Academic Quarter Calendar Sessions API
+  description: Quarter Calendar information from the Office of the Registrar.
+servers:
+- url: https://api.ucsb.edu/academics
+tags:
+- name: Sessions
+paths:
+  /quartercalendar/v1/sessions/current:
+    get:
+      tags:
+      - Sessions
+      operationId: /quartercalendar/v1/sessions/current
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        description: The requested API version
+        required: false
+        schema:
+          type: string
+          default: '1.0'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionCalendar'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SessionCalendar'
+      description: Get Session Information by quarter
+      security:
+      - ucsb-api-key: []
+      summary: /quartercalendar/v1/sessions/current
+      x-summary-source: derived
+  /quartercalendar/v1/sessions:
+    get:
+      tags:
+      - Sessions
+      operationId: /quartercalendar/v1/sessions
+      parameters:
+      - name: quarter
+        in: query
+        description: quarter
+        required: false
+        schema:
+          type: string
+          default: ''
+      - name: date
+        in: query
+        required: false
+        schema:
+          type: string
+          default: ''
+      - name: ucsb-api-version
+        in: header
+        description: The requested API version
+        required: false
+        schema:
+          type: string
+          default: '1.0'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SessionCalendar'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SessionCalendar'
+      description: Get Session Information by quarter
+      security:
+      - ucsb-api-key: []
+      summary: /quartercalendar/v1/sessions
+      x-summary-source: derived
+components:
+  schemas:
+    SessionCalendar:
+      type: object
+      properties:
+        quarter:
+          type: string
+        sessionNumber:
+          type: string
+        firstDayOfClasses:
+          format: date-time
+          type: string
+        firstDayOfFinals:
+          format: date-time
+          type: string
+        lastDayOfClasses:
+          format: date-time
+          type: string
+        lastDayOfFinals:
+          format: date-time
+          type: string
+        lastDayToAddGrad:
+          format: date-time
+          type: string
+        lastDayToAddUnderGrad:
+          format: date-time
+          type: string
+        lastDayToCancel:
+          format: date-time
+          type: string
+        lastDayToDropGrad:
+          format: date-time
+          type: string
+        lastDayToDropUnderGrad:
+          format: date-time
+          type: string
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey

@@ -1,0 +1,107 @@
+generated: '2026-08-30'
+method: searched
+source: https://developer.ucsb.edu/docs/publishers/guidelines-and-standards
+docs: https://developer.ucsb.edu/documentation
+note: >-
+  UCSB PUBLISHES its own API design standard — "API Development Guidelines and Standards
+  (Publishers)" — and it is binding on any campus unit putting an API on the Campus API
+  Gateway. This is unusual for this cohort: most institutions have no written API design
+  guidance at all. The rules below are UCSB's own, restated from that page and cross-checked
+  against the 21 contracts they govern. Compliance figures are OURS, measured against the
+  published specs on 2026-08-30.
+authority:
+  document: API Development Guidelines and Standards (Publishers)
+  url: https://developer.ucsb.edu/docs/publishers/guidelines-and-standards
+  status: >-
+    Self-described as "an ever evolving set of Guidelines and Standards"; not versioned and
+    not dated.
+  scope: Any API published on the UCSB Campus API Gateway (api.ucsb.edu).
+rules:
+- id: url-lowercase
+  statement: All names in the URL must be lowercase.
+  severity: required
+  source_quote: All names in the url should be lowercase (query string parameters are defined in Variables below)
+  observed_compliance: >-
+    High. Path segments across the 21 contracts are lowercase throughout; the exceptions are
+    path PARAMETERS, which are camelCase (e.g. {subjectcode} is lowercase but query params
+    such as enrollCode, subjectCode, includeClassSections are camelCase by design).
+- id: no-dashes-in-urls
+  statement: Dashes must not be used in URLs.
+  severity: required
+  source_quote: Dashes (-) should not be used in urls (ie. don't have /academics/quarter-calendar)
+  observed_compliance: >-
+    Full. No path in any of the 21 contracts contains a dash; UCSB uses run-together segments
+    (quartercalendar, gradprograms, deptcourses, barcstudents, fauvalidation, classcode).
+- id: plural-service-names
+  statement: Service names must be plural.
+  severity: required
+  source_quote: Service names should be plural, use /courses instead of /course.
+  observed_compliance: >-
+    Mostly. /courses, /classes, /quarters, /sessions, /programs, /subjects, /skills,
+    /registrations, /departments, /majors, /minors all comply. Singular exceptions exist —
+    /classsection/{quarter}/{enrollcode} in Academic Curriculum v3.0.
+- id: no-nested-services
+  statement: Separate services must not be nested under one another.
+  severity: required
+  source_quote: >-
+    Separate services shouldn't be nested under each other ... this is not a recommended
+    design: /students (basic student information) and /students/courses
+  observed_compliance: >-
+    VIOLATED BY UCSB'S OWN CONTRACTS, and the guideline names the exact violation. The Student
+    Courses API basePath is /students/courses (openapi/ucsb-student-courses-openapi.yml) —
+    the very example the standard says not to do — and Student Registrations
+    (/students/registrations) and Student Schedules (/students/schedules) follow the same
+    pattern. This is the clearest gap between UCSB's written standard and its shipped estate.
+- id: version-at-deployment-root
+  statement: >-
+    The MAJOR version number goes in the URL at the root of the API's deployment package,
+    not at a higher level shared across APIs.
+  severity: required
+  source_quote: 'Good: /students/v1/{endpoint} — Bad: /v1/students/{endpoint}'
+  observed_compliance: >-
+    Mixed. /students/lookups/v1/*, /academics/gradprograms/v1/*,
+    /academics/clas/schedules/v1/* and /students/private/barcstudents/v1/* comply. Academic
+    Curriculum places the version first within its own deployment (/academics/curriculums
+    + /v3/classes/...), and Academic Quarter Calendar likewise
+    (/academics + /quartercalendar/v1/...), which still satisfies the "per-API, not global"
+    intent.
+- id: major-version-in-url-only
+  statement: >-
+    Only the MAJOR version appears in the URL. A minor change must not move the URL version.
+  severity: required
+  observed_compliance: >-
+    Full — no URL in any contract carries a minor version. info.version does carry minor
+    numbers (v1.1, v1.6, v2, v3), which is exactly what the standard intends.
+- id: minor-version-header
+  statement: >-
+    Minor versions MAY be requested with a ucsb-api-version request header carrying
+    major.minor.
+  severity: optional
+  observed_compliance: >-
+    Declared as an operation parameter on 14 of the 21 contracts. Required on only one —
+    CLAS Schedules marks ucsb-api-version required on all 6 operations; everywhere else it is
+    optional with a default. The 7 contracts that omit it entirely still accept the header at
+    the gateway, which advertises it in Access-Control-Allow-Headers.
+- id: version-response-headers
+  statement: >-
+    A service MAY respond with api-supported-versions and api-selected-version headers.
+  severity: optional
+  observed_compliance: >-
+    Not observable without an approved key; no probed response carried either header.
+- id: rest-http-methods
+  statement: >-
+    Use HTTP methods to convey the action performed against a URL representing an entity.
+  severity: recommended
+  observed_compliance: >-
+    The published estate is almost entirely read-only: 83 GET operations against 3 POST, and
+    18 of the 21 contracts are GET-only. The whole write surface is Student Registrations
+    (registration blocks), the PeopleSoft FAU combination-validation service, and Grad
+    Application Verifications.
+gaps:
+- The guidelines page is undated and unversioned, so a consumer cannot tell which contracts
+  were built under which revision.
+- The standard is not machine-enforceable — no Spectral ruleset, no linter, no CI gate is
+  published alongside it.
+- Nothing in the standard covers error shapes, pagination, rate limiting or deprecation
+  headers, which is why the estate has two incompatible error envelopes (see
+  errors/ucsb-problem-types.yml).

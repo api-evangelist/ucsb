@@ -1,0 +1,280 @@
+openapi: 3.2.0
+info:
+  version: v1.0
+  title: Employment and Job Data Employees API
+  description: Employment and Job Data (private API only)
+servers:
+- url: https://api.ucsb.edu/employees/private/employeejoblookup
+security:
+- apiKey: []
+tags:
+- name: Employees
+paths:
+  /v1/employee:
+    get:
+      tags:
+      - Employees
+      description: 'Retrieve a list of employee information.
+
+
+        The employee data is meant to have basic information for display on web pages or reports.'
+      responses:
+        '200':
+          description: A list of Employees
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmployeeModel'
+      summary: Get employee
+      x-summary-source: derived
+      operationId: getV1Employee
+      x-operation-id-source: derived
+  /v1/employee/{employeeId}:
+    get:
+      tags:
+      - Employees
+      description: 'Retrieve an employee''s information.
+
+
+        The employee data is meant to have basic information for display on web pages or reports.'
+      parameters:
+      - name: employeeId
+        in: path
+        description: The 8-character employee number
+        required: true
+        schema:
+          type: string
+          maxLength: 8
+          minLength: 8
+      responses:
+        '200':
+          description: An array with one individual Employee
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmployeeModel'
+      summary: Get employee by employee id
+      x-summary-source: derived
+      operationId: getV1EmployeeByEmployeeId
+      x-operation-id-source: derived
+  /v1/employeejob:
+    get:
+      tags:
+      - Employees
+      description: Retrieve a list of employee job records
+      responses:
+        '200':
+          description: A list of employee job records for all employees
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmployeeJobModel'
+      summary: Get employeejob
+      x-summary-source: derived
+      operationId: getV1Employeejob
+      x-operation-id-source: derived
+  /v1/employeejob/{employeeId}:
+    get:
+      tags:
+      - Employees
+      description: Retrieve a list of employee job records
+      parameters:
+      - name: employeeId
+        in: path
+        description: The 8-character employee number
+        required: true
+        schema:
+          type: string
+          maxLength: 8
+          minLength: 8
+      responses:
+        '200':
+          description: A list of employee job records for a single employee
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmployeeJobModel'
+      summary: Get employeejob by employee id
+      x-summary-source: derived
+      operationId: getV1EmployeejobByEmployeeId
+      x-operation-id-source: derived
+  /v1/lookup/jobcodes:
+    get:
+      tags:
+      - Employees
+      description: Lookup employment job codes to descriptions
+      responses:
+        '200':
+          description: A list of employement job codes and description
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobCodesModel'
+      summary: Get lookup jobcodes
+      x-summary-source: derived
+      operationId: getV1LookupJobcodes
+      x-operation-id-source: derived
+  /v1/lookup/jobclasscodes:
+    get:
+      tags:
+      - Employees
+      description: Lookup of employment job class codes to descriptions
+      responses:
+        '200':
+          description: A list of job class codes and descriptions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobClassCodesModel'
+      summary: Get lookup jobclasscodes
+      x-summary-source: derived
+      operationId: getV1LookupJobclasscodes
+      x-operation-id-source: derived
+  /v1/lookup/empstatuscodes:
+    get:
+      tags:
+      - Employees
+      description: Lookup of employment status codes to descriptions
+      responses:
+        '200':
+          description: A list of employment status codes and descriptions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmploymentStatusModel'
+      summary: Get lookup empstatuscodes
+      x-summary-source: derived
+      operationId: getV1LookupEmpstatuscodes
+      x-operation-id-source: derived
+components:
+  schemas:
+    JobCodesModel:
+      type: object
+      properties:
+        code:
+          description: 'Unique Code (Examples: 001234, CW1234)'
+          type: string
+          minLength: 6
+          maxLength: 6
+        description:
+          description: 'Description of the employee job (Examples: STDT ACAD MGR 2, STDT DISABILITY MGR 1)'
+          type: string
+    EmployeeModel:
+      type: object
+      properties:
+        employeeId:
+          description: The 8-character employee number (treat this as a string)
+          type: string
+          minLength: 8
+          maxLength: 8
+        firstName:
+          description: The first name (given name)
+          type: string
+          maxLength: 30
+        middleName:
+          description: The middle name
+          type: string
+          maxLength: 30
+        lastName:
+          description: The last name (family name)
+          type: string
+          maxLength: 30
+        employmentStatusCode:
+          description: ???
+          type: string
+          minLength: 1
+          maxLength: 1
+        campusPhoneNumber:
+          description: Phone number for the employee (LDAP's telephoneNumber) in XXX-XXX-XXXX format.
+          type: string
+          maxLength: 12
+        homeDeptCode:
+          description: The department code
+          type: string
+          minLength: 4
+          maxLength: 4
+        ucsbCampusId:
+          description: Unique identifier within UCSB Campus Identity Systems (GUID)
+          type: string
+          minLength: 36
+          maxLength: 36
+        ppsEmployeeId:
+          description: The older employeeId used in the PPS systems before the UC Path switchover. This is used for reference with historical data.
+          type: string
+        businessEmail:
+          description: The ucsb.edu email address of the employee.
+          type: string
+        ucsbNetId:
+          description: The ucsbNetId of the employee.
+          type: string
+    EmploymentStatusModel:
+      type: object
+      properties:
+        code:
+          description: 'Unique Code (examples: A, N, W, S)'
+          type: string
+          minLength: 1
+          maxLength: 1
+        description:
+          description: 'Descriptions of the Employeement Status (examples: Active, Leave Without Pay, Short Work Break, Separated'
+          type: string
+    JobClassCodesModel:
+      type: object
+      properties:
+        code:
+          description: 'Unique Code (Examples: 1, 13, C)'
+          type: string
+          minLength: 1
+          maxLength: 2
+        description:
+          description: 'Description of the employee class (Examples: Staff: Contract, Staff: Contingent Work, Conversion Use Only)'
+          type: string
+    EmployeeJobModel:
+      type: object
+      properties:
+        employeeId:
+          description: The 8-character employee number (treat this as a string)
+          type: string
+          minLength: 8
+          maxLength: 8
+        jobCode:
+          description: The unique job code that represents this job
+          type: string
+          maxLength: 6
+        jobClassCode:
+          description: ???
+          type: string
+          maxLength: 2
+        hireDate:
+          description: The hire date in YYYYMMDD format
+          type: string
+        terminationDate:
+          description: The termination date in YYYYMMDD format
+          type: string
+        deptCode:
+          description: The primary HR department associated with job.
+          type: string
+          maxLength: 4
+        fte:
+          description: The percentage allocation of the employee to the job.
+          type: number
+          format: float
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      name: ucsb-api-key
+      in: header

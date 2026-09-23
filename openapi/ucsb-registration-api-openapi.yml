@@ -1,0 +1,279 @@
+openapi: 3.2.0
+info:
+  version: v2
+  title: Student Registrations Registration API
+  description: Registrations information from the Office of the Registrar.
+servers:
+- url: https://api.ucsb.edu/students/registrations
+security:
+- ucsb-api-key: []
+- BasicAuth: []
+tags:
+- name: Registration
+paths:
+  /v2/registrations/{perm}:
+    get:
+      tags:
+      - Registration
+      summary: Search for a student's registration records.
+      operationId: /registrations/v2/registrations/{perm}
+      parameters:
+      - name: perm
+        in: path
+        description: Student's 6 or 7 character perm
+        required: true
+        schema:
+          type: string
+      - name: ucsb-user-jwt
+        in: header
+        description: Used when an application is required to provide an End User Token. Only the data for the student indicated by the End User Token will be retrieved.
+        required: false
+        schema:
+          type: string
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '2.0'
+      responses:
+        '200':
+          description: A populated list of registration objects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Registration'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Registration'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Registration'
+            text/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Registration'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+        '401':
+          description: Unauthorized. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+        '404':
+          description: Resource cannot be found. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+  /v2/registrations/{perm}/{quarter}:
+    get:
+      tags:
+      - Registration
+      summary: Search for a student's registration records.
+      parameters:
+      - name: perm
+        in: path
+        description: Student's 6 or 7 character perm.
+        required: true
+        schema:
+          type: string
+      - name: quarter
+        in: path
+        description: Quarter with format YYYYQ
+        required: true
+        schema:
+          type: string
+      - name: ucsb-user-jwt
+        in: header
+        description: Used when an application is required to provide an End User Token. Only the data for the student indicated by the End User Token will be retrieved.
+        required: false
+        schema:
+          type: string
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '2.0'
+      responses:
+        '200':
+          description: registration objects by perm and quarter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Registration'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Registration'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+        '401':
+          description: Unauthorized. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+        '404':
+          description: Resource cannot be found. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+      operationId: getV2RegistrationsByPermByQuarter
+      x-operation-id-source: derived
+components:
+  schemas:
+    Registration:
+      required:
+      - perm
+      - quarter
+      type: object
+      properties:
+        perm:
+          description: Student 7 character perm
+          maxLength: 7
+          minLength: 0
+          type: string
+        quarter:
+          description: Quarter with format YYYYQ
+          maxLength: 5
+          minLength: 0
+          type: string
+        classLevelCode:
+          description: Class level code for the quarter. See public look up api for translations
+          maxLength: 2
+          minLength: 0
+          type: string
+        classificationCode:
+          description: Classification code for the quarter. See public look up api for translations
+          maxLength: 1
+          minLength: 0
+          type: string
+        regStatusCode:
+          description: Registration status code for the quarter. See public look up api for translations
+          maxLength: 1
+          minLength: 0
+          type: string
+        feeStatusCode:
+          description: Fee status code for the quarter. See public look up api for translations
+          maxLength: 1
+          minLength: 0
+          type: string
+        objLevelCode:
+          description: Object level code for the quarter. See public look up api for translations
+          maxLength: 1
+          minLength: 0
+          type: string
+        registeredPaidFlag:
+          description: When (RegStatus code is either 'R' or 'E') and (Fee Status code is not empty)
+          maxLength: 1
+          minLength: 0
+          type: string
+        eapReciprocityFlag:
+          description: Check if the student is on EAP Reciprocity
+          maxLength: 1
+          minLength: 0
+          type: string
+        studyLoadStatus:
+          description: Status of the study load example value - F (full time), H (half time)
+          maxLength: 1
+          minLength: 0
+          type: string
+        studyLoadUnits:
+          format: double
+          description: Total Study load units for the quarter
+          maximum: 99
+          minimum: 0
+          pattern: ^\d+\.\d{1,2}$
+          type: number
+        appointment1BeginDateTime:
+          format: date-time
+          description: First Appointment Begin date and time
+          type: string
+        appointment2BeginDateTime:
+          format: date-time
+          description: Second Appointment Begin date and time
+          type: string
+        appointment3BeginDateTime:
+          format: date-time
+          description: Third Appointment Begin date and time
+          type: string
+    WebApiInvalidModel:
+      type: object
+      properties:
+        message:
+          type: string
+        modelState:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    SimpleMessageModel:
+      type: object
+      properties:
+        message:
+          type: string
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey
+    BasicAuth:
+      type: http
+      scheme: basic

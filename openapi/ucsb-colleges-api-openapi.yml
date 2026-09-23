@@ -1,0 +1,80 @@
+openapi: 3.2.0
+info:
+  version: v1.6
+  title: Student Record Code Lookups Colleges API
+  description: Code Lookups from the Office of the Registrar.
+servers:
+- url: https://api.ucsb.edu/students
+tags:
+- name: Colleges
+paths:
+  /lookups/v1/colleges:
+    get:
+      tags:
+      - Colleges
+      operationId: /lookups/v1/colleges
+      parameters:
+      - name: translationFilter
+        in: query
+        description: 'Filters the translations by the given text. If the text appears in the the
+
+          translation, then it will be returned.'
+        required: false
+        schema:
+          type: string
+          default: ''
+      - name: includeInactive
+        in: query
+        description: 'Include colleges that are no longer active. The default behavior is to not
+
+          include inactive colleges.'
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicCollege'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicCollege'
+      description: 'Gets the list of active colleges.
+
+        (Data Dictionary - College)'
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/colleges
+      x-summary-source: derived
+components:
+  schemas:
+    AcademicCollege:
+      type: object
+      properties:
+        collegeCode:
+          type: string
+        collegeTranslation:
+          type: string
+        orgCode:
+          type: string
+        inactive:
+          type: boolean
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey

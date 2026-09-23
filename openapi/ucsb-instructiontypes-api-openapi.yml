@@ -1,0 +1,56 @@
+openapi: 3.2.0
+info:
+  version: v1.6
+  title: Student Record Code Lookups Instruction Types API
+  description: Code Lookups from the Office of the Registrar.
+servers:
+- url: https://api.ucsb.edu/students
+tags:
+- name: InstructionTypes
+paths:
+  /lookups/v1/instructiontypes:
+    get:
+      tags:
+      - InstructionTypes
+      operationId: /lookups/v1/instructiontypes
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicInstructionType'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicInstructionType'
+      description: Get Academic Instruction type code and Instruction translation
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/instructiontypes
+      x-summary-source: derived
+components:
+  schemas:
+    AcademicInstructionType:
+      type: object
+      properties:
+        instructionTypeCode:
+          type: string
+        instructionTypeTranslation:
+          type: string
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey

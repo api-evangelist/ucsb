@@ -1,0 +1,84 @@
+generated: '2026-08-30'
+method: searched
+source: https://developer.ucsb.edu/docs/publishers/guidelines-and-standards
+docs: https://developer.ucsb.edu/apis/all
+versioning:
+  scheme: uri-path + optional request header
+  policy_published: true
+  policy_url: https://developer.ucsb.edu/docs/publishers/guidelines-and-standards
+  major:
+    location: URI path, at the root of each API's own deployment package
+    rule: >-
+      Set the version at the root of the deployment (/students/v1/{endpoint}), never above it
+      (/v1/students/{endpoint}). Versioning is per-API so teams can move independently.
+    observed: >-
+      info.version across the 21 contracts: v1 (10), v1.0 (2), 1.0.0 (2), 1.0 (1), v1.1 (1),
+      v1.6 (1), v2 (3), v3 (1). Six different spellings of a version string is itself a
+      governance gap the guidelines do not address.
+  minor:
+    location: ucsb-api-version request header
+    rule: >-
+      Optional major.minor, sent as the header 'ucsb-api-version: 1.1'. Backends may honour or
+      ignore it.
+    observed: >-
+      Declared as an operation parameter on 14 of 21 contracts; REQUIRED on only one
+      (CLAS Schedules).
+  response_negotiation:
+    headers: [api-supported-versions, api-selected-version]
+    status: documented as optional; not observed on any probed response
+  note: >-
+    UCSB's versioning discipline is genuinely good for this cohort — it is written down, it is
+    per-API rather than estate-wide, and the contracts largely follow it. What is missing is
+    the other half of a lifecycle: nothing states how long a major version is supported, what
+    notice a consumer gets, or where changes are announced.
+deprecation:
+  policy_published: false
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  signal:
+    mechanism: '"Deprecated: True|False" field on every API page in the developer portal'
+    machine_readable: false
+    evidence: >-
+      https://developer.ucsb.edu/content/academic-curriculums renders "Deprecated False"
+      alongside "Security Auto-Approved". Probed 2026-08-30.
+  observed_deprecations:
+  - item: Academic Curriculums v1
+    status: superseded
+    replaced_by: Academic Curriculum v3.0
+    evidence: >-
+      The Academic Curriculums page lists "Previous Versions: v1" and the current spec is
+      curriculums-v3_0_0.yaml. The v1 document (curriculums-v1.out_.api_.yml), still
+      referenced by UCSB's own ucsb-mold client repo, now returns HTTP 404 on
+      developer.ucsb.edu — a superseded contract was removed rather than archived, so anything
+      pinned to it broke silently.
+    source: https://github.com/ucsb/ucsb-mold
+  - item: Student Basic Student Info v1
+    status: superseded
+    replaced_by: v2 (students-v2.out_.api__1.yaml)
+    evidence: info.version v2 on the currently published contract.
+  - item: Student Registrations v1
+    status: superseded
+    replaced_by: v2 (registrations-v2_0.yaml)
+  - item: ClassCode Lookup Service v1
+    status: superseded
+    replaced_by: v2 (basePath /administration/financial/barc/classcode/v2)
+change_communication:
+  changelog: false
+  release_notes: false
+  status_page:
+    url: https://status.sa.ucsb.edu/
+    operator: institution
+    covers: Student Affairs Information Systems, which is where most of these backends live.
+    probed: '2026-08-30, HTTP 200'
+  support_channel: support@developer.ucsb.edu
+  note: >-
+    There is no API changelog, no release-notes feed and no RSS on developer.ucsb.edu. A
+    consumer learns that a contract changed by re-fetching the YAML.
+gaps:
+- No published support window or end-of-life policy for a major version.
+- No Sunset/Deprecation headers (RFC 8594) on any response.
+- Superseded spec files are deleted rather than archived — the v1 curriculums URL 404s while
+  UCSB's own published client still points at it.
+- No changelog or notification channel; the Deprecated flag is human-readable only and is not
+  carried into the OpenAPI documents.

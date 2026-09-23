@@ -1,0 +1,293 @@
+# x-archived-from: ucsb-grad-application-verifications-openapi.yml
+# x-archived-on: 2026-09-16
+swagger: '2.0'
+info:
+  version: v1
+  title: Graduate Division Applications Verifications v1.0
+  description: "This is designed to return information about applicant/applications from graduate division,\
+    \ for the purpose of verifying applicant status.<br/> <br/>\r\n                        The BasicAuth\
+    \ header is a base64-encoded(ucsbNetId:password) combination. The ucsbNetId/password combination should\
+    \ be of a service account registered with the Campus Identity systems (ETS, the Campus LDAP). \r\n\
+    \                        This ucsbNetId needs to be supplied to the Graduate Division as part of the\
+    \ approval process."
+  x-source-url: https://developer.ucsb.edu/sites/default/files/openapi/gradapplverifications-v1.yaml
+  x-last-validated: '2026-08-30'
+  x-operator: institution
+host: gradpoint.ucsb.edu
+basePath: /webservices/public/applverifications
+schemes:
+- https
+securityDefinitions:
+  ucsb-api-key:
+    name: ucsb-api-key
+    in: header
+    type: apiKey
+paths:
+  /v{apiVersion}/perm/{perm}:
+    get:
+      tags:
+      - Verifications
+      summary: "Search for applications for a grad program applicant by supplying a perm.\r\nIf the perm\
+        \ is valid, basic information for all applications for the applicant."
+      operationId: Verifications_GetApplicantByPerm
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: perm
+        in: path
+        description: Students 6 or 7 digit perm
+        required: true
+        type: string
+      - name: apiVersion
+        in: path
+        description: Major api version to use.
+        required: true
+        type: string
+        default: '1'
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.0'
+      responses:
+        '200':
+          description: List of graduate application for a student perm.
+          schema:
+            $ref: '#/definitions/ApplicationVerification'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          schema:
+            $ref: '#/definitions/WebApiInvalidModel'
+        '401':
+          description: Unauthorized. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+        '404':
+          description: Resource cannot be found. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+  /v{apiVersion}/user:
+    post:
+      tags:
+      - Verifications
+      summary: "Search for applications for a grad program applicant by supplying a valid eApp username\
+        \ (email) and password.\r\nIf the credentials are valid, basic information for all applications\
+        \ for the applicant is returned."
+      operationId: Verifications_GetApplicantByUser
+      consumes:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      - application/x-www-form-urlencoded
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: user
+        in: body
+        description: User Name and Password object
+        required: true
+        schema:
+          $ref: '#/definitions/ApplicationVerificationRequestByUser'
+      - name: apiVersion
+        in: path
+        description: Major api version to use.
+        required: true
+        type: string
+        default: '1'
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        type: string
+        default: '1.0'
+      responses:
+        '200':
+          description: List of graduate application for a student email and password.
+          schema:
+            $ref: '#/definitions/ApplicationVerification'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          schema:
+            $ref: '#/definitions/WebApiInvalidModel'
+        '401':
+          description: Unauthorized. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+        '404':
+          description: Resource cannot be found. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+definitions:
+  ApplicationVerification:
+    type: object
+    properties:
+      applicationId:
+        format: int32
+        description: Application's unique identifier.
+        type: integer
+      perm:
+        description: Applicant's complete Perm (7 characters)
+        type: string
+      firstName:
+        description: Applicant's first name.
+        type: string
+      middleName:
+        description: Applicant's middle name.
+        type: string
+      lastName:
+        description: Applicant's last name.
+        type: string
+      previousName:
+        description: Applicant's previous name used, if any.
+        type: string
+      email:
+        description: Applicant's email address.
+        type: string
+      majorCode1:
+        description: 5 character major code, which can be found in the Student Record Lookup API
+        type: string
+      objectiveCode1:
+        description: 3 character objective code, which can be found in the Student Record Lookup API.
+        type: string
+      majorCode2:
+        description: 5 character major code, which can be found in the Student Record Lookup API
+        type: string
+      objectiveCode2:
+        description: 3 character objective code, which can be found in the Student Record Lookup API.
+        type: string
+      birthDate:
+        description: Applicant's date of birth in YYYY-MM-DD format.
+        type: string
+      submittedDate:
+        description: Date application was submitted in YYYY-MM-DD format.
+        type: string
+      paid:
+        description: Application payment status indicator.
+        type: boolean
+      programAdmitQuarter:
+        description: Program Admissions Quarter string in YYYYQ format.
+        type: string
+      citizenshipCountryCode:
+        description: Citizenship Country. Two character country code.
+        type: string
+      residencyCountryCode:
+        description: Residency Country. Two character country code.
+        type: string
+      californiaResident:
+        description: Indicates California Residency status
+        type: boolean
+      visaCode:
+        description: Visa type.
+        type: string
+      militaryService:
+        description: Type of military service, if any.
+        type: string
+      ethnicity:
+        description: Ethnicity
+        type: string
+      actionCode:
+        description: Returns what the old ACTION code would have been
+        type: string
+      decisionNotes:
+        description: Decision notes.
+        type: string
+      sirResponse:
+        description: SIR response. Possible values are 'No Response', 'Yes', 'No'.
+        type: string
+      sirResponseDate:
+        description: Date applicant responded in YYYY-MM-DD format.
+        type: string
+      declineReason:
+        description: "SIR decline reason. Possible values are\r\n'Not Declined', 'I will attend another\
+          \ UC campus' , 'I will attend another non-UC institution', 'I will not attend graduate school\
+          \ next year'"
+        type: string
+      schoolAttending:
+        description: Name of school attending.
+        type: string
+      genderCode:
+        description: Applicant's gender.
+        type: string
+      address1:
+        description: Permanent Address Line 1.
+        type: string
+      address2:
+        description: Permanent Address Line 2.
+        type: string
+      city:
+        description: Permanent Address City.
+        type: string
+      stateCode:
+        description: Permanent Address State. Two character state code.
+        type: string
+      postalCode:
+        description: Permanent Address Postal Code.
+        type: string
+      countryCode:
+        description: Permanent Address Country. Two character country code.
+        type: string
+      mailAddress1:
+        description: Mailing Address Line 1.
+        type: string
+      mailAddress2:
+        description: Mailing Address Line 2.
+        type: string
+      mailCity:
+        description: Mailing Address City.
+        type: string
+      mailStateCode:
+        description: Mailing Address State. Two character state code.
+        type: string
+      mailZip:
+        description: Mailing Address Postal Code.
+        type: string
+      mailCountryCode:
+        description: Mailing Address Country. Two character country code.
+        type: string
+      phone:
+        description: Permanent Address Phone Number.
+        type: string
+      deferralAdmitQuarter:
+        description: Deferral Admit Quarter string in YYYYQ format.
+        type: string
+      fiveYear:
+        description: Indicates if the application if for a five year BA/MA program
+        type: boolean
+  WebApiInvalidModel:
+    type: object
+    properties:
+      message:
+        type: string
+      modelState:
+        type: object
+        additionalProperties:
+          type: array
+          items:
+            type: string
+  SimpleMessageModel:
+    type: object
+    properties:
+      message:
+        type: string
+  ApplicationVerificationRequestByUser:
+    description: Application Verification Request , containing email and password
+    required:
+    - email
+    - password
+    type: object
+    properties:
+      email:
+        description: Email for the applicant
+        type: string
+      password:
+        description: Password for the applicant
+        type: string

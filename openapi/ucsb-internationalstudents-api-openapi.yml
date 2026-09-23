@@ -1,0 +1,56 @@
+openapi: 3.2.0
+info:
+  version: v1.6
+  title: Student Record Code Lookups International Students API
+  description: Code Lookups from the Office of the Registrar.
+servers:
+- url: https://api.ucsb.edu/students
+tags:
+- name: InternationalStudents
+paths:
+  /lookups/v1/internationalstudents:
+    get:
+      tags:
+      - InternationalStudents
+      operationId: /lookups/v1/internationalstudents
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicInternationalStudent'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicInternationalStudent'
+      description: Gets the list of student international stundent type codes.
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/internationalstudents
+      x-summary-source: derived
+components:
+  schemas:
+    AcademicInternationalStudent:
+      type: object
+      properties:
+        internationalStudentCode:
+          type: string
+        internationalStudentTranslation:
+          type: string
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey

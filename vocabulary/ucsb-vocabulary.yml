@@ -1,0 +1,152 @@
+generated: '2026-08-30'
+method: derived
+source: openapi/ (21 first-party UCSB contracts) + https://developer.ucsb.edu/documentation
+vocabulary:
+  name: UCSB Campus API Vocabulary
+  description: >-
+    Domain vocabulary for the UC Santa Barbara campus API estate, derived from the 21 OpenAPI
+    documents UCSB publishes on developer.ucsb.edu and from the portal's own documentation.
+    Covers the gateway and entitlement model, the quarter-system academic calendar primitives
+    that everything else keys off, and the student-record entities the Registrar exposes.
+  version: '2026-08-30'
+  terms:
+
+  - term: Campus API Gateway
+    definition: >-
+      UCSB's single API front door at api.ucsb.edu. Every campus API is published as a proxy
+      on it, and it enforces the ucsb-api-key entitlement check before any request reaches a
+      backend Web API Service. Runs on Apigee (api.ucsb.edu CNAMEs to ucsb-prod.apigee.net);
+      the domain, the proxies and the API products are UCSB's.
+    tags: [Platform, Core Concept]
+
+  - term: API Developer Portal
+    definition: >-
+      The Drupal 10 site at developer.ucsb.edu that catalogs every campus API, renders each
+      contract with the swagger_ui_formatter module, and runs the registration, App creation
+      and API Access Request workflows. Accounts are approved manually.
+    tags: [Platform, Onboarding]
+
+  - term: Consumer Key
+    definition: >-
+      The portal's name for the application API key. Passed as the ucsb-api-key header on
+      every request, including to APIs with no further security limitation.
+    tags: [Security]
+
+  - term: API Product
+    definition: >-
+      The gateway-side bundle an App is entitled to. A key valid at the gateway but not
+      subscribed to the product returns oauth.v2.InvalidApiKeyForGivenResource.
+    tags: [Security, Entitlement]
+
+  - term: Access Classification
+    definition: >-
+      UCSB's three-tier authorization vocabulary, published on every API page — Auto-Approved,
+      Access Approval Required, Private. It stands in for OAuth scopes, which UCSB does not
+      have. See scopes/ucsb-scopes.yml.
+    tags: [Security, Governance]
+
+  - term: Campus LDAP Service Account
+    definition: >-
+      A non-personal directory account whose credentials are passed as HTTP Basic THROUGH the
+      gateway to the backend, so the backend can filter data by calling unit — UCSB's example
+      is a College of Engineering application seeing only Engineering students.
+    tags: [Security, Identity]
+
+  - term: Functional Account
+    definition: >-
+      A shared, role-based portal account (lsit-developers@ucsb.edu) that UCSB recommends over
+      an individual one so an App's entitlements survive staff turnover.
+    tags: [Onboarding, Governance]
+
+  - term: Quarter
+    definition: >-
+      The four-term academic period UCSB runs on, identified by a five-character code of year
+      plus term digit (20264 = Fall 2026). It is the primary key of the whole academic estate:
+      curriculum, schedules, registrations, rosters and BARC billing all take a quarter.
+    tags: [Academic Calendar, Core Concept]
+
+  - term: Pass (Pass 1 / Pass 2 / Pass 3)
+    definition: >-
+      UCSB's staged registration windows within a quarter. pass1Begin, pass2Begin and
+      pass3Begin are first-class fields on the QuarterCalendar object.
+    tags: [Academic Calendar, Registration]
+
+  - term: Enroll Code
+    definition: >-
+      The five-digit identifier of a specific class SECTION in a specific quarter. The join key
+      between the curriculum, schedule, roster and registration APIs.
+    tags: [Curriculum, Core Concept]
+
+  - term: Class Section
+    definition: >-
+      One meeting group of a class, carrying its own enrollCode, instruction type, enrollment
+      counts, time/location list and instructor list.
+    tags: [Curriculum]
+
+  - term: General Education (GE) Code
+    definition: >-
+      A requirement area a class satisfies, scoped to the awarding college (L&S, Engineering,
+      Creative Studies). Carried on the Class object as a geCode + geCollege pair.
+    tags: [Curriculum, Requirements]
+
+  - term: BARC
+    definition: >-
+      Billing, Accounts Receivable and Collections — UCSB's student financial system. It has
+      its own quarter calendar (which does NOT track the Registrar's), its own students API and
+      its own class-code lookup service, all Private or approval-gated.
+    tags: [Finance, Student Accounts]
+
+  - term: Class Code
+    definition: >-
+      A BARC classification that determines a student's billing category. Exposed by the
+      ClassCode Lookup Service at /administration/financial/barc/classcode/v2.
+    tags: [Finance]
+
+  - term: Chartfield / FAU
+    definition: >-
+      The Functional Accounting Unit — the segmented account string that identifies where money
+      moves in UCSB's PeopleSoft financials. Two contracts cover it: Department Chartfield
+      (read) and the FAU Combination Service (validation), plus a Legacy COA to CCOA
+      crosswalking service for the pre-conversion chart of accounts.
+    tags: [Finance, Administration]
+
+  - term: CLAS
+    definition: >-
+      Campus Learning Assistance Services — UCSB's tutoring and academic-support unit. Its
+      schedules API is one of only two contracts published as OpenAPI 3.0.1 and the only one
+      that makes ucsb-api-version a required header.
+    tags: [Student Services]
+
+  - term: MTD Access
+    definition: >-
+      The Registrar service backing student access to Santa Barbara Metropolitan Transit
+      District bus service — the campus-life surface of the estate.
+    tags: [Campus Life, Transit]
+
+  - term: GOLD
+    definition: >-
+      UCSB's student-facing registration and records web application (my.sa.ucsb.edu), the
+      human counterpart to the Students APIs. Not itself an API surface.
+    tags: [Student Services]
+
+  - term: Code Lookup
+    definition: >-
+      A reference table in the Student Information System — majors, minors, colleges,
+      departments, grades, pronouns, gender identity, classifications and 30 more. The Student
+      Record Code Lookups API exposes 39 of them and is the largest single UCSB contract, and
+      it is Auto-Approved, which makes it the most usable public surface UCSB has.
+    tags: [Reference Data, Student Records]
+
+  - term: Alexandria Digital Research Library (ADRL)
+    definition: >-
+      UCSB Library's institutional repository at digital.library.ucsb.edu (formerly
+      alexandria.ucsb.edu). Institution-operated and CloudFront-fronted, but it publishes no
+      documented API and no OAI-PMH endpoint.
+    tags: [Research Repository]
+
+  - term: Passport
+    definition: >-
+      UCSB's Shibboleth identity provider at passport.identity.ucsb.edu, registered in
+      InCommon as urn:mace:incommon:ucsb.edu. The one machine-readable institution-operated
+      surface here that is not an OpenAPI.
+    tags: [Identity, Federation]

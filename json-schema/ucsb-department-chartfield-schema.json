@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ucsb/main/json-schema/ucsb-department-chartfield-schema.json",
+  "title": "DepartmentModel",
+  "description": "A department chartfield / accounting unit in the UCSB financial system.",
+  "type": "object",
+  "properties": {
+    "deptCode": {
+      "type": "string",
+      "description": "Department Code",
+      "nullable": true
+    },
+    "deptName": {
+      "type": "string",
+      "description": "Department Name",
+      "nullable": true
+    },
+    "reportTo": {
+      "type": "string",
+      "description": "DepartmentModel to which this department report to",
+      "nullable": true
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "Department Enabled flag"
+    },
+    "updateDate": {
+      "type": "string",
+      "description": "Last time department was updated",
+      "format": "date-time"
+    },
+    "costTypes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/CostTypeModel"
+      },
+      "description": "department Cost Types",
+      "nullable": true
+    },
+    "costCenters": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/CostCenterModel"
+      },
+      "description": "Department Cost Centers",
+      "nullable": true
+    },
+    "projectCodes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ProjectCodeModel"
+      },
+      "description": "Department Project Codes",
+      "nullable": true
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "CostCenterModel": {
+      "type": "object",
+      "properties": {
+        "costCenter": {
+          "type": "string",
+          "description": "",
+          "nullable": true
+        },
+        "costCenterDesc": {
+          "type": "string",
+          "nullable": true
+        },
+        "enabled": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "updateDate": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ProjectCodeModel": {
+      "type": "object",
+      "properties": {
+        "projectCode": {
+          "type": "string",
+          "nullable": true
+        },
+        "projectCodeDesc": {
+          "type": "string",
+          "nullable": true
+        },
+        "enabled": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "updateDate": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    },
+    "CostTypeModel": {
+      "type": "object",
+      "properties": {
+        "costType": {
+          "type": "string",
+          "nullable": true
+        },
+        "costTypeDesc": {
+          "type": "string",
+          "nullable": true
+        },
+        "enabled": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "updateDate": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "x-source": "openapi/ucsb-department-chartfield-openapi.yml",
+  "x-method": "derived",
+  "x-generated": "2026-08-30"
+}

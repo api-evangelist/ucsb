@@ -1,0 +1,38 @@
+{
+  "x-generated": "2026-08-30",
+  "x-method": "derived",
+  "x-source": "openapi/ucsb-academic-quarter-calendar-openapi.yml",
+  "x-note": "Request shape is verbatim from the UCSB OpenAPI. Response VALUES are illustrative and derived from the QuarterCalendar schema — this endpoint requires an approved ucsb-api-key and no live response was captured.",
+  "request": {
+    "method": "GET",
+    "url": "https://api.ucsb.edu/academics/quartercalendar/v1/quarters/current?type=firstdayofquarter",
+    "headers": {
+      "ucsb-api-key": "YOUR_CONSUMER_KEY",
+      "ucsb-api-version": "1.0",
+      "Accept": "application/json"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "quarter": "20264",
+      "qyy": "F26",
+      "name": "FALL 2026",
+      "category": "REGULAR",
+      "academicYear": "2026-2027",
+      "firstDayOfClasses": "2026-09-24T00:00:00",
+      "lastDayOfClasses": "2026-12-04T00:00:00",
+      "firstDayOfFinals": "2026-12-05T00:00:00",
+      "lastDayOfFinals": "2026-12-11T00:00:00",
+      "firstDayOfQuarter": "2026-09-17T00:00:00",
+      "lastDayOfSchedule": "2026-12-11T00:00:00",
+      "pass1Begin": "2026-05-11T00:00:00",
+      "pass2Begin": "2026-05-18T00:00:00",
+      "pass3Begin": "2026-09-14T00:00:00",
+      "feeDeadline": "2026-09-15T00:00:00",
+      "lastDayToAddUnderGrad": "2026-10-09T00:00:00",
+      "lastDayToAddGrad": "2026-10-09T00:00:00",
+      "lastDayThirdWeek": "2026-10-09T00:00:00"
+    }
+  }
+}

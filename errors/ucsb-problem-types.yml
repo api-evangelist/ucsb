@@ -1,0 +1,76 @@
+generated: '2026-08-30'
+method: probed
+source: https://api.ucsb.edu/academics/quartercalendar/v1/quarters/current
+docs: https://developer.ucsb.edu/docs/security/api-key
+format: apigee-fault-envelope
+rfc9457: false
+note: >-
+  UCSB fronts every campus API with a Campus API Gateway running on Apigee at api.ucsb.edu
+  (DNS: api.ucsb.edu -> ucsb-prod.apigee.net). The domain, the API products and the backend
+  web services are UCSB's; the fault envelope on gateway-layer failures is Apigee's default.
+  There are TWO distinct error shapes in play and UCSB does not reconcile them, which is the
+  one real defect in an otherwise disciplined contract:
+    1. Gateway auth faults use {"fault": {"faultstring", "detail": {"errorcode"}}}
+    2. Unrouted paths use {"message": "..."}
+  Neither is declared in any of the 21 published OpenAPI documents — the specs declare only
+  their 200 responses plus, on the Swagger 2.0 ones, a WebApiInvalidModel / SimpleMessageModel
+  body for backend validation errors. No RFC 9457 application/problem+json is served at the
+  gateway; the two OpenAPI 3.0.1 contracts (CLAS Schedules, Department Chartfield) DO define a
+  ProblemDetails schema for the backend service, so the backend is closer to RFC 9457 than the
+  edge is.
+envelopes:
+- name: gateway-fault
+  layer: Campus API Gateway (Apigee)
+  content_type: application/json
+  probed: true
+  example:
+    fault:
+      faultstring: Invalid ApiKey
+      detail:
+        errorcode: oauth.v2.InvalidApiKey
+- name: gateway-router-message
+  layer: Campus API Gateway (Apigee) routing
+  content_type: application/json
+  probed: true
+  example:
+    message: >-
+      No API Endpoint defined for this path. Please see https://developer.ucsb.edu/ for more
+      information.
+- name: WebApiInvalidModel
+  layer: backend Web API Service (ASP.NET)
+  content_type: application/json
+  probed: false
+  declared_in: 11 of 21 OpenAPI documents
+  note: Model-validation error body carried by most of the Swagger 2.0 contracts.
+- name: ProblemDetails
+  layer: backend Web API Service (ASP.NET Core)
+  content_type: application/problem+json
+  probed: false
+  declared_in:
+  - openapi/ucsb-clas-schedules-openapi.yml
+  - openapi/ucsb-department-chartfield-openapi.yml
+status_codes:
+- status: 401
+  meaning: >-
+    Missing ucsb-api-key, invalid ucsb-api-key, or a valid key whose app is not subscribed to
+    this API product (errorcode oauth.v2.InvalidApiKeyForGivenResource).
+  retryable: false
+  probed: true
+  evidence: 'GET /academics/quartercalendar/v1/quarters/current with no key -> 401 (2026-08-30)'
+- status: 404
+  meaning: No API proxy is deployed at this base path.
+  retryable: false
+  probed: true
+  evidence: 'GET /academics/nope/v1/nothing -> 404 (2026-08-30)'
+- status: 400
+  meaning: Backend model validation failure (WebApiInvalidModel / ProblemDetails).
+  retryable: false
+  probed: false
+  evidence: Declared in the published OpenAPI documents; not reachable without an approved key.
+gaps:
+- No error responses are declared in the OpenAPI documents for the gateway layer, so a generated
+  client sees only the 200 contract and will not recognise a fault envelope.
+- Missing and invalid credentials are indistinguishable to the caller — both return the identical
+  body, which makes key-rotation failures hard to diagnose.
+- No RFC 9457 / problem+json at the edge, and no Retry-After or rate-limit headers observed on
+  any probed response.

@@ -1,0 +1,79 @@
+openapi: 3.2.0
+info:
+  version: v1.6
+  title: Student Record Code Lookups Requirements API
+  description: Code Lookups from the Office of the Registrar.
+servers:
+- url: https://api.ucsb.edu/students
+tags:
+- name: Requirements
+paths:
+  /lookups/v1/requirements:
+    get:
+      tags:
+      - Requirements
+      operationId: /lookups/v1/requirements
+      parameters:
+      - name: includeInactive
+        in: query
+        description: Include object major emphasis combinations that are no longer active. This cannot be used with code.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicCollegeRequirement'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicCollegeRequirement'
+      description: 'Gets the list of college requirements.
+
+        (Data Dictionary - College Requirements)
+
+        (Reg Catalog - Degree Requirements)'
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/requirements
+      x-summary-source: derived
+components:
+  schemas:
+    AcademicCollegeRequirement:
+      type: object
+      properties:
+        requirementCode:
+          type: string
+        requirementTranslation:
+          type: string
+        collegeCode:
+          type: string
+        objCode:
+          type: string
+        courseCount:
+          format: int32
+          type: integer
+        units:
+          format: double
+          type: number
+        inactive:
+          type: boolean
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey

@@ -1,0 +1,141 @@
+openapi: 3.2.0
+info:
+  version: v2
+  title: Student Registrations Registration Blocks API
+  description: Registrations information from the Office of the Registrar.
+servers:
+- url: https://api.ucsb.edu/students/registrations
+security:
+- ucsb-api-key: []
+- BasicAuth: []
+tags:
+- name: RegistrationBlocks
+paths:
+  /v2/registrationblocks:
+    post:
+      tags:
+      - RegistrationBlocks
+      summary: Adds or removes a registration block for a student.
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '2.0'
+      responses:
+        '200':
+          description: Return regblockResponse if successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegistrationBlockResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/RegistrationBlockResponse'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+        '401':
+          description: Unauthorized. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+        '404':
+          description: Resource cannot be found. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegistrationBlockRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/RegistrationBlockRequest'
+        required: true
+      operationId: postV2Registrationblocks
+      x-operation-id-source: derived
+components:
+  schemas:
+    RegistrationBlockRequest:
+      description: Dto object to process a registration block
+      required:
+      - quarter
+      - perm
+      - blockDepartment
+      - blockReason
+      - blockAction
+      type: object
+      properties:
+        quarter:
+          description: Quarter Block will be placed
+          type: string
+        perm:
+          description: 6 or 7 character student Id
+          type: string
+        blockDepartment:
+          description: Department Placing the block. Refer Campus Organisations Org_Code
+          type: string
+        blockReason:
+          description: Reason for the block - Refer Look up block reason
+          type: string
+        blockAction:
+          description: Block Action - can be either Add or Drop
+          enum:
+          - Add
+          - Drop
+          type: string
+    WebApiInvalidModel:
+      type: object
+      properties:
+        message:
+          type: string
+        modelState:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    RegistrationBlockResponse:
+      description: Regsitration Block Response Object
+      type: object
+      properties:
+        status:
+          description: Status of the request Failed, Success, Rejected
+          enum:
+          - Success
+          - Rejected
+          type: string
+        messsage:
+          description: Error Message
+          type: string
+    SimpleMessageModel:
+      type: object
+      properties:
+        message:
+          type: string
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey
+    BasicAuth:
+      type: http
+      scheme: basic

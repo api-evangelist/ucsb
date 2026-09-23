@@ -1,0 +1,114 @@
+generated: '2026-08-30'
+method: probed
+source: openapi/ + live probes of api.ucsb.edu, passport.identity.ucsb.edu and mdq.incommon.org
+docs: https://developer.ucsb.edu/docs/publishers/guidelines-and-standards
+regime: education
+note: >-
+  Conformance measured against the Kin Score `education` regime standards[] plus the general
+  API specification standards. Every entry below is REWARD-ONLY and carries the exact location
+  the evidence was read from. Nothing is asserted from a prose claim. The two genuine finds
+  here are the SAML/Shibboleth identity federation — UCSB runs its own IdP and is a registered
+  InCommon entity, machine-readable and previously uncatalogued — and the 21 first-party
+  OpenAPI documents on developer.ucsb.edu.
+standards:
+- id: saml
+  conforms: true
+  evidence: >-
+    SAML 2.0 EntityDescriptor for entityID urn:mace:incommon:ucsb.edu retrieved from the
+    InCommon MDQ service at
+    https://mdq.incommon.org/entities/urn%3Amace%3Aincommon%3Aucsb.edu — HTTP 200,
+    Content-Type application/samlmetadata+xml, 10,748 bytes, XML-signed, validUntil
+    2026-09-13. mdui:DisplayName "University of California, Santa Barbara".
+    SingleSignOnService endpoints bind SAML2 HTTP-POST, POST-SimpleSign and HTTP-Redirect at
+    https://passport.identity.ucsb.edu/idp/profile/SAML2/*/SSO. Probed 2026-08-30.
+- id: shibboleth
+  conforms: true
+  evidence: >-
+    The IdP is Shibboleth. The metadata declares the Shibboleth 1.0 AuthnRequest binding
+    (urn:mace:shibboleth:1.0:profiles:AuthnRequest) at
+    https://passport.identity.ucsb.edu/idp/profile/Shibboleth/SSO, and
+    https://passport.identity.ucsb.edu/idp/shibboleth returns HTTP 200. The host resolves to
+    a UCSB-operated load balancer (Shibboleth-App-LB-*.us-west-2.elb.amazonaws.com), so the
+    IdP is institution-operated, not a vendor tenancy. Probed 2026-08-30.
+- id: openapi
+  conforms: true
+  evidence: >-
+    21 first-party API contracts published as downloadable YAML under
+    https://developer.ucsb.edu/sites/default/files/openapi/ and rendered by the Drupal
+    swagger_ui_formatter module on each API page. 19 are Swagger 2.0; 2 are OpenAPI 3.0.1
+    (CLAS Schedules, Department Chartfield). All 21 declare a UCSB host — 20 at api.ucsb.edu,
+    1 at gradpoint.ucsb.edu. Fetched 2026-08-30, all HTTP 200.
+- id: oai-pmh
+  conforms: false
+  operator: tenant
+  evidence: >-
+    No OAI-PMH provider on a UCSB host. https://digital.library.ucsb.edu/oai-pmh?verb=Identify
+    and https://www.library.ucsb.edu/oai return 403/404. UCSB scholarship IS harvestable via
+    OAI-PMH, but through eScholarship (https://escholarship.org/oai?verb=Identify, HTTP 200),
+    which is operated by the California Digital Library for the whole UC system — a tenant
+    relationship, not a UCSB endpoint. Not credited to UCSB.
+- id: orcid
+  conforms: false
+  evidence: >-
+    No ORCID identifier or ORCID integration exposed in any of the 21 published contracts and
+    no ORCID member API surface found on a ucsb.edu host.
+- id: datacite
+  conforms: false
+  operator: tenant
+  evidence: >-
+    UCSB deposits DOIs for the Alexandria Digital Research Library, but minting runs through
+    the California Digital Library's EZID/DataCite membership, not a UCSB-operated surface.
+    Not credited to UCSB.
+- id: crossref
+  conforms: false
+  evidence: No Crossref deposit or query surface operated on a ucsb.edu host.
+- id: scim
+  conforms: false
+  evidence: >-
+    No SCIM endpoint published. Provisioning is documented as Campus LDAP service accounts
+    (https://developer.ucsb.edu/docs/accounts/ldap-accounts), not SCIM.
+- id: lti
+  conforms: false
+  evidence: No LTI tool or platform registration surface published on developer.ucsb.edu.
+- id: oneroster
+  conforms: false
+  evidence: >-
+    Roster data IS published — openapi/ucsb-student-rosters-openapi.yml — but in a UCSB-native
+    shape (Roster / RosterCourse / RosterSection), not the IMS OneRoster vocabulary.
+- id: ed-fi
+  conforms: false
+  evidence: No Ed-Fi ODS or Ed-Fi API surface; Ed-Fi is a K-12 standard and is not expected here.
+- id: caliper
+  conforms: false
+  evidence: No Caliper Analytics event store or sensor endpoint published.
+- id: qti
+  conforms: false
+  evidence: No QTI assessment interchange surface published.
+- id: oauth2
+  conforms: false
+  evidence: >-
+    No oauth2 securityScheme in any of the 21 contracts. /.well-known/openid-configuration and
+    /.well-known/oauth-authorization-server return 404 on api.ucsb.edu, developer.ucsb.edu and
+    www.ucsb.edu (probed 2026-08-30). UCSB documents Google OAuth as an explicit interim and
+    states a campus OAuth provider is on the long-term roadmap.
+- id: rfc9457-problem-details
+  conforms: partial
+  evidence: >-
+    The two OpenAPI 3.0.1 contracts define a ProblemDetails schema for the backend service.
+    The gateway itself does not: probed 401 and 404 responses return application/json with an
+    Apigee fault envelope and a bare {"message"} envelope respectively, never
+    application/problem+json.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: >-
+    No Sunset or Deprecation header on any probed response. UCSB DOES carry a Deprecated
+    boolean on every portal API page, which is a real deprecation signal but a human-readable
+    one.
+- id: llms-txt
+  conforms: false
+  evidence: /llms.txt returns 404 on both www.ucsb.edu and developer.ucsb.edu (probed 2026-08-30).
+- id: security-txt
+  conforms: false
+  evidence: >-
+    /.well-known/security.txt returns 404 on www.ucsb.edu and developer.ucsb.edu
+    (probed 2026-08-30).

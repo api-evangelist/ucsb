@@ -1,0 +1,57 @@
+{
+  "x-generated": "2026-08-30",
+  "x-method": "derived",
+  "x-source": "openapi/ucsb-academic-curriculums-openapi.yml",
+  "x-note": "Request shape verbatim from the UCSB OpenAPI (Academic Curriculum v3.0). Response values are illustrative, derived from the Class / ClassSection schemas; the endpoint requires an approved ucsb-api-key.",
+  "request": {
+    "method": "GET",
+    "url": "https://api.ucsb.edu/academics/curriculums/v3/classes/search?quarter=20264&deptCode=CMPSC&includeClassSections=true&pageNumber=1&pageSize=25",
+    "headers": {
+      "ucsb-api-key": "YOUR_CONSUMER_KEY",
+      "ucsb-api-version": "3.0",
+      "Accept": "application/json"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "pageNumber": 1,
+      "pageSize": 25,
+      "total": 42,
+      "classes": [
+        {
+          "quarter": "20264",
+          "courseId": "CMPSC   130A",
+          "title": "DATA STRUCT ALGOR",
+          "description": "Design and analysis of data structures and algorithms.",
+          "college": "L&S",
+          "deptCode": "CMPSC",
+          "subjectArea": "CMPSC",
+          "unitsFixed": 4,
+          "generalEducation": [
+            { "geCode": "QNT", "geCollege": "L&S" }
+          ],
+          "classSections": [
+            {
+              "enrollCode": "07484",
+              "section": "0100",
+              "session": null,
+              "classClosed": null,
+              "courseCancelled": null,
+              "gradingOptionCode": "L",
+              "enrolledTotal": 118,
+              "maxEnroll": 120,
+              "instructionType": "LEC",
+              "timeLocations": [
+                { "room": "1001", "building": "PHELP", "days": "M W", "beginTime": "14:00", "endTime": "15:15" }
+              ],
+              "instructors": [
+                { "instructor": "SMITH J", "functionCode": "Teaching and in charge" }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

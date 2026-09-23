@@ -1,0 +1,114 @@
+openapi: 3.2.0
+info:
+  version: v1.6
+  title: Student Record Code Lookups Emphasis API
+  description: Code Lookups from the Office of the Registrar.
+servers:
+- url: https://api.ucsb.edu/students
+tags:
+- name: Emphasis
+paths:
+  /lookups/v1/emphasis/{code}:
+    get:
+      tags:
+      - Emphasis
+      operationId: /lookups/v1/emphasis/{code}
+      parameters:
+      - name: code
+        in: path
+        description: 'The emphasis code to match. If this is used translationFilter and includeInactive
+
+          are ignored.'
+        required: true
+        schema:
+          type: string
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcademicEmphasis'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/AcademicEmphasis'
+      description: 'Gets an active emphasis.
+
+        (Data Dictionary - Emphasis)'
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/emphasis/{code}
+      x-summary-source: derived
+  /lookups/v1/emphasis:
+    get:
+      tags:
+      - Emphasis
+      operationId: /lookups/v1/emphasis
+      parameters:
+      - name: translationFilter
+        in: query
+        description: 'Filters the translations by the given text. If the text appears in the the
+
+          translation, then it will be returned. This cannot be used with code.'
+        required: false
+        schema:
+          type: string
+          default: ''
+      - name: includeInactive
+        in: query
+        description: Include emphases that are no longer active. This cannot be used with code.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicEmphasis'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicEmphasis'
+      description: 'Gets the list of active emphases. (The name was left as emphasis because it''s easier to find).
+
+        (Data Dictionary - Emphasis)'
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/emphasis
+      x-summary-source: derived
+components:
+  schemas:
+    AcademicEmphasis:
+      type: object
+      properties:
+        emphasisCode:
+          type: string
+        emphasisTranslation:
+          type: string
+        inactive:
+          type: boolean
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey

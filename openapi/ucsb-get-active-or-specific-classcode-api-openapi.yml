@@ -1,0 +1,82 @@
+openapi: 3.2.0
+info:
+  version: 1.0.0
+  title: ClassCode Lookup Service Get Active or Specific ClassCode…
+  description: 'This service looks up Class Codes on the BARC system. The service will query the system based on three flags. *Active (Retrieve only Active codes) *All (Retrieve Active and Inactive codes) *Specific Class Code (Example: 0001)'
+  termsOfService: ''
+  contact:
+    name: API Team
+servers:
+- url: https://api.ucsb.edu/administration/financial/barc/classcode/v2
+security:
+- apiKey: []
+tags:
+- name: Get Active or Specific ClassCode
+paths:
+  /{value}:
+    get:
+      tags:
+      - Get Active or Specific ClassCode
+      operationId: GetClassCodeItem
+      parameters:
+      - name: value
+        in: path
+        description: Active or ClassCodeID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns a list of Class Codes from the BARC System
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ClassCodeItem'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClassCodeItem'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ClassCodeItem'
+        '404':
+          description: Not Found
+        '500':
+          description: Server Error
+      summary: Get class code item
+      x-summary-source: derived
+components:
+  schemas:
+    ClassCodeItem:
+      type: object
+      properties:
+        classcode:
+          type: string
+        description:
+          type: string
+        loc:
+          type: string
+        account:
+          type: string
+        fund:
+          type: string
+        sub:
+          type: string
+        manualControl:
+          type: string
+        validForBarcFlag:
+          type: string
+        objectCode:
+          type: string
+        registrationRefundFlag:
+          type: string
+        department:
+          type: string
+        lastUpdateDate:
+          type: string
+        lastUpdateUserid:
+          type: string
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      name: ucsb-api-key
+      in: header

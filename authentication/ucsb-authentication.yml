@@ -1,0 +1,113 @@
+generated: '2026-08-30'
+method: searched
+source: https://developer.ucsb.edu/docs/security/overview
+docs: https://developer.ucsb.edu/documentation
+summary:
+  types:
+  - apiKey
+  - basic
+  - oauth2
+  api_key_in:
+  - header
+  oauth2_flows:
+  - authorizationCode
+  note: >-
+    UCSB documents a three-layer security model for the Campus API Gateway, and it is one of
+    the more clearly written institutional API security pages in this cohort. Layer 1 is an
+    application API key (the portal calls it the Consumer Key) checked at the gateway. Layer 2
+    is HTTP Basic against a Campus LDAP service account, passed THROUGH the gateway to the
+    backend web service so the backend can scope what a given department's application may
+    see. Layer 3, used only where the calling end user must be identified, is Google OAuth —
+    which UCSB states explicitly is a stopgap: "Temporarily, Google can provide this OAuth
+    information as the Campus Identity team works on implementing an OAuth provider specific
+    for our campus needs." UCSB's own campus OAuth provider is on the long-term roadmap and
+    is not shipped.
+schemes:
+- name: ucsb-api-key
+  type: apiKey
+  in: header
+  parameter: ucsb-api-key
+  layer: Campus API Gateway
+  purpose: >-
+    Authenticates the calling APPLICATION to the gateway and resolves which API products that
+    application is entitled to. Required on every call, including on APIs with no further
+    security limitations.
+  issued_at: https://developer.ucsb.edu/
+  issuance: >-
+    Register a developer-portal account (manually approved by an administrator), create an
+    App, and read the Consumer Key off the App page. UCSB recommends a functional account
+    (e.g. lsit-developers@ucsb.edu) over an individual one so entitlements survive staff
+    turnover.
+  scoped: true
+  scope_model: >-
+    Per-API-product entitlement, not OAuth scopes. An unentitled key returns
+    oauth.v2.InvalidApiKeyForGivenResource.
+  declared_in: 21 of 21 published OpenAPI documents (as ucsb-api-key or apiKey/ucsbApiKey)
+  sources:
+  - https://developer.ucsb.edu/docs/security/api-key
+  - openapi/ucsb-academic-quarter-calendar-openapi.yml
+- name: BasicAuth
+  type: http
+  scheme: basic
+  layer: backend Web API Service
+  purpose: >-
+    Carries a Campus LDAP SERVICE ACCOUNT to the backend so the backend can apply per-caller
+    data filtering. UCSB's worked example: an application from the College of Engineering may
+    only be permitted student information for that college.
+  issued_at: null
+  issuance: Campus LDAP service/functional account, requested through campus IT — not self-service.
+  scoped: true
+  declared_in: >-
+    11 of 21 published OpenAPI documents (BasicAuth / basicAuth / ucsbnetid-password), all of
+    them Students, Registrar or BARC contracts.
+  sources:
+  - https://developer.ucsb.edu/docs/security/basic-authentication
+  - https://developer.ucsb.edu/docs/accounts/ldap-accounts
+- name: Google End User OAuth
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    provider: Google
+  layer: backend Web API Service
+  purpose: >-
+    Identifies the END USER of the calling application where the backend must know who is
+    asking, not just which app is asking.
+  self_described_as_interim: true
+  interim_evidence: >-
+    "Temporarily, Google can provide this OAuth information as the Campus Identity team works
+    on implementing an OAuth provider specific for our campus needs."
+    — https://developer.ucsb.edu/docs/security/overview
+  declared_in: >-
+    Not declared as an oauth2 securityScheme in any published OpenAPI. Its transport is visible
+    only in the gateway's CORS allow-list, which admits a ucsb-user-jwt header.
+  sources:
+  - https://developer.ucsb.edu/docs/security/google-end-user-oauth
+observed_transport:
+  probed: true
+  probed_on: '2026-08-30'
+  evidence: >-
+    api.ucsb.edu returns Access-Control-Allow-Headers "origin, x-requested-with, accept,
+    ucsb-api-key, ucsb-api-version, authorization, ucsb-user-jwt, content-type" on every
+    response, including 401 and 404. The three UCSB-specific headers — ucsb-api-key,
+    ucsb-api-version and ucsb-user-jwt — are the whole auth and versioning surface, and the
+    gateway advertises them without a key.
+onboarding:
+  self_service: false
+  approval: manual
+  steps:
+  - Register a portal account at https://developer.ucsb.edu/user/register
+  - Wait for an administrator to approve the account manually
+  - Create an App to obtain a Consumer Key
+  - File an API Access Request for any API above the Auto-Approved tier
+  note: >-
+    UCSB states the manual approval step is current practice and that automatic approval is
+    intended but not implemented.
+  sources:
+  - https://developer.ucsb.edu/docs/getting-started
+  - https://developer.ucsb.edu/docs/creating-your-first-app
+gaps:
+- No campus-operated OAuth 2.0 or OIDC provider for API authorization; Google is used as an
+  acknowledged interim.
+- No /.well-known/openid-configuration and no /.well-known/oauth-authorization-server on
+  api.ucsb.edu, developer.ucsb.edu or www.ucsb.edu.
+- No security.txt on any UCSB host probed.

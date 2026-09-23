@@ -1,0 +1,120 @@
+openapi: 3.2.0
+info:
+  version: v1.6
+  title: Student Record Code Lookups Obj Maj Emps API
+  description: Code Lookups from the Office of the Registrar.
+servers:
+- url: https://api.ucsb.edu/students
+tags:
+- name: ObjMajEmps
+paths:
+  /lookups/v1/objmajemps:
+    get:
+      tags:
+      - ObjMajEmps
+      operationId: /lookups/v1/objmajemps
+      parameters:
+      - name: objCode
+        in: query
+        description: The objective code to match. Can be used with other code parameters.
+        required: false
+        schema:
+          type: string
+          default: ''
+      - name: majorCode
+        in: query
+        description: The objective code to match. Can be used with other code parameters.
+        required: false
+        schema:
+          type: string
+          default: ''
+      - name: emphasisCode
+        in: query
+        description: The objective code to match. Can be used with other code parameters.
+        required: false
+        schema:
+          type: string
+          default: ''
+      - name: objLevelCode
+        in: query
+        description: '''G''raduate or ''U''ndergraduate. Can be used with other code parameters.'
+        required: false
+        schema:
+          type: string
+          default: ''
+      - name: objLevel
+        in: query
+        description: '''G''raduate or ''U''ndergraduate. Can be used with other code parameters.
+
+          This parameter will be deprecated in the future, use objLevelCode instead.'
+        required: false
+        schema:
+          type: string
+          default: ''
+      - name: includeInactive
+        in: query
+        description: Include object major emphasis combinations that are no longer active. This cannot be used with code.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicObjMajEmp'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicObjMajEmp'
+      description: 'Gets the list of active object major emphasis combinations.
+
+        These are the actual degree programs students enroll in.
+
+        (Data Dictionary - Object Major Emphasis By College)'
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/objmajemps
+      x-summary-source: derived
+components:
+  schemas:
+    AcademicObjMajEmp:
+      type: object
+      properties:
+        objMajEmpCode:
+          type: string
+        objCode:
+          type: string
+        majorCode:
+          type: string
+        emphasisCode:
+          type: string
+        collegeCode:
+          type: string
+        deptCode:
+          type: string
+        objLevel:
+          type: string
+        objLevelCode:
+          type: string
+        obtainDegree:
+          type: string
+        inactive:
+          type: boolean
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey

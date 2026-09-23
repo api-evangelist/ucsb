@@ -1,0 +1,66 @@
+openapi: 3.2.0
+info:
+  version: v1.6
+  title: Student Record Code Lookups Fee Status API
+  description: Code Lookups from the Office of the Registrar.
+servers:
+- url: https://api.ucsb.edu/students
+tags:
+- name: FeeStatus
+paths:
+  /lookups/v1/feestatus:
+    get:
+      tags:
+      - FeeStatus
+      operationId: /lookups/v1/feestatus
+      parameters:
+      - name: includeInactive
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicFeeStatus'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicFeeStatus'
+      description: Gets the list of school type codes.
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/feestatus
+      x-summary-source: derived
+components:
+  schemas:
+    AcademicFeeStatus:
+      type: object
+      properties:
+        feeStatusCode:
+          type: string
+        feeStatusTranslation:
+          type: string
+        comments:
+          type: string
+        inactive:
+          type: boolean
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey

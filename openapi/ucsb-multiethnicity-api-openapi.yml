@@ -1,0 +1,58 @@
+openapi: 3.2.0
+info:
+  version: v1.6
+  title: Student Record Code Lookups Multi Ethnicity API
+  description: Code Lookups from the Office of the Registrar.
+servers:
+- url: https://api.ucsb.edu/students
+tags:
+- name: MultiEthnicity
+paths:
+  /lookups/v1/multiethnicity:
+    get:
+      tags:
+      - MultiEthnicity
+      operationId: /lookups/v1/multiethnicity
+      parameters:
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.6'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicMultiEthnicity'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicMultiEthnicity'
+      description: 'Gets the list of Multi ethnicity for students
+
+        All the multi ethnicity code and there translations returned'
+      security:
+      - ucsb-api-key: []
+      summary: /lookups/v1/multiethnicity
+      x-summary-source: derived
+components:
+  schemas:
+    AcademicMultiEthnicity:
+      type: object
+      properties:
+        multiEthnicityCode:
+          type: string
+        multiEthnicityTranslation:
+          type: string
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey

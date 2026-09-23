@@ -1,0 +1,189 @@
+swagger: '2.0'
+info:
+  version: v2
+  title: Student Basic Student Info
+  description: "Basic Student information from the Office of the Registrar. This endpoint is meant to return name, email address, and some relatively static registration information.\r\n\r\nThe BasicAuth header is a base64-encoded(ucsbNetId:password) combination. The ucsbNetId/password combination should be of a service account registered with the Campus Identity systems (ETS, the Campus LDAP). This ucsbNetId needs to be supplied to the Office of the Registrar as part of the approval process."
+host: api.ucsb.edu
+basePath: /students
+schemes:
+  - https
+securityDefinitions:
+  ucsb-api-key:
+    name: ucsb-api-key
+    in: header
+    type: apiKey
+  BasicAuth:
+    type: basic
+security:
+  - ucsb-api-key: []
+  - BasicAuth: []
+paths:
+  /v2/students/{perm}:
+    get:
+      tags:
+        - Students
+      consumes: []
+      produces:
+        - application/json
+        - text/json
+      parameters:
+        - name: perm
+          in: path
+          description: Students 6 or 7 character perm
+          required: true
+          type: string
+        - name: ucsb-api-version
+          in: header
+          description: Specific api version to use.
+          required: false
+          type: string
+          default: '2.0'
+      responses:
+        '200':
+          description: "A basic student information object is returned. With appropriate approval, an extended student information object is returned."
+          schema:
+            $ref: '#/definitions/StudentExtended'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          schema:
+            $ref: '#/definitions/WebApiInvalidModel'
+        '401':
+          description: Unauthorized. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+        '404':
+          description: Resource cannot be found. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+  /v2/students/current:
+    get:
+      tags:
+        - Students
+      consumes: []
+      produces:
+        - application/json
+        - text/json
+      parameters:
+        - name: ucsb-user-jwt
+          in: header
+          description: end user jwt token
+          required: true
+          type: string
+        - name: ucsb-api-version
+          in: header
+          description: Specific api version to use.
+          required: false
+          type: string
+          default: '2.0'
+      responses:
+        '200':
+          description: A basic student information object is returned. With appropriate approval, an extended student information object is returned.
+          schema:
+            $ref: '#/definitions/StudentMinimal'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          schema:
+            $ref: '#/definitions/WebApiInvalidModel'
+        '401':
+          description: Unauthorized. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+        '404':
+          description: Resource cannot be found. See response body for details.
+          schema:
+            $ref: '#/definitions/SimpleMessageModel'
+definitions:
+  StudentExtended:
+    type: object
+    properties:
+      firstName:
+        description: The student's lived first name
+        type: string
+      firstNameLegal:
+        description: The student's legal first name (Extended Data Only)
+        type: string
+      middleName:
+        description: The student's lived middle name (Extended Data Only)
+        type: string
+      middleNameLegal:
+        description: The student's legal middle name (Extended Data Only)
+        type: string
+      lastName:
+        description: The student's lived last name
+        type: string
+      lastNameLegal:
+        description: The student's legal last name (Extended Data Only)
+        type: string
+      suffix:
+        description: The name suffix (JR, SR, etc)
+        type: string
+      gender:
+        description: '''M'' = Male, ''F'' = Female, NULL = No value provided (Extended Data Only)'
+        type: string
+      birthDate:
+        description: The birthdate in 8 character code (YYYYMMDD)
+        type: string
+      nfr:
+        description: "Not For Release - This indicates if the students record has a Not For Release flag associated with it. If true,\r\nthen the Registrar's Office should be consulted before releasing any of the students information to anyone\r\nbesides the student."
+        type: boolean
+      internationalStudentCode:
+        description: '''F'' = Foreign, ''R'' = Resident Alien, NULL = Domestic'
+        type: string
+      firstCensusQuarter:
+        description: The first quarter the student was registered and included in the UCOP extract.
+        type: string
+      lastCensusQuarter:
+        description: The latest quarter the student was registered and included in the UCOP extract.
+        type: string
+      lastRegisteredQuarter:
+        description: The latest quarter that the student was registered with a status of Registered (R) or EAP (E).
+        type: string
+      admitLevel:
+        description: '''FR'' = Freshman Undergraduate Admit, ''TR'' = Transfer Undergraduate Admit, Empty = No data or not an undergraduate admit.'
+        type: string
+      admitQuarter:
+        description: Quarter the student was admitted as an undergraduate.
+        type: string
+      pronounCode:
+        description: Pronoun code for the student.
+        type: string
+      perm:
+        description: The 7-digit perm number
+        type: string
+      email:
+        description: The email address (umail.ucsb.edu)
+        type: string
+  WebApiInvalidModel:
+    type: object
+    properties:
+      message:
+        type: string
+      modelState:
+        type: object
+        additionalProperties:
+          type: array
+          items:
+            type: string
+  SimpleMessageModel:
+    type: object
+    properties:
+      message:
+        type: string
+  StudentMinimal:
+    type: object
+    properties:
+      perm:
+        description: The 7-digit perm number
+        type: string
+      firstName:
+        description: The student's first name
+        type: string
+      lastName:
+        description: The student's last name
+        type: string
+      suffix:
+        description: The name suffix (JR, SR, etc)
+        type: string
+      email:
+        description: The email address (umail.ucsb.edu)
+        type: string

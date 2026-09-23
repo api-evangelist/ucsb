@@ -1,0 +1,172 @@
+openapi: 3.2.0
+info:
+  version: v1
+  title: Student Courses API
+  description: Student Course information from the Office of the Registrar.
+servers:
+- url: https://api.ucsb.edu/students/courses
+security:
+- ucsb-api-key: []
+- ucsbnetid-password: []
+tags:
+- name: Courses
+paths:
+  /v1/courses/{perm}:
+    get:
+      tags:
+      - Courses
+      operationId: /courses/v1/courses/{perm}
+      parameters:
+      - name: perm
+        in: path
+        description: Students 6 or 7 digit perm
+        required: true
+        schema:
+          type: string
+      - name: quarter
+        in: query
+        description: Quarter with format YYYYQ
+        required: false
+        schema:
+          type: string
+      - name: enrollCode
+        in: query
+        description: Enroll code should be 5 chars
+        required: false
+        schema:
+          type: string
+      - name: ucsb-user-jwt
+        in: header
+        description: Used when an application is required to provide an End User Token. Only the data for the student indicated by the End User Token will be retrieved.
+        required: false
+        schema:
+          type: string
+      - name: ucsb-api-version
+        in: header
+        description: Specific api version to use.
+        required: false
+        schema:
+          type: string
+          default: '1.0'
+      responses:
+        '200':
+          description: Basic course information for student.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+        '400':
+          description: Bad or malformed request. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/WebApiInvalidModel'
+        '401':
+          description: Unauthorized. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+        '404':
+          description: Resource cannot be found. See response body for details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SimpleMessageModel'
+      description: 'Search for courses in which student is registered. All the courses for that student can be returned when search by perm and quarter/enroll code. Perm is required for search and either quarter and enroll code can be both used. Returned is the collection of courses for student enrollment.
+
+
+        This service contains information about the students academic history, including their grades. While this endpoint provides information on the current quarter, it is intended to look at the historical information about an individual student''s record.'
+      summary: /courses/v1/courses/{perm}
+      x-summary-source: derived
+components:
+  schemas:
+    Course:
+      description: 'Course Entity represent
+
+        Course Data student enrolled in'
+      type: object
+      properties:
+        perm:
+          description: Student 7 digit perm
+          type: string
+        quarter:
+          description: Quarter with format YYYYQ
+          type: string
+        courseId:
+          description: '13 character course Id with format SSSSSPPPNNNNUUU , Fist 5 char is course subject,
+
+            Next 3 char is course prefix then next 3 char is course number
+
+            and last 2 char is course suffix. For example ''ES   1-  16B ''
+
+            can be broken down in subject ''ES   '' prefix ''1- '' number '' 16'' suffix ''B '''
+          type: string
+        enrollCode:
+          description: 'EnrollCode an unique number assigned
+
+            to a curriculum'
+          type: string
+        session:
+          description: 'Session of the curriculum in which
+
+            Student is enrolled for summer'
+          type: string
+        grade:
+          description: Grade assigned for the Course
+          type: string
+        repeatTypeCode:
+          description: 'Repeat type for a course
+
+            See more RepeatTypeCode and RepeatTypeTranslation on RepeatType interface
+
+            on Public Lookups API'
+          type: string
+        unitsAttempted:
+          format: double
+          description: 'Total number of units attempted by the student
+
+            for the course'
+          type: number
+        unitsCompleted:
+          format: double
+          description: 'units completed by student during
+
+            the course'
+          type: number
+    WebApiInvalidModel:
+      type: object
+      properties:
+        message:
+          type: string
+        modelState:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    SimpleMessageModel:
+      type: object
+      properties:
+        message:
+          type: string
+  securitySchemes:
+    ucsb-api-key:
+      name: ucsb-api-key
+      in: header
+      type: apiKey
+    ucsbnetid-password:
+      type: http
+      scheme: basic

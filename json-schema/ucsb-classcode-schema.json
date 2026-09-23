@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ucsb/main/json-schema/ucsb-classcode-schema.json",
+  "title": "ClassCodeItem",
+  "description": "A BARC class code used to classify student billing categories.",
+  "type": "object",
+  "properties": {
+    "classcode": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "loc": {
+      "type": "string"
+    },
+    "account": {
+      "type": "string"
+    },
+    "fund": {
+      "type": "string"
+    },
+    "sub": {
+      "type": "string"
+    },
+    "manualControl": {
+      "type": "string"
+    },
+    "validForBarcFlag": {
+      "type": "string"
+    },
+    "objectCode": {
+      "type": "string"
+    },
+    "registrationRefundFlag": {
+      "type": "string"
+    },
+    "department": {
+      "type": "string"
+    },
+    "lastUpdateDate": {
+      "type": "string"
+    },
+    "lastUpdateUserid": {
+      "type": "string"
+    }
+  },
+  "x-source": "openapi/ucsb-classcode-lookup-service-openapi.yml",
+  "x-method": "derived",
+  "x-generated": "2026-08-30"
+}
