@@ -102,17 +102,11 @@ components:
           - Add
           - Drop
           type: string
-    WebApiInvalidModel:
+    SimpleMessageModel:
       type: object
       properties:
         message:
           type: string
-        modelState:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
     RegistrationBlockResponse:
       description: Regsitration Block Response Object
       type: object
@@ -126,11 +120,17 @@ components:
         messsage:
           description: Error Message
           type: string
-    SimpleMessageModel:
+    WebApiInvalidModel:
       type: object
       properties:
         message:
           type: string
+        modelState:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
   securitySchemes:
     ucsb-api-key:
       name: ucsb-api-key

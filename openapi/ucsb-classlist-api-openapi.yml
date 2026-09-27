@@ -73,15 +73,49 @@ paths:
                   $ref: '#/components/schemas/Department'
 components:
   schemas:
-    ConcurrentCourse:
+    Student:
       type: object
       properties:
-        concurrentCourseNumber:
+        lastName:
           type: string
-        concurrentSectionNumber:
+        firstName:
           type: string
-        concurrentSessionNumber:
+        middleName:
           type: string
+        permNumber:
+          type: string
+        emailAddress:
+          type: string
+        courseStatus:
+          type: string
+    Department:
+      type: object
+      properties:
+        deptCode:
+          type: string
+        courses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Course'
+    Course:
+      type: object
+      properties:
+        courseID:
+          type: string
+        courseTitle:
+          type: string
+        courseDescription:
+          type: string
+        prerequisiteText:
+          type: string
+        crossListedCourses:
+          type: array
+          items:
+            type: string
+        sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/Section'
     Section:
       type: object
       properties:
@@ -125,6 +159,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Student'
+    ConcurrentCourse:
+      type: object
+      properties:
+        concurrentCourseNumber:
+          type: string
+        concurrentSectionNumber:
+          type: string
+        concurrentSessionNumber:
+          type: string
     TimeLocation:
       type: object
       properties:
@@ -137,40 +180,6 @@ components:
         buildingRoom:
           type: string
         roomCapacity:
-          type: string
-    Course:
-      type: object
-      properties:
-        courseID:
-          type: string
-        courseTitle:
-          type: string
-        courseDescription:
-          type: string
-        prerequisiteText:
-          type: string
-        crossListedCourses:
-          type: array
-          items:
-            type: string
-        sections:
-          type: array
-          items:
-            $ref: '#/components/schemas/Section'
-    Student:
-      type: object
-      properties:
-        lastName:
-          type: string
-        firstName:
-          type: string
-        middleName:
-          type: string
-        permNumber:
-          type: string
-        emailAddress:
-          type: string
-        courseStatus:
           type: string
     Instructor:
       type: object
@@ -197,15 +206,6 @@ components:
           type: string
         instructorFunctionDescription:
           type: string
-    Department:
-      type: object
-      properties:
-        deptCode:
-          type: string
-        courses:
-          type: array
-          items:
-            $ref: '#/components/schemas/Course'
   securitySchemes:
     ucsb-api-key:
       name: ucsb-api-key

@@ -392,114 +392,6 @@ paths:
     - url: https://api.ucsb.edu/students/schedules
 components:
   schemas:
-    EnrollDates:
-      required:
-      - term
-      type: object
-      properties:
-        enrollDatesPk:
-          type: integer
-          description: Unique Id of the Alpha Object
-          format: int32
-        term:
-          maxLength: 5
-          minLength: 0
-          type: string
-          description: The term
-        session:
-          maxLength: 1
-          minLength: 0
-          type:
-          - string
-          - 'null'
-          description: The session
-        enrollStart:
-          type: string
-          description: Enroll Start
-          format: date-time
-        enrollEnd:
-          type: string
-          description: Enroll End
-          format: date-time
-      additionalProperties: false
-    WorkshopSchedule:
-      type: object
-      properties:
-        workshopCategoryPk:
-          type: integer
-          format: int32
-        workshopSkillClassPk:
-          type: integer
-          format: int32
-        workshopCode:
-          type:
-          - string
-          - 'null'
-        workshopDate:
-          type:
-          - string
-          - 'null'
-        workshopTime:
-          type:
-          - string
-          - 'null'
-        sessionCount:
-          type: integer
-          format: int32
-      additionalProperties: false
-    Subject:
-      required:
-      - subjectCode
-      type: object
-      properties:
-        subjectCode:
-          maxLength: 5
-          minLength: 0
-          type: string
-        subjectName:
-          maxLength: 25
-          minLength: 0
-          type:
-          - string
-          - 'null'
-        schedules:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Schedule'
-      additionalProperties: false
-    ApiVersionError:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/ApiVersionErrorDetail'
-      additionalProperties: false
-    ProblemDetails:
-      type: object
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-      additionalProperties: {}
     WorkshopTitle:
       type: object
       properties:
@@ -571,6 +463,70 @@ components:
           items:
             $ref: '#/components/schemas/WorkshopTitle'
       additionalProperties: false
+    EnrollDates:
+      required:
+      - term
+      type: object
+      properties:
+        enrollDatesPk:
+          type: integer
+          description: Unique Id of the Alpha Object
+          format: int32
+        term:
+          maxLength: 5
+          minLength: 0
+          type: string
+          description: The term
+        session:
+          maxLength: 1
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: The session
+        enrollStart:
+          type: string
+          description: Enroll Start
+          format: date-time
+        enrollEnd:
+          type: string
+          description: Enroll End
+          format: date-time
+      additionalProperties: false
+    ApiVersionError:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ApiVersionErrorDetail'
+      additionalProperties: false
+    TermInfo:
+      type: object
+      properties:
+        term:
+          type:
+          - string
+          - 'null'
+        quarter:
+          type:
+          - string
+          - 'null'
+        year:
+          type:
+          - string
+          - 'null'
+        isSession:
+          type: boolean
+        enrollDates:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EnrollDates'
+        message:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
     Schedule:
       type: object
       properties:
@@ -628,71 +584,78 @@ components:
         isNew:
           type: boolean
       additionalProperties: false
-    TermInfo:
+    Subject:
+      required:
+      - subjectCode
       type: object
       properties:
-        term:
+        subjectCode:
+          maxLength: 5
+          minLength: 0
+          type: string
+        subjectName:
+          maxLength: 25
+          minLength: 0
           type:
           - string
           - 'null'
-        quarter:
-          type:
-          - string
-          - 'null'
-        year:
-          type:
-          - string
-          - 'null'
-        isSession:
-          type: boolean
-        enrollDates:
+        schedules:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/EnrollDates'
-        message:
+            $ref: '#/components/schemas/Schedule'
+      additionalProperties: false
+    ProblemDetails:
+      type: object
+      properties:
+        type:
           type:
           - string
           - 'null'
-      additionalProperties: false
-    ScheduleTimeLocation:
-      description: Time Location data for course
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
+    WorkshopSchedule:
       type: object
       properties:
-        section:
-          description: Course section student enrolled in
-          type: string
-        instructionTypeCode:
-          description: 'Instruction Type ex Lec , Dis etc
-
-            See more InstructionTypeCode and InstructionTypeTranslation on InstructionType interface
-
-            on Public Lookups API'
-          type: string
-        days:
-          description: 'Days of Instruction for course for example ''M W    '' means instruction happens on Monday and wednesday
-
-            For mode translation on day code look at Days interface at public api'
-          type: string
-        beginTime:
-          description: 'Begin time for a course
-
-            HH:mm format'
-          type: string
-        endTime:
-          description: 'End time of the course
-
-            HH:mm format'
-          type: string
-        buildingRoom:
-          description: location of course
-          type: string
-        instructors:
-          description: Time location instructor list
-          type: array
-          items:
-            $ref: '#/components/schemas/TimeLocationInstructor'
+        workshopCategoryPk:
+          type: integer
+          format: int32
+        workshopSkillClassPk:
+          type: integer
+          format: int32
+        workshopCode:
+          type:
+          - string
+          - 'null'
+        workshopDate:
+          type:
+          - string
+          - 'null'
+        workshopTime:
+          type:
+          - string
+          - 'null'
+        sessionCount:
+          type: integer
+          format: int32
+      additionalProperties: false
     TimeLocationInstructor:
       description: Instructor assigned to a course
       type: object
@@ -761,6 +724,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ScheduleTimeLocation'
+    SimpleMessageModel:
+      type: object
+      properties:
+        message:
+          type: string
     WebApiInvalidModel:
       type: object
       properties:
@@ -772,11 +740,43 @@ components:
             type: array
             items:
               type: string
-    SimpleMessageModel:
+    ScheduleTimeLocation:
+      description: Time Location data for course
       type: object
       properties:
-        message:
+        section:
+          description: Course section student enrolled in
           type: string
+        instructionTypeCode:
+          description: 'Instruction Type ex Lec , Dis etc
+
+            See more InstructionTypeCode and InstructionTypeTranslation on InstructionType interface
+
+            on Public Lookups API'
+          type: string
+        days:
+          description: 'Days of Instruction for course for example ''M W    '' means instruction happens on Monday and wednesday
+
+            For mode translation on day code look at Days interface at public api'
+          type: string
+        beginTime:
+          description: 'Begin time for a course
+
+            HH:mm format'
+          type: string
+        endTime:
+          description: 'End time of the course
+
+            HH:mm format'
+          type: string
+        buildingRoom:
+          description: location of course
+          type: string
+        instructors:
+          description: Time location instructor list
+          type: array
+          items:
+            $ref: '#/components/schemas/TimeLocationInstructor'
   securitySchemes:
     ucsb-api-key:
       name: ucsb-api-key

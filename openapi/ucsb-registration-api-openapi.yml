@@ -178,6 +178,11 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    SimpleMessageModel:
+      type: object
+      properties:
+        message:
+          type: string
     Registration:
       required:
       - perm
@@ -264,11 +269,6 @@ components:
             type: array
             items:
               type: string
-    SimpleMessageModel:
-      type: object
-      properties:
-        message:
-          type: string
   securitySchemes:
     ucsb-api-key:
       name: ucsb-api-key

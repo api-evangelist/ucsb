@@ -220,19 +220,6 @@ components:
             type: array
             items:
               type: string
-    ApplicationVerificationRequestByUser:
-      description: Application Verification Request , containing email and password
-      required:
-      - email
-      - password
-      type: object
-      properties:
-        email:
-          description: Email for the applicant
-          type: string
-        password:
-          description: Password for the applicant
-          type: string
     ApplicationVerification:
       type: object
       properties:
@@ -368,6 +355,19 @@ components:
         fiveYear:
           description: Indicates if the application if for a five year BA/MA program
           type: boolean
+    ApplicationVerificationRequestByUser:
+      description: Application Verification Request , containing email and password
+      required:
+      - email
+      - password
+      type: object
+      properties:
+        email:
+          description: Email for the applicant
+          type: string
+        password:
+          description: Password for the applicant
+          type: string
   securitySchemes:
     ucsb-api-key:
       name: ucsb-api-key

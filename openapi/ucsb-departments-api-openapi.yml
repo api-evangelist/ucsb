@@ -168,6 +168,91 @@ paths:
     - url: https://api.ucsb.edu/students
 components:
   schemas:
+    CostTypeModel:
+      type: object
+      properties:
+        costType:
+          type:
+          - string
+          - 'null'
+        costTypeDesc:
+          type:
+          - string
+          - 'null'
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        updateDate:
+          type: string
+          format: date-time
+      additionalProperties: false
+    CostCenterModel:
+      type: object
+      properties:
+        costCenter:
+          type:
+          - string
+          - 'null'
+          description: ''
+        costCenterDesc:
+          type:
+          - string
+          - 'null'
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        updateDate:
+          type: string
+          format: date-time
+      additionalProperties: false
+    ProjectCodeModel:
+      type: object
+      properties:
+        projectCode:
+          type:
+          - string
+          - 'null'
+        projectCodeDesc:
+          type:
+          - string
+          - 'null'
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        updateDate:
+          type: string
+          format: date-time
+      additionalProperties: false
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties:
+        type: object
+        additionalProperties: false
     DepartmentModel:
       type: object
       properties:
@@ -216,91 +301,6 @@ components:
           description: Department Project Codes
       additionalProperties: false
       description: ''
-    ProjectCodeModel:
-      type: object
-      properties:
-        projectCode:
-          type:
-          - string
-          - 'null'
-        projectCodeDesc:
-          type:
-          - string
-          - 'null'
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        updateDate:
-          type: string
-          format: date-time
-      additionalProperties: false
-    ProblemDetails:
-      type: object
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-      additionalProperties:
-        type: object
-        additionalProperties: false
-    CostTypeModel:
-      type: object
-      properties:
-        costType:
-          type:
-          - string
-          - 'null'
-        costTypeDesc:
-          type:
-          - string
-          - 'null'
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        updateDate:
-          type: string
-          format: date-time
-      additionalProperties: false
-    CostCenterModel:
-      type: object
-      properties:
-        costCenter:
-          type:
-          - string
-          - 'null'
-          description: ''
-        costCenterDesc:
-          type:
-          - string
-          - 'null'
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        updateDate:
-          type: string
-          format: date-time
-      additionalProperties: false
     AcademicDepartment:
       type: object
       properties:

@@ -98,6 +98,52 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    RosterSection:
+      description: Roster data for the Non primary sections
+      type: object
+      properties:
+        section:
+          description: Section Number for a course
+          type: string
+        enrollCode:
+          description: 'EnrollCode an unique number assigned
+
+            to a curriculum'
+          type: string
+        rosters:
+          description: Roster data for the section
+          type: array
+          items:
+            $ref: '#/components/schemas/Roster'
+    SimpleMessageModel:
+      type: object
+      properties:
+        message:
+          type: string
+    WebApiInvalidModel:
+      type: object
+      properties:
+        message:
+          type: string
+        modelState:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    Roster:
+      description: Roster of Enrolled Students in Section
+      type: object
+      properties:
+        perm:
+          description: Student 7 digit perm
+          type: string
+        unitsAttempted:
+          format: double
+          description: 'Total number of units attempted by the student
+
+            for the course'
+          type: number
     RosterCourse:
       description: Roster data includes course and Enrollment in Sections
       type: object
@@ -127,52 +173,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RosterSection'
-    WebApiInvalidModel:
-      type: object
-      properties:
-        message:
-          type: string
-        modelState:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-    RosterSection:
-      description: Roster data for the Non primary sections
-      type: object
-      properties:
-        section:
-          description: Section Number for a course
-          type: string
-        enrollCode:
-          description: 'EnrollCode an unique number assigned
-
-            to a curriculum'
-          type: string
-        rosters:
-          description: Roster data for the section
-          type: array
-          items:
-            $ref: '#/components/schemas/Roster'
-    Roster:
-      description: Roster of Enrolled Students in Section
-      type: object
-      properties:
-        perm:
-          description: Student 7 digit perm
-          type: string
-        unitsAttempted:
-          format: double
-          description: 'Total number of units attempted by the student
-
-            for the course'
-          type: number
-    SimpleMessageModel:
-      type: object
-      properties:
-        message:
-          type: string
   securitySchemes:
     ucsb-api-key:
       name: ucsb-api-key

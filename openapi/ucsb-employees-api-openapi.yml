@@ -173,6 +173,58 @@ components:
         description:
           description: 'Description of the employee job (Examples: STDT ACAD MGR 2, STDT DISABILITY MGR 1)'
           type: string
+    JobClassCodesModel:
+      type: object
+      properties:
+        code:
+          description: 'Unique Code (Examples: 1, 13, C)'
+          type: string
+          minLength: 1
+          maxLength: 2
+        description:
+          description: 'Description of the employee class (Examples: Staff: Contract, Staff: Contingent Work, Conversion Use Only)'
+          type: string
+    EmploymentStatusModel:
+      type: object
+      properties:
+        code:
+          description: 'Unique Code (examples: A, N, W, S)'
+          type: string
+          minLength: 1
+          maxLength: 1
+        description:
+          description: 'Descriptions of the Employeement Status (examples: Active, Leave Without Pay, Short Work Break, Separated'
+          type: string
+    EmployeeJobModel:
+      type: object
+      properties:
+        employeeId:
+          description: The 8-character employee number (treat this as a string)
+          type: string
+          minLength: 8
+          maxLength: 8
+        jobCode:
+          description: The unique job code that represents this job
+          type: string
+          maxLength: 6
+        jobClassCode:
+          description: ???
+          type: string
+          maxLength: 2
+        hireDate:
+          description: The hire date in YYYYMMDD format
+          type: string
+        terminationDate:
+          description: The termination date in YYYYMMDD format
+          type: string
+        deptCode:
+          description: The primary HR department associated with job.
+          type: string
+          maxLength: 4
+        fte:
+          description: The percentage allocation of the employee to the job.
+          type: number
+          format: float
     EmployeeModel:
       type: object
       properties:
@@ -221,58 +273,6 @@ components:
         ucsbNetId:
           description: The ucsbNetId of the employee.
           type: string
-    EmploymentStatusModel:
-      type: object
-      properties:
-        code:
-          description: 'Unique Code (examples: A, N, W, S)'
-          type: string
-          minLength: 1
-          maxLength: 1
-        description:
-          description: 'Descriptions of the Employeement Status (examples: Active, Leave Without Pay, Short Work Break, Separated'
-          type: string
-    JobClassCodesModel:
-      type: object
-      properties:
-        code:
-          description: 'Unique Code (Examples: 1, 13, C)'
-          type: string
-          minLength: 1
-          maxLength: 2
-        description:
-          description: 'Description of the employee class (Examples: Staff: Contract, Staff: Contingent Work, Conversion Use Only)'
-          type: string
-    EmployeeJobModel:
-      type: object
-      properties:
-        employeeId:
-          description: The 8-character employee number (treat this as a string)
-          type: string
-          minLength: 8
-          maxLength: 8
-        jobCode:
-          description: The unique job code that represents this job
-          type: string
-          maxLength: 6
-        jobClassCode:
-          description: ???
-          type: string
-          maxLength: 2
-        hireDate:
-          description: The hire date in YYYYMMDD format
-          type: string
-        terminationDate:
-          description: The termination date in YYYYMMDD format
-          type: string
-        deptCode:
-          description: The primary HR department associated with job.
-          type: string
-          maxLength: 4
-        fte:
-          description: The percentage allocation of the employee to the job.
-          type: number
-          format: float
   securitySchemes:
     apiKey:
       type: apiKey

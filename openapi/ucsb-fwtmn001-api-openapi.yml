@@ -376,23 +376,6 @@ components:
           type: string
         cmncInitialProcessDate:
           type: string
-    QuarterDataPayLoad:
-      description: ''
-      type: object
-      properties:
-        quarterCalendar:
-          $ref: '#/components/schemas/QuarterCalendar'
-          description: Quarter Information
-        holidays:
-          description: An array of holidays, in YYYYMMDD Format
-          type: array
-          items:
-            type: string
-        specialDays:
-          description: An array of special days, in YYYYMMDD Format
-          type: array
-          items:
-            type: string
     QuarterInformationWrapper:
       description: A wrapper class that contains messaging for the API call and the payload
       type: object
@@ -422,6 +405,23 @@ components:
       properties:
         message:
           type: string
+    QuarterDataPayLoad:
+      description: ''
+      type: object
+      properties:
+        quarterCalendar:
+          $ref: '#/components/schemas/QuarterCalendar'
+          description: Quarter Information
+        holidays:
+          description: An array of holidays, in YYYYMMDD Format
+          type: array
+          items:
+            type: string
+        specialDays:
+          description: An array of special days, in YYYYMMDD Format
+          type: array
+          items:
+            type: string
   securitySchemes:
     ucsb-api-key:
       name: ucsb-api-key
