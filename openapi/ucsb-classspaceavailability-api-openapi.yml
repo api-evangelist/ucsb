@@ -100,28 +100,11 @@ paths:
                 $ref: '#/components/schemas/SimpleMessageModel'
 components:
   schemas:
-    ClassSpaceModel:
+    SimpleMessageModel:
       type: object
       properties:
-        pageNumber:
-          format: int32
-          description: page number for pagination
-          type: integer
-        pageSize:
-          format: int32
-          description: 'how many courses user want to be returned on one page
-
-            imp - one course can have multiple sections'
-          type: integer
-        total:
-          format: int32
-          description: Total number of courses for the search criteria
-          type: integer
-        classSpaces:
-          description: Available space in the class
-          type: array
-          items:
-            $ref: '#/components/schemas/ClassSpace'
+        message:
+          type: string
     ClassSpaceAvailability:
       description: class space availability by section
       type: object
@@ -140,11 +123,6 @@ components:
           format: int32
           description: Max number of students can be enrolled in the section
           type: integer
-    SimpleMessageModel:
-      type: object
-      properties:
-        message:
-          type: string
     WebApiInvalidModel:
       type: object
       properties:
@@ -170,6 +148,28 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ClassSpaceAvailability'
+    ClassSpaceModel:
+      type: object
+      properties:
+        pageNumber:
+          format: int32
+          description: page number for pagination
+          type: integer
+        pageSize:
+          format: int32
+          description: 'how many courses user want to be returned on one page
+
+            imp - one course can have multiple sections'
+          type: integer
+        total:
+          format: int32
+          description: Total number of courses for the search criteria
+          type: integer
+        classSpaces:
+          description: Available space in the class
+          type: array
+          items:
+            $ref: '#/components/schemas/ClassSpace'
   securitySchemes:
     ucsb-api-key:
       name: ucsb-api-key

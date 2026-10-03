@@ -201,6 +201,17 @@ paths:
     - url: https://api.ucsb.edu/students
 components:
   schemas:
+    WebApiInvalidModel:
+      type: object
+      properties:
+        message:
+          type: string
+        modelState:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
     Student:
       description: A student record that was updated within the given time frame
       type: object
@@ -233,35 +244,6 @@ components:
       type: object
       properties:
         message:
-          type: string
-    WebApiInvalidModel:
-      type: object
-      properties:
-        message:
-          type: string
-        modelState:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-    StudentMinimal:
-      type: object
-      properties:
-        perm:
-          description: The 7-digit perm number
-          type: string
-        firstName:
-          description: The student's first name
-          type: string
-        lastName:
-          description: The student's last name
-          type: string
-        suffix:
-          description: The name suffix (JR, SR, etc)
-          type: string
-        email:
-          description: The email address (umail.ucsb.edu)
           type: string
     StudentExtended:
       type: object
@@ -323,6 +305,24 @@ components:
           type: string
         perm:
           description: The 7-digit perm number
+          type: string
+        email:
+          description: The email address (umail.ucsb.edu)
+          type: string
+    StudentMinimal:
+      type: object
+      properties:
+        perm:
+          description: The 7-digit perm number
+          type: string
+        firstName:
+          description: The student's first name
+          type: string
+        lastName:
+          description: The student's last name
+          type: string
+        suffix:
+          description: The name suffix (JR, SR, etc)
           type: string
         email:
           description: The email address (umail.ucsb.edu)

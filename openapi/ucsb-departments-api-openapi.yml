@@ -168,14 +168,15 @@ paths:
     - url: https://api.ucsb.edu/students
 components:
   schemas:
-    CostTypeModel:
+    CostCenterModel:
       type: object
       properties:
-        costType:
+        costCenter:
           type:
           - string
           - 'null'
-        costTypeDesc:
+          description: ''
+        costCenterDesc:
           type:
           - string
           - 'null'
@@ -187,15 +188,14 @@ components:
           type: string
           format: date-time
       additionalProperties: false
-    CostCenterModel:
+    CostTypeModel:
       type: object
       properties:
-        costCenter:
+        costType:
           type:
           - string
           - 'null'
-          description: ''
-        costCenterDesc:
+        costTypeDesc:
           type:
           - string
           - 'null'

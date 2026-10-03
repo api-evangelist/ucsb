@@ -126,11 +126,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    SimpleMessageModel:
-      type: object
-      properties:
-        message:
-          type: string
     WebApiInvalidModel:
       type: object
       properties:
@@ -142,19 +137,6 @@ components:
             type: array
             items:
               type: string
-    GraduateProgram:
-      type: object
-      properties:
-        id:
-          format: int32
-          description: Graduate Program's unique identifier
-          type: integer
-        displayName:
-          description: The Graduate Program display name
-          type: string
-        degrees:
-          description: Graduate Program's list of degrees, comma delimited
-          type: string
     GraduateProgramDetail:
       description: ''
       type: object
@@ -201,6 +183,24 @@ components:
           type: string
         specializations:
           description: List of specialization, semicolon separated
+          type: string
+    SimpleMessageModel:
+      type: object
+      properties:
+        message:
+          type: string
+    GraduateProgram:
+      type: object
+      properties:
+        id:
+          format: int32
+          description: Graduate Program's unique identifier
+          type: integer
+        displayName:
+          description: The Graduate Program display name
+          type: string
+        degrees:
+          description: Graduate Program's list of degrees, comma delimited
           type: string
   securitySchemes:
     ucsb-api-key:

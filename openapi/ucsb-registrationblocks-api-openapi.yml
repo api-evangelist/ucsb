@@ -74,6 +74,30 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    WebApiInvalidModel:
+      type: object
+      properties:
+        message:
+          type: string
+        modelState:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    RegistrationBlockResponse:
+      description: Regsitration Block Response Object
+      type: object
+      properties:
+        status:
+          description: Status of the request Failed, Success, Rejected
+          enum:
+          - Success
+          - Rejected
+          type: string
+        messsage:
+          description: Error Message
+          type: string
     RegistrationBlockRequest:
       description: Dto object to process a registration block
       required:
@@ -107,30 +131,6 @@ components:
       properties:
         message:
           type: string
-    RegistrationBlockResponse:
-      description: Regsitration Block Response Object
-      type: object
-      properties:
-        status:
-          description: Status of the request Failed, Success, Rejected
-          enum:
-          - Success
-          - Rejected
-          type: string
-        messsage:
-          description: Error Message
-          type: string
-    WebApiInvalidModel:
-      type: object
-      properties:
-        message:
-          type: string
-        modelState:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
   securitySchemes:
     ucsb-api-key:
       name: ucsb-api-key

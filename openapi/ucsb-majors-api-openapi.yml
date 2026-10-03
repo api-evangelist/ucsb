@@ -285,6 +285,17 @@ paths:
     - url: https://api.ucsb.edu/students
 components:
   schemas:
+    WebApiInvalidModel:
+      type: object
+      properties:
+        message:
+          type: string
+        modelState:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
     AcademicMajor:
       type: object
       properties:
@@ -329,17 +340,6 @@ components:
         degreeQuarter:
           description: The quarter the student has petitioned to graduate in YYYYQ format. See the Degree Status to determine the status of the degree.
           type: string
-    WebApiInvalidModel:
-      type: object
-      properties:
-        message:
-          type: string
-        modelState:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
     AcademicMajor_2:
       type: object
       properties:

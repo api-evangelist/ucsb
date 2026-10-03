@@ -204,10 +204,18 @@ paths:
         required: true
 components:
   schemas:
-    SimpleMessageModel:
+    ApplicationVerificationRequestByUser:
+      description: Application Verification Request , containing email and password
+      required:
+      - email
+      - password
       type: object
       properties:
-        message:
+        email:
+          description: Email for the applicant
+          type: string
+        password:
+          description: Password for the applicant
           type: string
     WebApiInvalidModel:
       type: object
@@ -355,18 +363,10 @@ components:
         fiveYear:
           description: Indicates if the application if for a five year BA/MA program
           type: boolean
-    ApplicationVerificationRequestByUser:
-      description: Application Verification Request , containing email and password
-      required:
-      - email
-      - password
+    SimpleMessageModel:
       type: object
       properties:
-        email:
-          description: Email for the applicant
-          type: string
-        password:
-          description: Password for the applicant
+        message:
           type: string
   securitySchemes:
     ucsb-api-key:

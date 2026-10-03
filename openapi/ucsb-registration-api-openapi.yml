@@ -178,11 +178,17 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    SimpleMessageModel:
+    WebApiInvalidModel:
       type: object
       properties:
         message:
           type: string
+        modelState:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
     Registration:
       required:
       - perm
@@ -258,17 +264,11 @@ components:
           format: date-time
           description: Third Appointment Begin date and time
           type: string
-    WebApiInvalidModel:
+    SimpleMessageModel:
       type: object
       properties:
         message:
           type: string
-        modelState:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
   securitySchemes:
     ucsb-api-key:
       name: ucsb-api-key
