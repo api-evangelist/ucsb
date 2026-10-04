@@ -217,6 +217,11 @@ components:
         password:
           description: Password for the applicant
           type: string
+    SimpleMessageModel:
+      type: object
+      properties:
+        message:
+          type: string
     WebApiInvalidModel:
       type: object
       properties:
@@ -363,11 +368,6 @@ components:
         fiveYear:
           description: Indicates if the application if for a five year BA/MA program
           type: boolean
-    SimpleMessageModel:
-      type: object
-      properties:
-        message:
-          type: string
   securitySchemes:
     ucsb-api-key:
       name: ucsb-api-key

@@ -178,17 +178,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    WebApiInvalidModel:
-      type: object
-      properties:
-        message:
-          type: string
-        modelState:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
     Registration:
       required:
       - perm
@@ -269,6 +258,17 @@ components:
       properties:
         message:
           type: string
+    WebApiInvalidModel:
+      type: object
+      properties:
+        message:
+          type: string
+        modelState:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
   securitySchemes:
     ucsb-api-key:
       name: ucsb-api-key

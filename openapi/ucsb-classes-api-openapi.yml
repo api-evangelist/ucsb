@@ -288,35 +288,35 @@ paths:
                 $ref: '#/components/schemas/SimpleMessageModel'
 components:
   schemas:
-    ClassInstructor:
-      description: Instructor of the section and class
-      type: object
-      properties:
-        instructor:
-          description: Name of the Instructor
-          type: string
-        functionCode:
-          description: 'Instruction Function.
-
-            See more InstructionFunctionCode and InstructionFunctionTranslation on InstructionFunction interface
-
-            See translation on Student Record Code Lookups API'
-          type: string
-    GeneralEducation:
-      description: General education code and college
-      type: object
-      properties:
-        geCode:
-          description: General education code
-          type: string
-        geCollege:
-          description: General education college
-          type: string
     SimpleMessageModel:
       type: object
       properties:
         message:
           type: string
+    ClassModel:
+      type: object
+      properties:
+        pageNumber:
+          format: int32
+          description: page number for pagination
+          type: integer
+        pageSize:
+          format: int32
+          description: 'how many courses user want to be returned on one page
+
+            imp - one course can have multiple sections'
+          type: integer
+        total:
+          format: int32
+          description: Total number of courses for the search criteria
+          type: integer
+        classes:
+          description: 'List of Classes
+
+            class include all the related sections'
+          type: array
+          items:
+            $ref: '#/components/schemas/Class'
     Class:
       description: Master course info
       type: object
@@ -397,6 +397,17 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ClassSection'
+    WebApiInvalidModel:
+      type: object
+      properties:
+        message:
+          type: string
+        modelState:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
     ClassSection:
       description: Section information for a class
       type: object
@@ -478,41 +489,30 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ClassInstructor'
-    ClassModel:
+    ClassInstructor:
+      description: Instructor of the section and class
       type: object
       properties:
-        pageNumber:
-          format: int32
-          description: page number for pagination
-          type: integer
-        pageSize:
-          format: int32
-          description: 'how many courses user want to be returned on one page
-
-            imp - one course can have multiple sections'
-          type: integer
-        total:
-          format: int32
-          description: Total number of courses for the search criteria
-          type: integer
-        classes:
-          description: 'List of Classes
-
-            class include all the related sections'
-          type: array
-          items:
-            $ref: '#/components/schemas/Class'
-    WebApiInvalidModel:
-      type: object
-      properties:
-        message:
+        instructor:
+          description: Name of the Instructor
           type: string
-        modelState:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
+        functionCode:
+          description: 'Instruction Function.
+
+            See more InstructionFunctionCode and InstructionFunctionTranslation on InstructionFunction interface
+
+            See translation on Student Record Code Lookups API'
+          type: string
+    GeneralEducation:
+      description: General education code and college
+      type: object
+      properties:
+        geCode:
+          description: General education code
+          type: string
+        geCollege:
+          description: General education college
+          type: string
     ClassTimeLocation:
       description: time location for the section
       type: object

@@ -61,6 +61,52 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    QuarterInformationWrapper:
+      description: A wrapper class that contains messaging for the API call and the payload
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/QuarterDataPayLoad'
+          description: Results of API call, if any. NULL on error.
+        messageCode:
+          description: Error code, if any.
+          type: string
+        message:
+          description: Error messaging coming from the database. Check here for clues about how to fix queries
+          type: string
+    SimpleMessageModel:
+      type: object
+      properties:
+        message:
+          type: string
+    QuarterDataPayLoad:
+      description: ''
+      type: object
+      properties:
+        quarterCalendar:
+          $ref: '#/components/schemas/QuarterCalendar'
+          description: Quarter Information
+        holidays:
+          description: An array of holidays, in YYYYMMDD Format
+          type: array
+          items:
+            type: string
+        specialDays:
+          description: An array of special days, in YYYYMMDD Format
+          type: array
+          items:
+            type: string
+    WebApiInvalidModel:
+      type: object
+      properties:
+        message:
+          type: string
+        modelState:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
     QuarterCalendar:
       description: Represents a single quarter from the Quarter Calendar
       type: object
@@ -375,52 +421,6 @@ components:
         cmncPass2EndDate:
           type: string
         cmncInitialProcessDate:
-          type: string
-    SimpleMessageModel:
-      type: object
-      properties:
-        message:
-          type: string
-    WebApiInvalidModel:
-      type: object
-      properties:
-        message:
-          type: string
-        modelState:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-    QuarterDataPayLoad:
-      description: ''
-      type: object
-      properties:
-        quarterCalendar:
-          $ref: '#/components/schemas/QuarterCalendar'
-          description: Quarter Information
-        holidays:
-          description: An array of holidays, in YYYYMMDD Format
-          type: array
-          items:
-            type: string
-        specialDays:
-          description: An array of special days, in YYYYMMDD Format
-          type: array
-          items:
-            type: string
-    QuarterInformationWrapper:
-      description: A wrapper class that contains messaging for the API call and the payload
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/QuarterDataPayLoad'
-          description: Results of API call, if any. NULL on error.
-        messageCode:
-          description: Error code, if any.
-          type: string
-        message:
-          description: Error messaging coming from the database. Check here for clues about how to fix queries
           type: string
   securitySchemes:
     ucsb-api-key:

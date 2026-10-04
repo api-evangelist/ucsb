@@ -61,17 +61,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    WebApiInvalidModel:
-      type: object
-      properties:
-        message:
-          type: string
-        modelState:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
     TermInformation:
       description: ''
       type: object
@@ -89,6 +78,22 @@ components:
         term3:
           description: ''
           type: string
+    SimpleMessageModel:
+      type: object
+      properties:
+        message:
+          type: string
+    WebApiInvalidModel:
+      type: object
+      properties:
+        message:
+          type: string
+        modelState:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
     TermInformationWrapper:
       description: A wrapper class that contains messaging for the API call and the payload
       type: object
@@ -101,11 +106,6 @@ components:
           type: string
         message:
           description: Error messaging coming from the database. Check here for clues about how to fix queries
-          type: string
-    SimpleMessageModel:
-      type: object
-      properties:
-        message:
           type: string
   securitySchemes:
     ucsb-api-key:

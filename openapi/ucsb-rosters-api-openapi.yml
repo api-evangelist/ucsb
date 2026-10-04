@@ -98,6 +98,39 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    SimpleMessageModel:
+      type: object
+      properties:
+        message:
+          type: string
+    RosterSection:
+      description: Roster data for the Non primary sections
+      type: object
+      properties:
+        section:
+          description: Section Number for a course
+          type: string
+        enrollCode:
+          description: 'EnrollCode an unique number assigned
+
+            to a curriculum'
+          type: string
+        rosters:
+          description: Roster data for the section
+          type: array
+          items:
+            $ref: '#/components/schemas/Roster'
+    WebApiInvalidModel:
+      type: object
+      properties:
+        message:
+          type: string
+        modelState:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
     RosterCourse:
       description: Roster data includes course and Enrollment in Sections
       type: object
@@ -140,39 +173,6 @@ components:
 
             for the course'
           type: number
-    RosterSection:
-      description: Roster data for the Non primary sections
-      type: object
-      properties:
-        section:
-          description: Section Number for a course
-          type: string
-        enrollCode:
-          description: 'EnrollCode an unique number assigned
-
-            to a curriculum'
-          type: string
-        rosters:
-          description: Roster data for the section
-          type: array
-          items:
-            $ref: '#/components/schemas/Roster'
-    SimpleMessageModel:
-      type: object
-      properties:
-        message:
-          type: string
-    WebApiInvalidModel:
-      type: object
-      properties:
-        message:
-          type: string
-        modelState:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
   securitySchemes:
     ucsb-api-key:
       name: ucsb-api-key

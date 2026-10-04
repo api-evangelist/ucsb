@@ -93,17 +93,11 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    WebApiInvalidModel:
+    SimpleMessageModel:
       type: object
       properties:
         message:
           type: string
-        modelState:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
     Course:
       description: 'Course Entity represent
 
@@ -157,11 +151,17 @@ components:
 
             the course'
           type: number
-    SimpleMessageModel:
+    WebApiInvalidModel:
       type: object
       properties:
         message:
           type: string
+        modelState:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
   securitySchemes:
     ucsb-api-key:
       name: ucsb-api-key

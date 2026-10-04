@@ -168,26 +168,6 @@ paths:
     - url: https://api.ucsb.edu/students
 components:
   schemas:
-    CostCenterModel:
-      type: object
-      properties:
-        costCenter:
-          type:
-          - string
-          - 'null'
-          description: ''
-        costCenterDesc:
-          type:
-          - string
-          - 'null'
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        updateDate:
-          type: string
-          format: date-time
-      additionalProperties: false
     CostTypeModel:
       type: object
       properties:
@@ -207,14 +187,15 @@ components:
           type: string
           format: date-time
       additionalProperties: false
-    ProjectCodeModel:
+    CostCenterModel:
       type: object
       properties:
-        projectCode:
+        costCenter:
           type:
           - string
           - 'null'
-        projectCodeDesc:
+          description: ''
+        costCenterDesc:
           type:
           - string
           - 'null'
@@ -301,6 +282,25 @@ components:
           description: Department Project Codes
       additionalProperties: false
       description: ''
+    ProjectCodeModel:
+      type: object
+      properties:
+        projectCode:
+          type:
+          - string
+          - 'null'
+        projectCodeDesc:
+          type:
+          - string
+          - 'null'
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        updateDate:
+          type: string
+          format: date-time
+      additionalProperties: false
     AcademicDepartment:
       type: object
       properties:

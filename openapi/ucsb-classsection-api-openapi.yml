@@ -84,30 +84,6 @@ paths:
                 $ref: '#/components/schemas/SimpleMessageModel'
 components:
   schemas:
-    ClassInstructor:
-      description: Instructor of the section and class
-      type: object
-      properties:
-        instructor:
-          description: Name of the Instructor
-          type: string
-        functionCode:
-          description: 'Instruction Function.
-
-            See more InstructionFunctionCode and InstructionFunctionTranslation on InstructionFunction interface
-
-            See translation on Student Record Code Lookups API'
-          type: string
-    GeneralEducation:
-      description: General education code and college
-      type: object
-      properties:
-        geCode:
-          description: General education code
-          type: string
-        geCollege:
-          description: General education college
-          type: string
     SimpleMessageModel:
       type: object
       properties:
@@ -193,6 +169,17 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ClassSection'
+    WebApiInvalidModel:
+      type: object
+      properties:
+        message:
+          type: string
+        modelState:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
     ClassSection:
       description: Section information for a class
       type: object
@@ -274,17 +261,30 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ClassInstructor'
-    WebApiInvalidModel:
+    ClassInstructor:
+      description: Instructor of the section and class
       type: object
       properties:
-        message:
+        instructor:
+          description: Name of the Instructor
           type: string
-        modelState:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
+        functionCode:
+          description: 'Instruction Function.
+
+            See more InstructionFunctionCode and InstructionFunctionTranslation on InstructionFunction interface
+
+            See translation on Student Record Code Lookups API'
+          type: string
+    GeneralEducation:
+      description: General education code and college
+      type: object
+      properties:
+        geCode:
+          description: General education code
+          type: string
+        geCollege:
+          description: General education college
+          type: string
     ClassTimeLocation:
       description: time location for the section
       type: object

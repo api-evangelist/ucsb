@@ -100,54 +100,6 @@ paths:
                 $ref: '#/components/schemas/SimpleMessageModel'
 components:
   schemas:
-    SimpleMessageModel:
-      type: object
-      properties:
-        message:
-          type: string
-    ClassSpaceAvailability:
-      description: class space availability by section
-      type: object
-      properties:
-        section:
-          description: Section number of the course
-          type: string
-        enrollCode:
-          description: EnrollCode an unique number assigned to a curriculum, Enroll code should be 5 chars
-          type: string
-        enrolledTotal:
-          format: int32
-          description: Total number of enrollments in the section
-          type: integer
-        maxEnroll:
-          format: int32
-          description: Max number of students can be enrolled in the section
-          type: integer
-    WebApiInvalidModel:
-      type: object
-      properties:
-        message:
-          type: string
-        modelState:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-    ClassSpace:
-      description: Available space in the class
-      type: object
-      properties:
-        courseId:
-          description: '13 character course Id with format SSSSSPPPNNNNUUU , Fist 5 char is course subject, Next 3 char is course prefix then next 3 char is course number and last 2 char is course suffix.
-
-            For example ''ES 1- 16B '' can be broken down in subject ''ES '' prefix ''1- '' number '' 16'' suffix ''B'
-          type: string
-        classSpaceAvailabilities:
-          description: List of available class spaces by section
-          type: array
-          items:
-            $ref: '#/components/schemas/ClassSpaceAvailability'
     ClassSpaceModel:
       type: object
       properties:
@@ -170,6 +122,54 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ClassSpace'
+    SimpleMessageModel:
+      type: object
+      properties:
+        message:
+          type: string
+    WebApiInvalidModel:
+      type: object
+      properties:
+        message:
+          type: string
+        modelState:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    ClassSpaceAvailability:
+      description: class space availability by section
+      type: object
+      properties:
+        section:
+          description: Section number of the course
+          type: string
+        enrollCode:
+          description: EnrollCode an unique number assigned to a curriculum, Enroll code should be 5 chars
+          type: string
+        enrolledTotal:
+          format: int32
+          description: Total number of enrollments in the section
+          type: integer
+        maxEnroll:
+          format: int32
+          description: Max number of students can be enrolled in the section
+          type: integer
+    ClassSpace:
+      description: Available space in the class
+      type: object
+      properties:
+        courseId:
+          description: '13 character course Id with format SSSSSPPPNNNNUUU , Fist 5 char is course subject, Next 3 char is course prefix then next 3 char is course number and last 2 char is course suffix.
+
+            For example ''ES 1- 16B '' can be broken down in subject ''ES '' prefix ''1- '' number '' 16'' suffix ''B'
+          type: string
+        classSpaceAvailabilities:
+          description: List of available class spaces by section
+          type: array
+          items:
+            $ref: '#/components/schemas/ClassSpaceAvailability'
   securitySchemes:
     ucsb-api-key:
       name: ucsb-api-key

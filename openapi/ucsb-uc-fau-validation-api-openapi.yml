@@ -76,17 +76,89 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    MESSAGE_SET_NBR:
+    MESSAGE_NBR:
       properties:
         IsChanged:
           type: string
+      type: object
+    MSG_SEQ_FLG:
+      properties:
+        IsChanged:
+          type: string
+      type: object
+    COMBO_VALID_FLG:
+      properties:
+        IsChanged:
+          type: string
+      type: object
+    COMBO_TRAN_SRC:
+      properties:
+        IsChanged:
+          type: string
+      type: object
+    PROCESS_INSTANCE:
+      properties:
+        IsChanged:
+          type: string
+      type: object
+    LANGUAGE_CD:
+      properties:
+        IsChanged:
+          type: string
+      type: object
+    COMBO_CF_MSG_H:
+      properties:
+        COMBO_VALID_FLG:
+          $ref: '#/components/schemas/COMBO_VALID_FLG'
+        MESSAGE_SET_NBR:
+          $ref: '#/components/schemas/MESSAGE_SET_NBR'
+        MESSAGE_NBR:
+          $ref: '#/components/schemas/MESSAGE_NBR'
+        MESSAGE_TEXT:
+          $ref: '#/components/schemas/MESSAGE_TEXT'
+        COMBO_TRAN_SRC:
+          $ref: '#/components/schemas/COMBO_TRAN_SRC'
+      type: object
+    UC_FAU_VALIDATION_REPLY:
+      properties:
+        FieldTypes:
+          $ref: '#/components/schemas/FieldTypes'
+        MsgData:
+          $ref: '#/components/schemas/MsgData'
+      type: object
+    Transaction:
+      properties:
+        COMBO_CF_MSG_H:
+          $ref: '#/components/schemas/COMBO_CF_MSG_H'
+        PSCAMA:
+          $ref: '#/components/schemas/PSCAMA'
+      type: array
+      minItems: 0
+      items:
+        $ref: '#/components/schemas/Transaction'
+    SEQNO:
+      properties: {}
       type: object
     AUDIT_ACTN:
       properties:
         IsChanged:
           type: string
       type: object
+    FieldTypes:
+      properties:
+        COMBO_CF_MSG_H:
+          $ref: '#/components/schemas/COMBO_CF_MSG_H'
+        COMBO_CF_MSG_D:
+          $ref: '#/components/schemas/COMBO_CF_MSG_D'
+        PSCAMA:
+          $ref: '#/components/schemas/PSCAMA'
+      type: object
     BASE_LANGUAGE_CD:
+      properties:
+        IsChanged:
+          type: string
+      type: object
+    MSGNODENAME:
       properties:
         IsChanged:
           type: string
@@ -108,17 +180,17 @@ components:
         MSGNODENAME:
           $ref: '#/components/schemas/MSGNODENAME'
       type: object
-    Transaction:
+    PUBLISH_RULE_ID:
       properties:
-        COMBO_CF_MSG_H:
-          $ref: '#/components/schemas/COMBO_CF_MSG_H'
-        PSCAMA:
-          $ref: '#/components/schemas/PSCAMA'
-      type: array
-      minItems: 0
-      items:
-        $ref: '#/components/schemas/Transaction'
-    COMBO_VALID_FLG:
+        IsChanged:
+          type: string
+      type: object
+    MESSAGE_TEXT:
+      properties:
+        IsChanged:
+          type: string
+      type: object
+    MESSAGE_SET_NBR:
       properties:
         IsChanged:
           type: string
@@ -130,82 +202,10 @@ components:
         COMBO_VALID_FLG:
           $ref: '#/components/schemas/COMBO_VALID_FLG'
       type: object
-    MESSAGE_NBR:
-      properties:
-        IsChanged:
-          type: string
-      type: object
-    COMBO_TRAN_SRC:
-      properties:
-        IsChanged:
-          type: string
-      type: object
-    LANGUAGE_CD:
-      properties:
-        IsChanged:
-          type: string
-      type: object
-    SEQNO:
-      properties: {}
-      type: object
-    MESSAGE_TEXT:
-      properties:
-        IsChanged:
-          type: string
-      type: object
-    FieldTypes:
-      properties:
-        COMBO_CF_MSG_H:
-          $ref: '#/components/schemas/COMBO_CF_MSG_H'
-        COMBO_CF_MSG_D:
-          $ref: '#/components/schemas/COMBO_CF_MSG_D'
-        PSCAMA:
-          $ref: '#/components/schemas/PSCAMA'
-      type: object
-    UC_FAU_VALIDATION_REPLY:
-      properties:
-        FieldTypes:
-          $ref: '#/components/schemas/FieldTypes'
-        MsgData:
-          $ref: '#/components/schemas/MsgData'
-      type: object
     MsgData:
       properties:
         Transaction:
           $ref: '#/components/schemas/Transaction'
-      type: object
-    PUBLISH_RULE_ID:
-      properties:
-        IsChanged:
-          type: string
-      type: object
-    COMBO_CF_MSG_H:
-      properties:
-        COMBO_VALID_FLG:
-          $ref: '#/components/schemas/COMBO_VALID_FLG'
-        MESSAGE_SET_NBR:
-          $ref: '#/components/schemas/MESSAGE_SET_NBR'
-        MESSAGE_NBR:
-          $ref: '#/components/schemas/MESSAGE_NBR'
-        MESSAGE_TEXT:
-          $ref: '#/components/schemas/MESSAGE_TEXT'
-        COMBO_TRAN_SRC:
-          $ref: '#/components/schemas/COMBO_TRAN_SRC'
-      type: object
-    PROCESS_INSTANCE:
-      properties:
-        IsChanged:
-          type: string
-      type: object
-    MSG_SEQ_FLG:
-      properties:
-        IsChanged:
-          type: string
-      type: object
-    MSGNODENAME:
-      properties:
-        IsChanged:
-          type: string
       type: object
   securitySchemes:
     apiKey:
