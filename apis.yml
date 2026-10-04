@@ -59,8 +59,6 @@ tags:
 - Identity Federation
 - Research Repository
 - Library
-- API Gateway
-- Developer Portal
 - Developer Tools
 created: '2026-06-03'
 modified: '2026-08-30'
@@ -3198,6 +3196,9 @@ apis:
   - type: Documentation
     url: https://developer.ucsb.edu/content/student-schedules
 common:
+- type: CapabilityMap
+  url: capabilities/ucsb-capability-edges.yml
+  name: University of California, Santa Barbara Business Capability Map
 - type: Website
   url: https://www.ucsb.edu/
 - type: DeveloperPortal
@@ -3323,3 +3324,6 @@ x-hostless-resolution:
   hosts:
     api.ucsb.edu: 18
     gradpoint.ucsb.edu: 1
+x-tags-removed:
+- Developer Portal
+- API Gateway
