@@ -1,0 +1,12 @@
+{
+ "url": "https://developer.ucsb.edu/sites/default/files/openapi/deptcourses-v1.2out.api__1.yaml",
+ "requested_url": "https://developer.ucsb.edu/sites/default/files/openapi/deptcourses-v1.2out.api__1.yaml",
+ "status": 200,
+ "content_type": "text/plain",
+ "bytes": 5103,
+ "sha256": "ecb1a54c3b3a286b201b0d6871c009c868bd785b2dd8a5827eb0c1609e5c40fb",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}

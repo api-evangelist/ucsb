@@ -1,0 +1,12 @@
+{
+ "url": "https://developer.ucsb.edu/sites/default/files/openapi/schedules-v1.out_.api_.yaml",
+ "requested_url": "https://developer.ucsb.edu/sites/default/files/openapi/schedules-v1.out_.api_.yaml",
+ "status": 200,
+ "content_type": "text/plain",
+ "bytes": 6808,
+ "sha256": "c06d969afd972e1b3c9c96356804bb966553f6150652c0fcdef09e7efd84e216",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}

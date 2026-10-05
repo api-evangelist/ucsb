@@ -1,0 +1,12 @@
+{
+ "url": "https://developer.ucsb.edu/sites/default/files/openapi/rosters-v1.out_.api_.yaml",
+ "requested_url": "https://developer.ucsb.edu/sites/default/files/openapi/rosters-v1.out_.api_.yaml",
+ "status": 200,
+ "content_type": "text/plain",
+ "bytes": 5771,
+ "sha256": "38c8573cbb9966303c0afa42d1bb212c2db9c20778f213a657551c2d649c6936",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}

@@ -1,0 +1,12 @@
+{
+ "url": "https://developer.ucsb.edu/sites/default/files/openapi/events-v1.api_.out_.yaml",
+ "requested_url": "https://developer.ucsb.edu/sites/default/files/openapi/events-v1.api_.out_.yaml",
+ "status": 200,
+ "content_type": "text/plain",
+ "bytes": 656,
+ "sha256": "49e1598be059c5bbd00829f24821a1ad379f967639d9dcd47f52b7387f3edb3e",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}

@@ -1,0 +1,12 @@
+{
+ "url": "https://developer.ucsb.edu/sites/default/files/openapi/gradapplverifications-v1.yaml",
+ "requested_url": "https://developer.ucsb.edu/sites/default/files/openapi/gradapplverifications-v1.yaml",
+ "status": 200,
+ "content_type": "text/plain",
+ "bytes": 9822,
+ "sha256": "0757a1d1e4e405aa7b5808a4a6a587274c748946cc53956932f78991d9dfd2d3",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}

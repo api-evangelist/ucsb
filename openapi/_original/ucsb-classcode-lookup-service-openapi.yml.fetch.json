@@ -1,0 +1,12 @@
+{
+ "url": "https://developer.ucsb.edu/sites/default/files/openapi/BARC-ClassCodes.yaml",
+ "requested_url": "https://developer.ucsb.edu/sites/default/files/openapi/BARC-ClassCodes.yaml",
+ "status": 200,
+ "content_type": "text/plain",
+ "bytes": 2551,
+ "sha256": "fcfa5d8d5555ba72baea121a30da265ce5ecb8fb06fc6c979de46d5cc79435e6",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
