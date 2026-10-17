@@ -93,11 +93,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    SimpleMessageModel:
-      type: object
-      properties:
-        message:
-          type: string
     Course:
       description: 'Course Entity represent
 
@@ -162,6 +157,11 @@ components:
             type: array
             items:
               type: string
+    SimpleMessageModel:
+      type: object
+      properties:
+        message:
+          type: string
   securitySchemes:
     ucsb-api-key:
       name: ucsb-api-key

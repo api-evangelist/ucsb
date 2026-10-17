@@ -201,6 +201,17 @@ paths:
     - url: https://api.ucsb.edu/students
 components:
   schemas:
+    WebApiInvalidModel:
+      type: object
+      properties:
+        message:
+          type: string
+        modelState:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
     StudentsResponse:
       description: A wrapper class that contains messaging for the API call and the payload
       type: object
@@ -234,17 +245,6 @@ components:
       properties:
         message:
           type: string
-    WebApiInvalidModel:
-      type: object
-      properties:
-        message:
-          type: string
-        modelState:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
     StudentMinimal:
       type: object
       properties:

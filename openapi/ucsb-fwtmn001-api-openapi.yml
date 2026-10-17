@@ -61,24 +61,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    QuarterInformationWrapper:
-      description: A wrapper class that contains messaging for the API call and the payload
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/QuarterDataPayLoad'
-          description: Results of API call, if any. NULL on error.
-        messageCode:
-          description: Error code, if any.
-          type: string
-        message:
-          description: Error messaging coming from the database. Check here for clues about how to fix queries
-          type: string
-    SimpleMessageModel:
-      type: object
-      properties:
-        message:
-          type: string
     QuarterDataPayLoad:
       description: ''
       type: object
@@ -96,6 +78,19 @@ components:
           type: array
           items:
             type: string
+    QuarterInformationWrapper:
+      description: A wrapper class that contains messaging for the API call and the payload
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/QuarterDataPayLoad'
+          description: Results of API call, if any. NULL on error.
+        messageCode:
+          description: Error code, if any.
+          type: string
+        message:
+          description: Error messaging coming from the database. Check here for clues about how to fix queries
+          type: string
     WebApiInvalidModel:
       type: object
       properties:
@@ -421,6 +416,11 @@ components:
         cmncPass2EndDate:
           type: string
         cmncInitialProcessDate:
+          type: string
+    SimpleMessageModel:
+      type: object
+      properties:
+        message:
           type: string
   securitySchemes:
     ucsb-api-key:

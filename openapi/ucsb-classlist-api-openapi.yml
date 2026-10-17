@@ -82,78 +82,6 @@ components:
           type: string
         concurrentSessionNumber:
           type: string
-    TimeLocation:
-      type: object
-      properties:
-        days:
-          type: string
-        beginTime:
-          type: string
-        endTime:
-          type: string
-        buildingRoom:
-          type: string
-        roomCapacity:
-          type: string
-    Student:
-      type: object
-      properties:
-        lastName:
-          type: string
-        firstName:
-          type: string
-        middleName:
-          type: string
-        permNumber:
-          type: string
-        emailAddress:
-          type: string
-        courseStatus:
-          type: string
-    Course:
-      type: object
-      properties:
-        courseID:
-          type: string
-        courseTitle:
-          type: string
-        courseDescription:
-          type: string
-        prerequisiteText:
-          type: string
-        crossListedCourses:
-          type: array
-          items:
-            type: string
-        sections:
-          type: array
-          items:
-            $ref: '#/components/schemas/Section'
-    Instructor:
-      type: object
-      properties:
-        firstName:
-          type: string
-        lastName:
-          type: string
-        pronounCode:
-          type: string
-        name:
-          type: string
-        employeeNumber:
-          type: string
-        isPpsEmployeeNumber:
-          type: boolean
-          readOnly: true
-        isUcPathEmployeeNumber:
-          type: boolean
-          readOnly: true
-        titleCode:
-          type: string
-        instructorFunction:
-          type: string
-        instructorFunctionDescription:
-          type: string
     Department:
       type: object
       properties:
@@ -206,6 +134,78 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Student'
+    Course:
+      type: object
+      properties:
+        courseID:
+          type: string
+        courseTitle:
+          type: string
+        courseDescription:
+          type: string
+        prerequisiteText:
+          type: string
+        crossListedCourses:
+          type: array
+          items:
+            type: string
+        sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/Section'
+    Student:
+      type: object
+      properties:
+        lastName:
+          type: string
+        firstName:
+          type: string
+        middleName:
+          type: string
+        permNumber:
+          type: string
+        emailAddress:
+          type: string
+        courseStatus:
+          type: string
+    Instructor:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        pronounCode:
+          type: string
+        name:
+          type: string
+        employeeNumber:
+          type: string
+        isPpsEmployeeNumber:
+          type: boolean
+          readOnly: true
+        isUcPathEmployeeNumber:
+          type: boolean
+          readOnly: true
+        titleCode:
+          type: string
+        instructorFunction:
+          type: string
+        instructorFunctionDescription:
+          type: string
+    TimeLocation:
+      type: object
+      properties:
+        days:
+          type: string
+        beginTime:
+          type: string
+        endTime:
+          type: string
+        buildingRoom:
+          type: string
+        roomCapacity:
+          type: string
   securitySchemes:
     ucsb-api-key:
       name: ucsb-api-key

@@ -392,56 +392,72 @@ paths:
     - url: https://api.ucsb.edu/students/schedules
 components:
   schemas:
-    ProblemDetails:
+    WorkshopCategory:
       type: object
       properties:
-        type:
+        term:
           type:
           - string
           - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
+        workshopCategoryPk:
+          type: integer
           format: int32
-        detail:
+        workshopCategoryName:
           type:
           - string
           - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-      additionalProperties: {}
-    ApiVersionErrorDetail:
-      type: object
-      properties:
-        code:
-          type:
-          - string
-          - 'null'
-        message:
-          type:
-          - string
-          - 'null'
-        target:
-          type:
-          - string
-          - 'null'
-        innerError:
-          type:
-          - string
-          - 'null'
-        details:
+        workshopTitles:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/ApiVersionErrorDetail'
+            $ref: '#/components/schemas/WorkshopTitle'
+      additionalProperties: false
+    WorkshopTitle:
+      type: object
+      properties:
+        workshopCategoryPk:
+          type: integer
+          format: int32
+        workshopSkillClassPk:
+          type: integer
+          format: int32
+        workshopTitleName:
+          type:
+          - string
+          - 'null'
+        htmlDescription:
+          type:
+          - string
+          - 'null'
+        workshopSchedules:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/WorkshopSchedule'
+      additionalProperties: false
+    Subject:
+      required:
+      - subjectCode
+      type: object
+      properties:
+        subjectCode:
+          maxLength: 5
+          minLength: 0
+          type: string
+        subjectName:
+          maxLength: 25
+          minLength: 0
+          type:
+          - string
+          - 'null'
+        schedules:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Schedule'
       additionalProperties: false
     EnrollDates:
       required:
@@ -473,33 +489,90 @@ components:
           description: Enroll End
           format: date-time
       additionalProperties: false
+    WorkshopSchedule:
+      type: object
+      properties:
+        workshopCategoryPk:
+          type: integer
+          format: int32
+        workshopSkillClassPk:
+          type: integer
+          format: int32
+        workshopCode:
+          type:
+          - string
+          - 'null'
+        workshopDate:
+          type:
+          - string
+          - 'null'
+        workshopTime:
+          type:
+          - string
+          - 'null'
+        sessionCount:
+          type: integer
+          format: int32
+      additionalProperties: false
     ApiVersionError:
       type: object
       properties:
         error:
           $ref: '#/components/schemas/ApiVersionErrorDetail'
       additionalProperties: false
-    WorkshopCategory:
+    TermInfo:
       type: object
       properties:
         term:
           type:
           - string
           - 'null'
-        workshopCategoryPk:
-          type: integer
-          format: int32
-        workshopCategoryName:
+        quarter:
           type:
           - string
           - 'null'
-        workshopTitles:
+        year:
+          type:
+          - string
+          - 'null'
+        isSession:
+          type: boolean
+        enrollDates:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/WorkshopTitle'
+            $ref: '#/components/schemas/EnrollDates'
+        message:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
     Schedule:
       type: object
       properties:
@@ -557,110 +630,32 @@ components:
         isNew:
           type: boolean
       additionalProperties: false
-    TermInfo:
+    ApiVersionErrorDetail:
       type: object
       properties:
-        term:
+        code:
           type:
           - string
           - 'null'
-        quarter:
-          type:
-          - string
-          - 'null'
-        year:
-          type:
-          - string
-          - 'null'
-        isSession:
-          type: boolean
-        enrollDates:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/EnrollDates'
         message:
           type:
           - string
           - 'null'
-      additionalProperties: false
-    WorkshopSchedule:
-      type: object
-      properties:
-        workshopCategoryPk:
-          type: integer
-          format: int32
-        workshopSkillClassPk:
-          type: integer
-          format: int32
-        workshopCode:
+        target:
           type:
           - string
           - 'null'
-        workshopDate:
+        innerError:
           type:
           - string
           - 'null'
-        workshopTime:
-          type:
-          - string
-          - 'null'
-        sessionCount:
-          type: integer
-          format: int32
-      additionalProperties: false
-    Subject:
-      required:
-      - subjectCode
-      type: object
-      properties:
-        subjectCode:
-          maxLength: 5
-          minLength: 0
-          type: string
-        subjectName:
-          maxLength: 25
-          minLength: 0
-          type:
-          - string
-          - 'null'
-        schedules:
+        details:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/Schedule'
+            $ref: '#/components/schemas/ApiVersionErrorDetail'
       additionalProperties: false
-    WorkshopTitle:
-      type: object
-      properties:
-        workshopCategoryPk:
-          type: integer
-          format: int32
-        workshopSkillClassPk:
-          type: integer
-          format: int32
-        workshopTitleName:
-          type:
-          - string
-          - 'null'
-        htmlDescription:
-          type:
-          - string
-          - 'null'
-        workshopSchedules:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/WorkshopSchedule'
-      additionalProperties: false
-    SimpleMessageModel:
-      type: object
-      properties:
-        message:
-          type: string
     StudentScheduleCourse:
       description: Student Schedule data includes course, time location and instructor data
       type: object
@@ -726,19 +721,10 @@ components:
             type: array
             items:
               type: string
-    TimeLocationInstructor:
-      description: Instructor assigned to a course
+    SimpleMessageModel:
       type: object
       properties:
-        name:
-          description: Name of the Instructor
-          type: string
-        functionCode:
-          description: 'Instruction Function.
-
-            See more InstructionFunctionCode and InstructionFunctionTranslation on InstructionFunction interface
-
-            See translation on public lookup api'
+        message:
           type: string
     ScheduleTimeLocation:
       description: Time Location data for course
@@ -777,6 +763,20 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TimeLocationInstructor'
+    TimeLocationInstructor:
+      description: Instructor assigned to a course
+      type: object
+      properties:
+        name:
+          description: Name of the Instructor
+          type: string
+        functionCode:
+          description: 'Instruction Function.
+
+            See more InstructionFunctionCode and InstructionFunctionTranslation on InstructionFunction interface
+
+            See translation on public lookup api'
+          type: string
   securitySchemes:
     ucsb-api-key:
       name: ucsb-api-key

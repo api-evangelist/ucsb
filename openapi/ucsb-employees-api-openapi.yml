@@ -162,17 +162,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    JobClassCodesModel:
-      type: object
-      properties:
-        code:
-          description: 'Unique Code (Examples: 1, 13, C)'
-          type: string
-          minLength: 1
-          maxLength: 2
-        description:
-          description: 'Description of the employee class (Examples: Staff: Contract, Staff: Contingent Work, Conversion Use Only)'
-          type: string
     EmployeeJobModel:
       type: object
       properties:
@@ -203,16 +192,16 @@ components:
           description: The percentage allocation of the employee to the job.
           type: number
           format: float
-    JobCodesModel:
+    JobClassCodesModel:
       type: object
       properties:
         code:
-          description: 'Unique Code (Examples: 001234, CW1234)'
+          description: 'Unique Code (Examples: 1, 13, C)'
           type: string
-          minLength: 6
-          maxLength: 6
+          minLength: 1
+          maxLength: 2
         description:
-          description: 'Description of the employee job (Examples: STDT ACAD MGR 2, STDT DISABILITY MGR 1)'
+          description: 'Description of the employee class (Examples: Staff: Contract, Staff: Contingent Work, Conversion Use Only)'
           type: string
     EmployeeModel:
       type: object
@@ -261,6 +250,17 @@ components:
           type: string
         ucsbNetId:
           description: The ucsbNetId of the employee.
+          type: string
+    JobCodesModel:
+      type: object
+      properties:
+        code:
+          description: 'Unique Code (Examples: 001234, CW1234)'
+          type: string
+          minLength: 6
+          maxLength: 6
+        description:
+          description: 'Description of the employee job (Examples: STDT ACAD MGR 2, STDT DISABILITY MGR 1)'
           type: string
     EmploymentStatusModel:
       type: object
