@@ -114,3 +114,9 @@ components:
       name: ucsb-api-key
       in: header
       type: apiKey
+x-provenance:
+  method: harvested
+  publisher: University of California, Santa Barbara
+  source: https://developer.ucsb.edu/sites/default/files/openapi/lookups-v1.6.out_.api__0.yaml
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)

@@ -277,3 +277,9 @@ components:
     BasicAuth:
       type: http
       scheme: basic
+x-provenance:
+  method: harvested
+  publisher: University of California, Santa Barbara
+  source: https://developer.ucsb.edu/sites/default/files/openapi/registrations-v2_0.yaml
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
